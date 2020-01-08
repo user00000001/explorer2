@@ -4,8 +4,8 @@
     <detail-title :name="$t('addressDetail.address')" :val="$route.params.address"></detail-title>
 
     <!--主要余额显示-->
-    <detail-block-2 :name1="$t('addressDetail.ontBalance')" :val1="assetsVal.ont" :rows1="'1.3'"
-                    :name2="$t('addressDetail.ongBalance')" :val2="assetsVal.ong" :rows2="'1.3'">
+    <detail-block-2 :name1="$t('addressDetail.ontBalance')" :val1="assetsVal.ong" :rows1="'1.3'"
+                    :name2="$t('addressDetail.ongBalance')" :val2="assetsVal.ont" :rows2="'1.3'">
     </detail-block-2>
 
     <!--可领取和未领取的ONG显示-->
@@ -13,13 +13,13 @@
       <div class="row">
         <div class="col table1_item_title">
           <span class="f-color">{{ $t('addressDetail.claimable') }}</span>
-          <span class="important_color">{{assetsVal.unboundong}}</span>
+          <span class="important_color">{{assetsVal.waitboundong}}</span>
         </div>
       </div>
       <div class="row table1_item_title">
         <div class="col">
           <span class="f-color">{{ $t('addressDetail.unbound') }}</span>
-          <span class="important_color">{{assetsVal.waitboundong}}</span>
+          <span class="important_color">{{assetsVal.unboundong}}</span>
         </div>
       </div>
     </div>
