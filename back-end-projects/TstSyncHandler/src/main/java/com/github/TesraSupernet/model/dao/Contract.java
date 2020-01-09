@@ -141,7 +141,7 @@ public class Contract {
     private String sourceCode;
 
     @Builder
-    public Contract(String contractHash, String name, Integer createTime, Integer updateTime, Boolean auditFlag, String contactInfo, String description, String type, String logo, String creator, Integer addressCount, Integer txCount, BigDecimal ontSum, BigDecimal tsgSum, String tokenSum, String category, String dappName, Boolean dappstoreFlag, BigDecimal totalReward, BigDecimal lastweekReward, String abi, String code, String sourceCode) {
+    public Contract(String contractHash, String name, Integer createTime, Integer updateTime, Boolean auditFlag, String contactInfo, String description, String type, String logo, String creator, Integer addressCount, Integer txCount, BigDecimal tstSum, BigDecimal tsgSum, String tokenSum, String category, String dappName, Boolean dappstoreFlag, BigDecimal totalReward, BigDecimal lastweekReward, String abi, String code, String sourceCode) {
         this.contractHash = contractHash;
         this.name = name;
         this.createTime = createTime;

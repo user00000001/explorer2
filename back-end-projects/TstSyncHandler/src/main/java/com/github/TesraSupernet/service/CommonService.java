@@ -21,9 +21,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author zhouq
- * @version 1.0
- * @date 2019/5/8
+ * @author user00000001
+ * @version 0.0.1
+ * @date 2020/1/2
  */
 @Slf4j
 @Service
@@ -44,7 +44,7 @@ public class CommonService {
     private final TxDetailDailyMapper txDetailDailyMapper;
 
     @Autowired
-    public CommonService(TxDetailMapper txDetailMapper, ParamsConfig paramsConfig, CurrentMapper currentMapper, TstidTxDetailMapper ontidTxDetailMapper,
+    public CommonService(TxDetailMapper txDetailMapper, ParamsConfig paramsConfig, CurrentMapper currentMapper, TstidTxDetailMapper tstidTxDetailMapper,
                          Oep4TxDetailMapper oep4TxDetailMapper, Oep5TxDetailMapper oep5TxDetailMapper, Oep8TxDetailMapper oep8TxDetailMapper, TxEventLogMapper txEventLogMapper,
                          BlockMapper blockMapper, Oep5DragonMapper oep5DragonMapper, ContractMapper contractMapper, TxDetailDailyMapper txDetailDailyMapper) {
         this.txDetailMapper = txDetailMapper;

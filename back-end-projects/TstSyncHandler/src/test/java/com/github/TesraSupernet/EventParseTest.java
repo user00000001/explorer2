@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author zhouq
- * @version 1.0
- * @date 2019/3/28
+ * @author user00000001
+ * @version 0.0.1
+ * @date 2020/1/2
  */
 public class EventParseTest {
 

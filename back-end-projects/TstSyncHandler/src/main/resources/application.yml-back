@@ -7,7 +7,7 @@ spring:
     encoding:
       charset: UTF-8
   datasource:
-    url: jdbc:mysql://localhost:3306/explorer_v2?serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:3306/explorer_v2?serverTimezone=UTC
     username: root
     password: ${MYSQL_TEST_PASSWORD}
     initialization-mode: always

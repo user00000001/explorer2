@@ -53,9 +53,9 @@ import java.util.concurrent.Future;
 
 
 /**
- * @author zhouq
- * @version 1.0
- * @date 2018/3/13
+ * @author user00000001
+ * @version 0.0.1
+ * @date 2020/1/2
  */
 @Slf4j
 @Component
@@ -274,7 +274,7 @@ public class TxHandlerThread {
      */
     private void insertTxEventLog(String txHash, int txTime, int txType, int blockHeight, int blockIndex,
                                   BigDecimal gasConsumed, int confirmFlag, String callednContractHash,
-                                  String eventLog, Boolean ontidTxFlag) {
+                                  String eventLog, Boolean tstidTxFlag) {
         TxEventLog txEventLog = TxEventLog.builder()
                 .txHash(txHash)
                 .txTime(txTime)
@@ -380,8 +380,8 @@ public class TxHandlerThread {
                     .creator(player)
                     .txCount(0)
                     .addressCount(0)
-                    .tsgSum(ConstantParam.ZERO)
                     .tstSum(ConstantParam.ZERO)
+                    .tsgSum(ConstantParam.ZERO)
                     .tokenSum(new JSONObject().toJSONString())
                     .dappstoreFlag(false)
                     .auditFlag(false)

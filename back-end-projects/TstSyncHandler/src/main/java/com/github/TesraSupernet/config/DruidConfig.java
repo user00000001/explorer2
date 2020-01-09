@@ -1,9 +1,9 @@
 package com.github.TesraSupernet.config;
 
 /**
- * @author zhouq
- * @version 1.0
- * @date 2018/12/6
+ * @author user00000001
+ * @version 0.0.1
+ * @date 2020/1/2
  */
 
 
@@ -22,7 +22,7 @@ import javax.sql.DataSource;
  * 3、数据库加密，DruidDriuiver和DruidDataSource都支持PasswordCallback。
  * 4、SQL执行日志。
  * 5、扩展JDBC，如果你要对JDBC层有编程的需求，可以通过Druid提供的Filter-Chain机制，很方便编写JDBC层的扩展插件
- * http://localhost:port/druid/login.html
+ * http://127.0.0.1:port/druid/login.html
  */
 //@Profile(value={"default","dev","pro"})
 @Configuration
