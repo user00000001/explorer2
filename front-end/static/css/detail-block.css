@@ -20,8 +20,8 @@
 
 /* 基础白色块属性 - 超出部分省略 */
 .detail-col {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
+  /* display: -webkit-box;
+  -webkit-box-orient: vertical; */
   -webkit-line-clamp: 3;
   overflow: hidden;
 }

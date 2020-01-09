@@ -2,28 +2,54 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Home from '@/components/home/Index'
-import BlockListPage from '@/components/blocks/List'
-import BlockDetailPage from '@/components/blocks/Detail'
-import OntIdListPage from '@/components/ontId/List'
-import OntIdDetailPage from '@/components/ontId/Detail'
-import AddressDetailPage from '@/components/addresses/Detail'
-import AddressList from '@/components/addresses/List'
-import TransactionList from '@/components/transactions/List'
-import TransactionDetail from '@/components/transactions/Detail'
-import ClaimDetailPage from '@/components/claim/Detail'
-import ClaimVerifyPage from '@/components/claim/Verify'
-import NodeStakeAuthorization from '@/components/nodes/List'
-import NodeTeamDetail from '@/components/nodes/Detail'
-import ContractList from '@/components/contracts/List'
-import ContractDetail from '@/components/contracts/Detail'
-import TokenList from '@/components/tokens/List'
-import TokenDetail from '@/components/tokens/Detail'
-import StatisticsTable from '@/components/statistics/Table'
-import ContractForm from '@/components/form/ContractForm'
+// import BlockListPage from '@/components/blocks/List'
+// import BlockDetailPage from '@/components/blocks/Detail'
+// import TstIdListPage from '@/components/tstId/List'
+// import TstIdDetailPage from '@/components/tstId/Detail'
+// import AddressDetailPage from '@/components/addresses/Detail'
+// import AddressList from '@/components/addresses/List'
+// import TransactionList from '@/components/transactions/List'
+// import TransactionDetail from '@/components/transactions/Detail'
+// import ClaimDetailPage from '@/components/claim/Detail'
+// import ClaimVerifyPage from '@/components/claim/Verify'
+// import NodeStakeAuthorization from '@/components/nodes/List'
+// import NodeTeamDetail from '@/components/nodes/Detail'
+// import ContractList from '@/components/contracts/List'
+// import ContractDetail from '@/components/contracts/Detail'
+// import TokenList from '@/components/tokens/List'
+// import TokenDetail from '@/components/tokens/Detail'
+// import StatisticsTable from '@/components/statistics/Table'
+// import ContractForm from '@/components/form/ContractForm'
+
+// const Home = () => import('@/components/home/Index')
+const BlockListPage = () => import('@/components/blocks/List')
+const BlockDetailPage = () => import('@/components/blocks/Detail')
+const TstIdListPage = () => import('@/components/tstId/List')
+const TstIdDetailPage = () => import('@/components/tstId/Detail')
+const AddressDetailPage = () => import('@/components/addresses/Detail')
+const AddressList = () => import('@/components/addresses/List')
+const TransactionList = () => import('@/components/transactions/List')
+const TransactionDetail = () => import('@/components/transactions/Detail')
+const ClaimDetailPage = () => import('@/components/claim/Detail')
+const ClaimVerifyPage = () => import('@/components/claim/Verify')
+const NodeStakeAuthorization = () => import('@/components/nodes/List')
+const NodeTeamDetail = () => import('@/components/nodes/Detail')
+const ContractList = () => import('@/components/contracts/List')
+const ContractDetail = () => import('@/components/contracts/Detail')
+const TokenList = () => import('@/components/tokens/List')
+const TokenDetail = () => import('@/components/tokens/Detail')
+const TokenSubmit = () => import('@/components/tokens/submit')
+const StatisticsTable = () => import('@/components/statistics/Table')
+const ContractForm = () => import('@/components/form/ContractForm')
 
 Vue.use(Router);
 
 let routes = [
+  {
+    path: '/home',
+    name: 'Home',
+    component: Home
+  },
   {
     path: '/',
     name: 'Home',
@@ -50,14 +76,24 @@ let routes = [
     component: BlockDetailPage
   },
   {
-    path: '/ontidlist/:pageSize/:pageNumber',
-    name: 'OntIdListDetail',
-    component: OntIdListPage
+    path: '/tstidlist/:pageSize/:pageNumber',
+    name: 'TstIdListDetail',
+    component: TstIdListPage
   },
   {
-    path: '/ontid/:ontid',
-    name: 'OntIdDetail',
-    component: OntIdDetailPage
+    path: '/tstid/:tstid/:pageSize/:pageNumber',
+    name: 'TstIdDetail',
+    component: TstIdDetailPage
+  },
+  {
+    path: '/tstid/:tstid',
+    name: 'TstIdDetailWithoutPage',
+    component: TstIdDetailPage
+  },
+  {
+    path: '/address/:address/:assetName/:pageSize/:pageNumber',
+    name: 'AddressDetail',
+    component: AddressDetailPage
   },
   {
     path: '/address/:address/:pageSize/:pageNumber',
@@ -65,8 +101,8 @@ let routes = [
     component: AddressDetailPage
   },
   {
-    path: '/address/:address',
-    name: 'AddressDetail',
+    path: '/address/:address/',
+    name: 'AddressDetailwithoutpage',
     component: AddressDetailPage
   },
   {
@@ -90,17 +126,17 @@ let routes = [
     component: TransactionList
   },
   {
-    path: '/transaction/:txnHash',
+    path: '/transaction/:tx_hash',
     name: 'TransactionDetail',
     component: TransactionDetail
   },
   {
-    path: '/transaction/:txnHash/:net',
+    path: '/transaction/:tx_hash/:net',
     name: 'TransactionDetailTest',
     component: TransactionDetail
   },
   {
-    path: '/claimverify/:cardId/:ownerOntId',
+    path: '/claimverify/:cardId/:ownerTstId',
     name: 'ClaimDetai',
     component: ClaimDetailPage
   },
@@ -115,14 +151,19 @@ let routes = [
     component: Home
   },
   {
-    path: '/ontidlist/:pageSize/:pageNumber/:net',
-    name: 'OntIdListDetailTest',
-    component: OntIdListPage
+    path: '/tstidlist/:pageSize/:pageNumber/:net',
+    name: 'TstIdListDetailTest',
+    component: TstIdListPage
   },
   {
-    path: '/ontid/:ontid/:net',
-    name: 'OntIdDetailTest',
-    component: OntIdDetailPage
+    path: '/tstid/:tstid/:pageSize/:pageNumber/:net',
+    name: 'TstIdDetailTest',
+    component: TstIdDetailPage
+  },
+  {
+    path: '/address/:address/:assetName/:pageSize/:pageNumber/:net',
+    name: 'AddressDetailTest',
+    component: AddressDetailPage
   },
   {
     path: '/address/:address/:pageSize/:pageNumber/:net',
@@ -135,7 +176,7 @@ let routes = [
     component: AddressDetailPage
   },
   {
-    path: '/claimverify/:cardId/:ownerOntId/:net',
+    path: '/claimverify/:cardId/:ownerTstId/:net',
     name: 'ClaimDetaiTest',
     component: ClaimDetailPage
   },
@@ -170,12 +211,32 @@ let routes = [
     component: ContractList
   },
   {
-    path: '/contract/:contractHash/:pageSize/:pageNumber',
+    path: '/contract/:contractType/:contractHash/:pageSize/:pageNumber',
     name: 'ContractDetail',
     component: ContractDetail
   },
   {
-    path: '/contract/:contractHash/:pageSize/:pageNumber/:net',
+    path: '/contract/:contractType/:contractHash',
+    name: 'ContractDetailwithoutpage',
+    component: ContractDetail
+  },
+/*   {
+    path: '/contract/:contractType/:contractHash/:pageSize',
+    name: 'ContractDetailwithoutpageSize',
+    component: ContractDetail
+  }, */
+  {
+    path: '/contract/:contractHash/:pageSize/:pageNumber',
+    name: 'ContractDetailwithoutType',
+    component: ContractDetail
+  },
+  {
+    path: '/contract/:contractHash',
+    name: 'ContractDetailOnlyHash',
+    component: ContractDetail
+  },
+  {
+    path: '/contract/:contractType/:contractHash/:pageSize/:pageNumber/:net',
     name: 'ContractDetailTest',
     component: ContractDetail
   },
@@ -190,24 +251,34 @@ let routes = [
     component: ContractRegistrationForm
   }, */
   {
-    path: '/token/list/:type/:pageSize/:pageNumber',
+    path: '/token/list/:contractType/:pageSize/:pageNumber',
     name: 'TokenList',
     component: TokenList
   },
   {
-    path: '/token/list/:type/:pageSize/:pageNumber/:net',
+    path: '/token/list/:contractType/:pageSize/:pageNumber/:net',
     name: 'TokenListTest',
     component: TokenList
   },
   {
-    path: '/token/detail/:type/:contractHash/:pageSize/:pageNumber',
+    path: '/token/detail/:contractType/:contractHash/:tokenName/:pageSize/:pageNumber',
     name: 'TokenDetail',
     component: TokenDetail
   },
   {
-    path: '/token/detail/:type/:contractHash/:pageSize/:pageNumber/:net',
+    path: '/token/detail/:contractType/:contractHash/:tokenName/:pageSize/:pageNumber/:net',
     name: 'TokenDetailTest',
     component: TokenDetail
+  },
+  {
+    path: '/token/submit',
+    name: 'TokenSubmit',
+    component: TokenSubmit
+  },
+  {
+    path: '/token/submit/:net',
+    name: 'TokenSubmitTest',
+    component: TokenSubmit
   },
   {
     path: '/statistics/:day',

@@ -7,13 +7,13 @@
         <div class="col">
           <div class="d-flex">
             <div class="img-sc-detail">
-              <img v-if="contract.list.Logo !== ''" :src="contract.list.Logo" alt="">
+              <img v-if="contract.list.logo !== ''" :src="contract.list.logo" alt="">
               <div v-else class="sc-no-logo-detail">C</div>
             </div>
             <div class="sc-detail-desc">
-              <h4>{{ contract.list.Name }}</h4>
+              <h4>{{ contract.list.name }}</h4>
               <div class="f-color word-break d-block height-100 font-size14">
-                <p class="word-break-word">{{ contract.list.Description }}</p>
+                <p class="word-break-word">{{ contract.list.description }}</p>
               </div>
             </div>
           </div>
@@ -22,20 +22,20 @@
 
     <detail-title-1 :name="$t('contracts.detail.hash')" :val="$route.params.contractHash"></detail-title-1>
 
-    <detail-block-3 :name1="$t('contracts.detail.creator')" :val1="contract.list.Creator" :rows1="'1.2'"
-                    :params1="['address', contract.list.Creator]"
+    <detail-block-3 :name1="$t('contracts.detail.creator')" :val1="contract.list.creator" :rows1="'1.2'"
+                    :params1="['address', contract.list.creator]"
                     :name2="$t('contracts.detail.createdTime')"
-                    :val2="$HelperTools.getTransDate(contract.list.CreateTime)" :rows2="'1.1'">
+                    :val2="$HelperTools.getTransDate(contract.list.create_time)" :rows2="'1.1'">
     </detail-block-3>
 
 <!-- detail info -->
-      <div class="row font-size14" v-for="(scVal, scKey, scIndex) in contract.list.ContactInfo">
+      <div class="row font-size14" v-for="(scVal, scKey, scIndex) in contract.list.contact_info">
         
-        <div v-if="scIndex !== contract.list.ContactInfo.length" class="sc-detail-divider-line"></div>
+        <div v-if="scIndex !== contract.list.contact_info.length" class="sc-detail-divider-line"></div>
         <div class="col-2"><span class="normal_color">{{ scKey }}:</span></div>
         <div class="col-10">
           <span class="f-color word-break d-block height-100 font-size14">
-            <div class="height-100">{{ scVal }}</div>
+            <div class="height-100"><div class="height-100 font-size14 important_color pointer" @click="turnTo(scVal)">{{ scVal }}</div></div>
           </span>
         </div>
         
@@ -50,13 +50,13 @@
               <i class="fa fa-info-circle" aria-hidden="true"></i>
             </a>
           </div>
-          <div class="tt-color font-size24 text-center line-height72">{{ $HelperTools.toFinancialVal(contract.list.AddressCount) }}</div>
+          <div class="tt-color font-size24 text-center line-height72">{{ $HelperTools.toFinancialVal(contract.list.address_count) }}</div>
         </div>
       </div>
       <div class="vol-col">
         <div class="detail-col detail-col-middle">
           <div class="t-color">{{ $t('tokens.detail.txn') }}</div>
-          <div class="tt-color font-size24 text-center line-height72">{{ $HelperTools.toFinancialVal(contract.list.Total) }}</div>
+          <div class="tt-color font-size24 text-center line-height72">{{ $HelperTools.toFinancialVal(contract.list.tx_count) }}</div>
         </div>
       </div>
       <div class="vol-col">
@@ -67,16 +67,16 @@
             </a>
           </div>
           <div class="tt-color font-size24 text-centerc volume-height">
-            <div class="volume-font">{{ $HelperTools.toFinancialVal(parseInt(contract.list.OntCount)) + ' ONT'}}</div>
-            <div class="volume-font">{{$HelperTools.toFinancialVal(contract.list.OngCount) + ' ONG'}}</div>
+            <div class="volume-font">{{ $HelperTools.toFinancialVal(parseInt(contract.list.tst_sum)) + ' TST'}}</div>
+            <div class="volume-font">{{$HelperTools.toFinancialVal(contract.list.tsg_sum) + ' TSG'}}</div>
           </div>
         </div>
       </div>
     </div>
 
     <!--更明显的展示方式，后期开放-->
-    <!--<detail-block-2 :name1="$t('contracts.detail.ontFlow')" :val1="contract.list.OntCount" :rows1="'1.1'"-->
-    <!--:name2="$t('contracts.detail.ongFlow')" :val2="contract.list.OngCount" :rows2="'1.1'">-->
+    <!--<detail-block-2 :name1="$t('contracts.detail.tstFlow')" :val1="contract.list.TstCount" :rows1="'1.1'"-->
+    <!--:name2="$t('contracts.detail.tsgFlow')" :val2="contract.list.TsgCount" :rows2="'1.1'">-->
     <!--</detail-block-2>-->
 
     <!-- Tab Control -->
@@ -102,12 +102,12 @@
     <!-- Tab panes -->
     <div class="tab-content">
       <div id="scTxn" class=" tab-pane active">
-        <div class="row " v-if="contract.total !== 0">
-          <div class="col ">
+        <div class="row " v-if="contractTxList.total !== 0">
+          <div  class="col ">
             <div class="detail-col">
-              <!-- <ont-pagination :total="contract.total"></ont-pagination> -->
-
-              <div class="table-responsive">
+              <!-- <tst-pagination :total="contract.total"></tst-pagination> -->
+              <o-load v-if="!(contractTxList.list && loadingFlag)" ></o-load>
+              <div v-else class="table-responsive">
                 <table class="table">
                   <thead>
                   <tr class="f-color">
@@ -119,29 +119,29 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr v-for="tx in contract.list.TxnList">
+                  <tr v-for="tx in contractTxList.list">
                     <td class="font-size14 important_color font-Regular pointer" >
-                      <span @click="toTransDetailPage(tx.TxnHash)">{{tx.TxnHash.substr(0,16) + '...' + tx.TxnHash.substr(60)}}</span>
+                      <span v-if="tx.tx_hash" @click="toTransDetailPage(tx.tx_hash)">{{tx.tx_hash.substr(0,16) + '...' + tx.tx_hash.substr(60)}}</span>
                     </td>
-                    <td class="normal_color">{{Number(tx.Fee).toString()}}</td>
-                    <td class="font-size14 s-color font-Regular" v-if="tx.ConfirmFlag === 1">
+                    <td class="normal_color">{{Number(tx.fee).toString()}}</td>
+                    <td class="font-size14 s-color font-Regular" v-if="tx.confirm_flag === 1">
                       Confirmed
                     </td>
                     <td class="font-size14 f-color font-Regular" v-else>
                       Failed
                     </td>
                     <td class="font-size14 normal_color font-Regular">
-                      {{tx.Height}}
+                      {{tx.block_height}}
                     </td>
                     <td class="font-size14 normal_color font-Regular">
-                      {{$HelperTools.getTransDate(tx.TxnTime)}}
+                      {{$HelperTools.getTransDate(tx.tx_time)}}
                     </td>
                   </tr>
                   </tbody>
                 </table>
               </div>
 
-              <ont-pagination :total="contract.total"></ont-pagination>
+              <tst-pagination :total="contractTxList.total"></tst-pagination>
             </div>
           </div>
         </div>
@@ -159,7 +159,7 @@
                 </span>
                 <span class="pull-right font-size14 font-ExtraLight copied-right" v-show="showCodeCopied">Copied!</span>
               </div>
-              <textarea id="scCodeData" readonly rows="6">{{ contract.list.Code }}</textarea>
+              <textarea id="scCodeData" readonly rows="6">{{ contract.list.code }}</textarea>
             </div>
           </div>
         </div>
@@ -176,7 +176,7 @@
                   </span>
                 <span class="pull-right font-size14 font-ExtraLight copied-right" v-show="showABICopied">Copied!</span>
               </div>
-              <textarea id="scABIData" readonly rows="6">{{contract.list.ABI}}</textarea>
+              <textarea id="scABIData" readonly rows="6">{{contract.list.abi}}</textarea>
             </div>
           </div>
         </div>
@@ -210,13 +210,39 @@
 
   export default {
     name: "Contracts-Detail",
-    created() {
-      this.getContractData();
-      this.getStatisticsData();
+    mounted() {
+      if (this.$route.params.pageSize == undefined || this.$route.params.pageNumber == undefined || this.$route.params.contractType == undefined) {
+        this.toContractDetailPage(this.$route.params.contractHash)
+      }else{    
+        this.getContractData();
+        this.getStatisticsData();
+      }
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+    },
+    watch: {
+      '$route': ['getContractData', 'getStatisticsData'],
+      'contract':function(){
+      //  console.log(this.contract)
+          if(this.$route.params.contractHash == "cae215265a5e348bfd603b8db22893aa74b42417"){
+              this.contract.list.address_count = this.contract.list.address_count + 32620
+              this.contract.list.total = this.contract.list.total + 63617
+              var cacuTsg = parseFloat(this.contract.list.tsg_sum)*1000000000
+              var cacuTst = parseFloat(this.contract.list.tst_sum)
+              cacuTsg = cacuTsg + 116055.79681789*1000000000
+              this.contract.list.tst_sum = cacuTst.toString()
+              this.contract.list.tsg_sum = (cacuTsg/1000000000).toString()
+
+          }
+      },
+      'contractTxList':function(){
+        this.loadingFlag = true
+      //  console.log(this.contractTxList)
+      },
     },
     computed: {
       ...mapState({
         contract: state => state.Contracts.Detail,
+        contractTxList: state => state.Contracts.TxList,
         statisticsData: state => state.Statistics.StatisticsData
       }),
     },
@@ -225,19 +251,38 @@
         showCodeCopied: false,
         showABICopied: false,
         hackReset: false,
+        loadingFlag:false,
       }
     },
     methods: {
+      turnTo(scVal){
+        if(scVal.substr(0,4) != "http"){
+          window.open("http://"+scVal)
+        }else{
+          window.open(scVal)
+        }
+      },
       getContractData() {
         this.contract.list = '';
-
+        this.loadingFlag = false
+        if(this.$route.params.contractType == undefined){
+          this.$route.params.contractType = "all"
+        }
         this.$store.dispatch('GetContract', this.$route.params).then();
+        this.$store.dispatch('GetContractTx', this.$route.params).then();
+      },
+      toContractDetailPage($hash){
+        if (this.$route.params.net === 'testnet') {
+          this.$router.push({name: 'ContractDetailTest', params: {contractType: 'all',contractHash:$hash, pageSize: 10, pageNumber: 1, net: 'testnet'}})
+        } else {
+          this.$router.push({name: 'ContractDetail', params: {contractType: 'all',contractHash:$hash, pageSize: 10, pageNumber: 1}})
+        }
       },
       toTransDetailPage($TxnId) {
         if (this.$route.params.net === 'testnet') {
-          this.$router.push({name: 'TransactionDetailTest', params: {txnHash: $TxnId, net: 'testnet'}})
+          this.$router.push({name: 'TransactionDetailTest', params: {tx_hash: $TxnId, net: 'testnet'}})
         } else {
-          this.$router.push({name: 'TransactionDetail', params: {txnHash: $TxnId}})
+          this.$router.push({name: 'TransactionDetail', params: {tx_hash: $TxnId}})
         }
       },
       copyDetailVal($id) {
@@ -282,7 +327,7 @@
   }
 
   .nav-item > a {
-    color: #32A4BE;
+    color: #4C4D66;
   }
 
   .tab-content textarea {
@@ -322,7 +367,7 @@
   .sc-no-logo-detail {
     width: 106px;
     height: 106px;
-    background-color: #32A4BE;
+    background-color: #4C4D66;
     color: white;
     font-size: 32px;
     font-weight: bold;

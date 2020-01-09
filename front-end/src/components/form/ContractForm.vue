@@ -53,9 +53,9 @@
         </div>
         <div class="form-submit-input-wrapper">
           <div class="form-submit-input-content">
-              <div class="form-submit-input-title">{{$t('form.ONTID')}}<span class="form-submit-input-requiredstar"> {{$t('form.requiredstar')}}</span></div>
-              <input class="form-submit-text" v-model="ONTID" name="ONTID" v-validate="'required'"/>
-              <div class="form-submit-input-text-error" v-show="errors.has('ONTID')">Here is can't be empty</div>
+              <div class="form-submit-input-title">{{$t('form.TSTID')}}<span class="form-submit-input-requiredstar"> {{$t('form.requiredstar')}}</span></div>
+              <input class="form-submit-text" v-model="TSTID" name="TSTID" v-validate="'required'"/>
+              <div class="form-submit-input-text-error" v-show="errors.has('TSTID')">Here is can't be empty</div>
           </div>
         </div>
         <div class="form-submit-input-wrapper">
@@ -152,7 +152,6 @@
 
 <script>
   import {mapState} from 'vuex'
-  import $ from 'jquery'
 
 export default {
   name: 'HelloWorld',
@@ -170,7 +169,7 @@ export default {
       DAppLogoName:'',
       WebLink:'',
       GitHubURL:'',
-      ONTID:'',
+      TSTID:'',
       ContractHash1:'',
       ContractHash2:'',
       ContractHash3:'',
@@ -217,7 +216,7 @@ export default {
     ...mapState({
     })
   },
-  created(){
+  mounted(){
 
   },
   methods:{
@@ -238,7 +237,7 @@ export default {
           formData.append('img_url', )
           formData.append('summary', )
           formData.append('content', )
-          formData.append('ont_id', )
+          formData.append('tst_id', )
           formData.append('dapp_screen_urls', )
           formData.append('telegram', )
           formData.append('twitter', )

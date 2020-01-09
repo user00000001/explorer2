@@ -1,42 +1,41 @@
 <template>
   <div class="e-container div-run-status">
     <div class="row">
+      <div class="status-list">
+        <div class="status-item" @click="toBlockListPage">
+          <div class="item-name">{{ $t('runStatus.CurrentHeight') }}</div>
+          <div class="item-value">{{ $HelperTools.toFinancialVal(blockStatus.info.block_height) }}</div>
+        </div>
+        <div class="status-item" @click="toTransactionListPage">
+          <div class="item-name">{{ $t('runStatus.TxnCount') }}</div>
+          <div class="item-value">{{ $HelperTools.toFinancialVal(blockStatus.info.tx_count) }}</div>
+        </div>
+        <div class="status-item" @click="toOnlineNodes" v-if="$route.params.net !== 'testnet'">
+          <div class="item-name">{{ $t('runStatus.NodeCount') }}</div>
+          <div class="item-value">{{ $HelperTools.toFinancialVal(nodeCount.info.candidate_node_count+nodeCount.info.consensus_node_count) }}</div>
+        </div>
+        <div class="status-item" @click="toAddressListPage" v-if="$route.params.net !== 'testnet'">
+          <div class="item-name">{{ $t('runStatus.addressCount') }}</div>
+          <div class="item-value">{{ $HelperTools.toFinancialVal(blockStatus.info.address_count) }}</div>
+        </div>
+        <div class="status-item" @click="toAddressListPage" v-else>
+          <div class="item-name">{{ $t('runStatus.addressCount') }}</div>
+          <div class="item-value">{{ $HelperTools.toFinancialVal(blockStatus.info.address_count) }}</div>
+        </div>
+        <!-- <div class="status-item" @click="toTstIdListPage">
+          <div class="item-name">{{ $t('runStatus.tstid') }}</div>
+          <div class="item-value">{{ $HelperTools.toFinancialVal(blockStatus.info.tstid_count) }}</div>
+        </div> -->
+      </div>
+
+      <!-- 留个模版
       <div class="col col-click" @click="toBlockListPage">
         <span class="run-status-label">{{ $t('runStatus.CurrentHeight') }}</span>
         <span class="view-go-to">>></span>
         <span class="d-block run-status-p font-ExtraLight font-size48">
-          <span>{{ $HelperTools.toFinancialVal(blockStatus.info.CurrentHeight) }}</span>
+          <span>{{ $HelperTools.toFinancialVal(blockStatus.info.block_height) }}</span>
         </span>
-      </div>
-      <div class="col col-click" @click="toTransactionListPage">
-        <span class="run-status-label">{{ $t('runStatus.TxnCount') }}</span>
-        <span class="view-go-to">>></span>
-        <span class="d-block run-status-p font-ExtraLight font-size48">
-          <span>{{ $HelperTools.toFinancialVal(blockStatus.info.TxnCount) }}</span>
-        </span>
-      </div>
-      <div class="col col-click" @click="toOnlineNodes" v-if="$route.params.net !== 'testnet'">
-        <span class="run-status-label">{{ $t('runStatus.NodeCount') }}</span>
-        <span class="view-go-to">>></span>
-        <span class="d-block run-status-p font-ExtraLight font-size48">
-          <span>{{ $HelperTools.toFinancialVal(blockStatus.info.NodeCount) }}</span>
-        </span>
-      </div>
-      <div class="col col-click" @click="toAddressListPage">
-<!--      <div class="col col-no-click-fix">-->
-        <span class="run-status-label">{{ $t('runStatus.addressCount') }}</span>
-        <span class="view-go-to">>></span>
-        <span class="d-block run-status-p font-ExtraLight font-size48">
-          <span>{{ $HelperTools.toFinancialVal(blockStatus.info.AddressCount) }}</span>
-        </span>
-      </div>
-      <div class="col col-click" @click="toOntIdListPage">
-        <span class="run-status-label">{{ $t('runStatus.ontid') }}</span>
-        <span class="view-go-to">>></span>
-        <span class="d-block run-status-p font-ExtraLight font-size48">
-          <span>{{ $HelperTools.toFinancialVal(blockStatus.info.OntIdCount) }}</span>
-        </span>
-      </div>
+      </div> -->
     </div>
 
     <div class="row chart-margin-top">
@@ -74,9 +73,6 @@
 
   export default {
     name: "run-status",
-    mounted: function () {
-      this.createAChart()
-    },
     data() {
       return {
         num: 1,
@@ -86,51 +82,94 @@
         dealNum: 0,
         node: 0,
         lastheight: 0,
+        k:0,
+        addLength:0,
+        addDatas:[],
+        addLabels:[],
         chartData: [],
         chartLabels: [],
         chartbackgroundColor: this.generateBgColor()
       }
     },
-    created() {
+    mounted() {
+      this.createAChart()
       this.getTableData()
       this.getRunStatus()
+      this.getNodeCountStatus()
       this.generateTime("76")
       this.intervalBlock = setInterval(() => {
-        this.generateTime(1)
         this.getRunStatus()
+      }, 3000)
+      this.intervalBlock1 = setInterval(() => {
+        this.generateTime(40)
       }, 3000)
     },
     watch: {
       '$route': 'getRunStatus',
       'getTime.info': function () {
-        if (this.getTime.info.length > 1) {
+        if (this.getTime.info.length > 40) {
           for (var i = 0; i < this.getTime.info.length; i++) {
-            this.chartData[75 - i] = this.getTime.info[i].GenerateTime
-            this.chartLabels[75 - i] = this.getTime.info[i].Height
-            this.lastheight = this.getTime.info[i].Height
+            this.chartData[75 - i] = this.getTime.info[i].generate_time
+            this.chartLabels[75 - i] = this.getTime.info[i].block_height
+            this.lastheight = this.getTime.info[0].block_height
+            /* console.log("first last",this.lastheight) */
           }
           this.myChart.update();
         } else {
-          if (this.getTime.info[0].Height !== this.lastheight) {
-            this.chartData.splice(0, 1)
-            this.chartLabels.splice(0, 1)
-            this.chartData.push(this.getTime.info[0].GenerateTime)
-            this.chartLabels.push(this.getTime.info[0].Height)
-            this.removeData(this.myChart)
-            this.addData(this.myChart, this.getTime.info[0].GenerateTime)
-            this.lastheight = this.getTime.info[0].Height
+          if (this.getTime.info[0].block_height > this.lastheight) {
+            this.addDatas = []
+            this.addLabels = []
+            this.addLength = 0
+            for(var j = 0; j < this.getTime.info.length; j++){
+              if(this.getTime.info[j].block_height > this.lastheight){      
+                this.addDatas.push(this.getTime.info[j].generate_time)
+                this.addLabels.push(this.getTime.info[j].block_height)
+              }
+            }
+            this.addLength = this.addLabels.length
+            /* console.log(this.addLabels) */
+            this.k = 0
+            this.handler = setInterval(() => {
+              this.setTime()
+            }, 200)
+/*             for(var k = 0; k < this.addLength; k++){
+              this.chartData.splice(0, 1)
+              this.chartLabels.splice(0, 1)
+              this.chartData.push(this.addDatas[this.addLength-k-1])
+              this.chartLabels.push(this.addLabels[this.addLength-k-1])
+              this.removeData(this.myChart)
+              this.addData(this.myChart, this.addDatas[this.addLength-k-1])
+            } */
+            this.lastheight = this.getTime.info[0].block_height
           }
         }
+        /* console.log(this.getTime.info[0].block_height) */
       },
     },
     computed: {
       ...mapState({
         blockStatus: state => state.RunStatus.BlockStatus,
         getTime: state => state.RunStatus.GenerateTime,
+        nodeCount: state => state.RunStatus.NodeCount,
         /* data: state => state.Statistics.StatisticsData, */
       })
     },
     methods: {
+      setTime(){
+              if(this.k<this.addLength){
+                  if(this.k>=this.addLength){
+                          clearInterval(this.handler);//关闭定时
+                  }
+                  this.chartData.splice(0, 1)
+                  this.chartLabels.splice(0, 1)
+                  this.chartData.push(this.addDatas[this.addLength-this.k-1])
+                  this.chartLabels.push(this.addLabels[this.addLength-this.k-1])
+                  this.removeData(this.myChart)
+                  this.addData(this.myChart, this.addDatas[this.addLength-this.k-1])
+                  
+                  this.k++;
+              }
+      },
       getTableData() {
         var params={}
         params.day = 14
@@ -141,8 +180,7 @@
         for (let i = 0; i < 76; i++) {
           retData[i] = 'rgba(228, 228, 228, 1)'
         }
-        retData.splice(75, 0, 'rgba(50, 164, 190, 1)')
-
+        retData.splice(75, 0, 'rgba(76,77,102,1)')
         return retData
       },
       toBlockListPage() {
@@ -161,21 +199,25 @@
       },
       toAddressListPage() {
         if (this.$route.params.net == undefined) {
-          this.$router.push({name: 'addressList', params: {token: 'ont', pageSize: 20, pageNumber: 1}})
+          this.$router.push({name: 'addressList', params: {token: 'tst', pageSize: 20, pageNumber: 1}})
         } else {
-          this.$router.push({name: 'addressListTest', params: {token: 'ont',pageSize: 20, pageNumber: 1, net: "testnet"}})
+          this.$router.push({name: 'addressListTest', params: {token: 'tst',pageSize: 20, pageNumber: 1, net: "testnet"}})
         }
       },
-      toOntIdListPage() {
+      toTstIdListPage() {
         if (this.$route.params.net == undefined) {
-          this.$router.push({name: 'OntIdListDetail', params: {pageSize: 20, pageNumber: 1}})
+          this.$router.push({name: 'TstIdListDetail', params: {pageSize: 20, pageNumber: 1}})
         } else {
-          this.$router.push({name: 'OntIdListDetailTest', params: {pageSize: 20, pageNumber: 1, net: 'testnet'}})
+          this.$router.push({name: 'TstIdListDetailTest', params: {pageSize: 20, pageNumber: 1, net: 'testnet'}})
         }
       },
       toOnlineNodes() {
-        this.$router.push({ name: 'NodeStakeList'})
-        // window.location.href = 'https://monitor.ont.io/'
+        /* this.$router.push({ name: 'NodeStakeList'}) */
+        //  window.open('https://node.ont.io/')
+        this.$router.push({ name: 'Home' })
+      },
+      getNodeCountStatus() {
+        this.$store.dispatch('getNodeCount').then()
       },
       getRunStatus() {
         this.$store.dispatch('getRunStatus', this.$route.params).then()
@@ -391,16 +433,12 @@
     },
     beforeDestroy() {
       clearInterval(this.intervalBlock)
+      clearInterval(this.intervalBlock1)
     }
   }
 </script>
 
 <style scoped>
-  .div-run-status {
-    border-radius: 0.25rem;
-    padding: 15px;
-  }
-
   label {
     font-size: 16px;
   }
@@ -409,6 +447,74 @@
     color: #afacac;
     margin-left: 6px;
   }
+  /* 状态 */
+  .status-list{
+    width: 1110px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .status-item{
+    width:250px;
+    height:129px;
+    border:1px solid rgba(219,219,224,1);
+    border-radius:2px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .status-item::before{
+    content: "";
+    display: block;
+    position: absolute;
+    width: 2px;
+    height: 30px;
+    background: #4C4D66;
+    top: -5px;
+    left: 37px;
+    z-index: 2;
+    transition: top .3s;
+  }
+  .status-item::after{
+    content: "";
+    display: block;
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    background: url("../../assets/nodes/stauts-arc.png");
+    background-position: center center;
+    background-size: 100% 100%;
+    top: 15px;
+    left: 25px;
+    z-index: 1;
+    transition: top .3s;
+  }
+  .status-item:hover::before{
+    top: 0px;
+  }
+  .status-item:hover::after{
+    top: 20px;
+  }
+  .item-name{
+    width: 100%;
+    border-bottom: 1px solid rgba(219,219,224,1);
+    text-align: center;
+    line-height: 54px;
+    font-size: 14px;
+    color: #333;
+    background: #fbfbfc;
+    font-family: 'MicrosoftYaHei'
+  }
+  .item-value{
+    width: 100%;
+    border-bottom: 1px solid rgba(219,219,224,1);
+    text-align: center;
+    font-size: 28px;
+    line-height: 75px;
+    color: #4C4D66;
+    background: #fff;
+  }
+  
+  /* 状态 */
 
   .col-click,
   .col-no-click-fix{
@@ -417,23 +523,23 @@
 
   .col-click:hover {
     cursor: pointer;
-    color: #32A4BE;
+    color: #4C4D66;
   }
 
   .col-click:hover .run-status-p > span {
-    border-bottom: 2px solid #32A4BE;
+    border-bottom: 2px solid #4C4D66;
   }
 
   .col-click:hover > .run-status-label {
-    color: #32A4BE;
+    color: #4C4D66;
   }
 
   .col-click:hover > .view-go-to {
-    color: #32A4BE;
+    color: #4C4D66;
   }
 
   .col-click:hover > .d-block {
-    color: #32A4BE;
+    color: #4C4D66;
   }
 
   .run-status-label {
@@ -454,6 +560,7 @@
   }
 
   .div-run-status {
+    width: 1110px;
     margin-bottom: 0px;
   }
 

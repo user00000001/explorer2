@@ -3,7 +3,7 @@
     <div class="row">
       <!--  Logo区域  -->
 <!--       <div v-if="isHome" class="  index-logo-warpper index-logo-warpper-new">
-        <img src="../../assets/logos/ontlogo.png" class="index-logo">
+        <img src="../../assets/logos/tstlogo.png" class="index-logo">
       </div>
       <div v-else class=" no-index-logo-warpper index-logo-warpper-new">
         <router-link class="navbar-brand" :to="{path: $route.params.net === 'testnet'?'/testnet':'/'}">
@@ -19,11 +19,11 @@
         <div class="collapse navbar-collapse" :class="isHome ? '' : 'not-home-bar'" id="collapsibleNavbar">
           <!--  具体菜单区域  -->
           <div v-if="isHome" class=" col-2 index-logo-warpper">
-            <img src="../../assets/logos/ontlogo.png" class="index-logo">
+            <img src="../../assets/logos/logo-ico-wt.png" class="index-logo">
           </div>
           <div v-else class=" col-2 no-index-logo-warpper">
             <router-link class="navbar-brand" :to="{path: $route.params.net === 'testnet'?'/testnet':'/'}">
-              <img class="index-logo" src="../../assets/logos/logo.png" alt="">
+              <img class="index-logo" src="../../assets/logos/logo-ico.png" alt="">
             </router-link>
           </div>
           <ul class="navbar-nav  navbar-center  padding-right0 col-8" :class="isHome ? '' : 'navbar-nav-no-home'">
@@ -40,42 +40,34 @@
                 <a class="dropdown-item" @click="toBlockListPage"><!-- <i class="fas fa-th"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.blocks') }}</a>
                 <hr style="margin: 4px 1rem">
                 <a class="dropdown-item" @click="toTransactionListPage"><!-- <i class="fas fa-exchange-alt"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.txns') }}</a>
-                <hr style="margin: 4px 1rem">
-                <a class="dropdown-item" @click="toAddressList"><!-- <i class="fas fa-university"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.accounts') }}</a>
+                <hr v-if="$route.params.net !== 'testnet' " style="margin: 4px 1rem">
+                <a v-if="$route.params.net !== 'testnet' " class="dropdown-item" @click="toAddressList"> <i class="fas fa-university"></i>&nbsp;&nbsp; {{ $t('navbar.top.accounts') }}</a>
               </div>
             </li>
 
-            <li v-if="$route.params.net !== 'testnet'" class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle padding-lr0" data-toggle="dropdown" href="#">
-                <!-- <i class="fab fa-linode"></i>&nbsp;&nbsp; -->
+            <li class="nav-item">
+              <a class="nav-link padding-lr0" :href="isHome ? '#' : '/'">
                 <img v-if='isHome' src="../../assets/navbar/nodes@2xM.png" class="nav-link-icon" />
-                <img v-else src="../../assets/navbar/nodes@2x.png" class="nav-link-icon" />{{ $t('navbar.top.nodes') }}
-              </a>
-              <div class="dropdown-menu">
-                <router-link class="dropdown-item nav-link" :to="{ name: 'NodeStakeList'}">
-                  <!-- <i class="far fa-handshake"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.stake') }}
-                </router-link>
-                <hr style="margin: 4px 1rem">
-                <a class="dropdown-item" :href="monitor" target="_blank">
-                  <!-- <i class="fas fa-map-marked-alt"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.nodeMap') }}
-                </a>
-              </div>
+                <img v-else src="../../assets/navbar/nodes@2x.png" class="nav-link-icon" />
+                <!-- <i class="far fa-file"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.nodes') }}</a>
             </li>
 
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle padding-lr0" data-toggle="dropdown" href="#">
                 <img v-if='isHome' src="../../assets/navbar/token@2xM.png" class="nav-link-icon" />
                 <img v-else src="../../assets/navbar/token@2x.png" class="nav-link-icon" />
-                <!-- <i class="fas fa-coins"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.tokens') }}
+                <i class="fas fa-coins"></i>&nbsp;&nbsp; {{ $t('navbar.top.tokens') }}
               </a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" @click="toTokenList('oep4')"><!-- <i class="fas fa-coins"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.oep4') }}</a>
+                <a class="dropdown-item" @click="toTokenList('oep4')">{{ $t('navbar.top.oep4') }}</a>
                 <hr style="margin: 4px 1rem">
-                <a class="dropdown-item" @click="toTokenList('oep5')"><!-- <i class="fas fa-coins"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.oep5') }}</a>
+                <a class="dropdown-item" @click="toTokenList('oep5')">{{ $t('navbar.top.oep5') }}</a>
                 <hr style="margin: 4px 1rem">
-                <a class="dropdown-item" @click="toTokenList('oep8')"><!-- <i class="fas fa-coins"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.oep8') }}</a>
+                <a class="dropdown-item" @click="toTokenList('oep8')">{{ $t('navbar.top.oep8') }}</a>
+                <hr style="margin: 4px 1rem">
+                <a class="dropdown-item" @click="toTokenSubmit('submit')">{{ $t('navbar.top.submit') }}</a>
               </div>
-            </li>
+            </li>-->
 
             <li class="nav-item">
               <a class="nav-link padding-lr0" @click="toContractList">
@@ -84,13 +76,13 @@
                 <!-- <i class="far fa-file"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.contracts') }}</a>
             </li>
 
-            <li class="nav-item">
-              <a class="nav-link padding-lr0" @click="toOntIdListPage">
-                <img v-if='isHome' src="../../assets/navbar/ontid@2xM.png" class="nav-link-icon" />
-                <img v-else src="../../assets/navbar/ontid@2x.png" class="nav-link-icon" />
-                <!-- <i class="fas fa-id-card"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.ontId') }}
+            <!-- <li class="nav-item">
+              <a class="nav-link padding-lr0" @click="toTstIdListPage">
+                <img v-if='isHome' src="../../assets/navbar/tstid@2xM.png" class="nav-link-icon" />
+                <img v-else src="../../assets/navbar/tstid@2x.png" class="nav-link-icon" />
+                {{ $t('navbar.top.tstId') }}
               </a>
-            </li>
+            </li> -->
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle padding-lr0" data-toggle="dropdown" href="#">
@@ -99,8 +91,8 @@
                 <!-- <i class="fas fa-tools"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.tool') }}
               </a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" target="_blank" :href="apiDocUrl"><!-- <i class="fas fa-book"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.apis') }}</a>
-                <hr style="margin: 4px 1rem">
+                <!-- <a class="dropdown-item" target="_blank" :href="$t('navbar.top.apiDocUrl')">{{ $t('navbar.top.apis') }}</a>
+                <hr style="margin: 4px 1rem"> -->
                 <a class="dropdown-item" @click="toStatistics"><!-- <i class="fas fa-table"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.statistics') }}</a>
               </div>
             </li>
@@ -134,13 +126,10 @@
                 <!-- <i class="fas fa-home"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.mainNet') }}
               </a>
               <div class="dropdown-menu">
-                <a class="dropdown-item"
-                   :class="$route.params.net === 'testnet' ? '' : 'pointer-events'" href="#"
-                   @click="changeNet()"><!-- <i class="fas fa-home"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.mainNet') }}</a>
+                <!-- @click="changeNet()" -->
+                <a class="dropdown-item" href="http://explorer.tesra.me"><!-- <i class="fas fa-home"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.mainNet') }}</a>
                 <hr style="margin: 4px 1rem">
-                <a class="dropdown-item"
-                   :class="$route.params.net === 'testnet' ? 'pointer-events' : ''" href="#"
-                   @click="changeNet()"><!-- <i class="fas fa-vial"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.testNet') }}</a>
+                <a class="dropdown-item" href="http://explorer2.tesra.me"><!-- <i class="fas fa-vial"></i>&nbsp;&nbsp; -->{{ $t('navbar.top.testNet') }}</a>
               </div>
             </li>
           </ul>
@@ -154,7 +143,7 @@
 
 <script>
   import LangStorage from './../../helpers/lang'
-
+  import {TEST_NET, MAIN_NET} from './../../common/consts'
   export default {
     name: "NavBar1",
     data() {
@@ -162,10 +151,11 @@
         isHome: true,
         monitor: 'https://monitor.ont.io/',
         apiDocUrl: 'https://dev-docs.ont.io/#/docs-en/explorer/overview',
-        language: 'en'
+        language: 'en',
+        nodelist: 'https://node.ont.io/'
       }
     },
-    created() {
+    mounted() {
       this.changeView();
       this.language = this.$i18n.locale
     },
@@ -174,12 +164,14 @@
     },
     methods: {
       changeView() {
-        this.isHome = (this.$route.path === '/' || this.$route.path === '/testnet');
+        this.isHome = (this.$route.name === 'Home' || this.$route.name === 'HomeTest');
       },
       changeNet() {
         if (this.$route.params.net === 'testnet') {
+          sessionStorage.setItem('network', MAIN_NET)
           this.$router.push({name: 'Home'});
         } else {
+          sessionStorage.setItem('network', TEST_NET)
           this.$router.push({name: 'HomeTest', params: {net: 'testnet'}});
         }
         location.reload();
@@ -190,6 +182,9 @@
         this.$validator.localize($lang);
 
         LangStorage.setLang(this.$i18n.locale)
+        if(this.$route.name == "Statistics" || this.$route.name == "StatisticsTest"){
+          window.location.reload()
+        }
       },
       toContractList() {
         if (this.$route.params.net === 'testnet') {
@@ -212,25 +207,32 @@
           this.$router.push({name: 'TransactionList', params: {pageSize: 20, pageNumber: 1}})
         }
       },
-      toOntIdListPage() {
+      toTstIdListPage() {
         if (this.$route.params.net === 'testnet') {
-          this.$router.push({name: 'OntIdListDetailTest', params: {pageSize: 20, pageNumber: 1, net: 'testnet'}})
+          this.$router.push({name: 'TstIdListDetailTest', params: {pageSize: 20, pageNumber: 1, net: 'testnet'}})
         } else {
-          this.$router.push({name: 'OntIdListDetail', params: {pageSize: 20, pageNumber: 1}})
+          this.$router.push({name: 'TstIdListDetail', params: {pageSize: 20, pageNumber: 1}})
         }
       },
       toAddressList() {
         if (this.$route.params.net === 'testnet') {
-          this.$router.push({name: 'addressListTest', params: {token: 'ont',pageSize: 20, pageNumber: 1, net: 'testnet'}})
+          this.$router.push({name: 'addressListTest', params: {token: 'tst',pageSize: 20, pageNumber: 1, net: 'testnet'}})
         } else {
-          this.$router.push({name: 'addressList', params: {token: 'ont', pageSize: 20, pageNumber: 1}})
+          this.$router.push({name: 'addressList', params: {token: 'tst', pageSize: 20, pageNumber: 1}})
         }
       },
       toTokenList($type) {
         if (this.$route.params.net === 'testnet') {
-          this.$router.push({name: 'TokenListTest', params: {type: $type, pageSize: 10, pageNumber: 1, net: 'testnet'}})
+          this.$router.push({name: 'TokenListTest', params: {contractType: $type, pageSize: 10, pageNumber: 1, net: 'testnet'}})
         } else {
-          this.$router.push({name: 'TokenList', params: {type: $type, pageSize: 10, pageNumber: 1}})
+          this.$router.push({name: 'TokenList', params: {contractType: $type, pageSize: 10, pageNumber: 1}})
+        }
+      },
+      toTokenSubmit($type) {
+        if (this.$route.params.net === 'testnet') {
+          this.$router.push({name: 'TokenSubmitTest', params: {net: 'testnet'}})
+        } else {
+          this.$router.push({name: 'TokenSubmit'})
         }
       },
       toStatistics() {
@@ -264,7 +266,7 @@
 
   .navbar-no-home > .navbar-toggler {
     border: 0;
-    color: #32a4be;
+    color: #4C4D66;
   }
 
   .index-logo-warpper {
@@ -353,7 +355,7 @@
   }
 
   .navbar-nav > .dropdown > .dropdown-menu > .dropdown-item {
-    color: #32A4BE;
+    color: #4C4D66;
     background: #f4f4f4;
   }
 

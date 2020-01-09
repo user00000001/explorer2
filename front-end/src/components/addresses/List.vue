@@ -4,22 +4,23 @@
 
     <div class="btn-group">
       <button type="button"
-              :disabled="$route.params.token === 'ont'"
-              @click="toAddressListPage('ont')"
-              :class="$route.params.token === 'ont' ? 'btn-current' : 'btn-choose'"
-              class="btn">ONT</button>
+              :disabled="$route.params.token === 'tst'"
+              @click="toAddressListPage('tst')"
+              :class="$route.params.token === 'tst' ? 'btn-current' : 'btn-choose'"
+              class="btn">TST</button>
       <button type="button"
-              :disabled="$route.params.token === 'ong'"
-              @click="toAddressListPage('ong')"
-              :class="$route.params.token === 'ong' ? 'btn-current' : 'btn-choose'"
-              class="btn btn-left-0-border">ONG</button>
+              :disabled="$route.params.token === 'tsg'"
+              @click="toAddressListPage('tsg')"
+              :class="$route.params.token === 'tsg' ? 'btn-current' : 'btn-choose'"
+              class="btn btn-left-0-border">TSG</button>
     </div>
 
-    <ont-pagination :total="addressList.total"></ont-pagination>
+    <tst-pagination :total="addressList.total"></tst-pagination>
 
     <div class="row justify-content-center">
       <div class="col">
-        <div class="table-responsive">
+        <o-load :type="listType" v-if="!(addressList && loadingFlag)" ></o-load>
+        <div v-else class="table-responsive">
           <table class="table table-hover">
             <thead>
             <tr>
@@ -45,7 +46,7 @@
       </div>
     </div>
 
-    <ont-pagination :total="addressList.total"></ont-pagination>
+    <tst-pagination :total="addressList.total"></tst-pagination>
   </div>
 </template>
 
@@ -53,11 +54,18 @@
   import {mapState} from 'vuex'
 
   export default {
-    created() {
+    mounted() {
       this.getAddressListInfo()
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
     },
     watch: {
-      '$route': 'getAddressListInfo'
+      '$route': function(){
+        this.getAddressListInfo()
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+      },
+      'addressList':function(){
+        this.loadingFlag = true
+      }
     },
     computed: {
       ...mapState({
@@ -67,12 +75,20 @@
         if (this.addressList.list) {
           let lists = this.addressList.list;
 
-          if (this.$route.params.token === 'ong') {
+          if (this.$route.params.token === 'tsg') {
             for (let i in lists) {
               let tmpB = lists[i].balance.toString();
               lists[i].balance = tmpB.substring(0, tmpB.length - 9) + '.' + tmpB.substring(tmpB.length - 9)
             }
-          }
+          };
+          for(let j in lists ){
+            if(lists[j].address === "0700000000000000000000000000000000000000"){
+              lists[j].address = "AFmseVrdL9f9oyCzZefL9tG6UbviEH9ugK"
+            }
+            if(lists[j].address === "0100000000000000000000000000000000000000"){
+              lists[j].address = "AFmseVrdL9f9oyCzZefL9tG6UbvhUMqNMV"
+            }
+          };
 
           return lists;
         } else {
@@ -80,8 +96,15 @@
         }
       }
     },
+    data() {
+      return {
+        loadingFlag:false,
+        listType:'list',
+      }
+    },
     methods: {
       getAddressListInfo() {
+        this.loadingFlag =false
         this.$store.dispatch('GetAddressList', this.$route.params).then()
       },
       toAddressListPage($token) {
@@ -98,12 +121,12 @@
         if (this.$route.params.net == undefined) {
           this.$router.push({
             name: 'AddressDetail',
-            params: {address: address, pageSize: 20, pageNumber: 1}
+            params: {address: address, assetName:"ALL", pageSize: 20, pageNumber: 1}
           })
         } else {
           this.$router.push({
             name: 'AddressDetailTest',
-            params: {address: address, pageSize: 20, pageNumber: 1, net: 'testnet'}
+            params: {address: address, assetName:"ALL", pageSize: 20, pageNumber: 1, net: 'testnet'}
           })
         }
       }
@@ -125,7 +148,7 @@
   }
 
   .btn-choose {
-    border: 1px solid #32a4be;
-    color: #32a4be;
+    border: 1px solid #4C4D66;
+    color: #4C4D66;
   }
 </style>

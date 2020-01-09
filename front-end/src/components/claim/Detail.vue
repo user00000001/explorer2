@@ -94,7 +94,7 @@
         verifyresult: true
       }
     },
-    created() {
+    mounted() {
       this.getClaimDetailPage()
     },
     watch: {
@@ -119,17 +119,17 @@
           this.$router.push({name: 'TransactionDetailTest', params: {txnHash: $TxnId, net: 'testnet'}})
         }
       },
-      togetClaimPage($OntId) {
+      togetClaimPage($TstId) {
         if (this.$route.params.net == undefined) {
-          this.$router.push({name: 'getClaim', params: {ontid: $OntId}})
+          this.$router.push({name: 'getClaim', params: {tstid: $TstId}})
         } else {
-          this.$router.push({name: 'getClaimTest', params: {ontid: $OntId, net: 'testnet'}})
+          this.$router.push({name: 'getClaimTest', params: {tstid: $TstId, net: 'testnet'}})
         }
       },
-      getOntIDEvent: function ($event) {
+      getTstIDEvent: function ($event) {
         switch ($event.substr(0, 12)) {
-          case "register Ont":
-            return "Register ONT ID"
+          case "register Tst":
+            return "Register TST ID"
           case "add publicKe":
             return "Add publickey"
           case "remove publi":
@@ -257,12 +257,12 @@
     }
 
     .card-title {
-      color: #32A4BE;
+      color: #4C4D66;
       font-size: 22px;
     }
 
     .card-cert-company-text {
-      color: #32A4BE;
+      color: #4C4D66;
       text-align: center;
       margin-top: 1%;
       font-size: 22px;
@@ -302,12 +302,12 @@
     }
 
     .card-title {
-      color: #32A4BE;
+      color: #4C4D66;
       font-size: 28px;
     }
 
     .card-cert-company-text {
-      color: #32A4BE;
+      color: #4C4D66;
       text-align: center;
       margin-top: 1%;
       font-size: 24px;

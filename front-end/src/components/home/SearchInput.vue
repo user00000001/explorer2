@@ -5,12 +5,17 @@
         <div class="col form-group search-area text-center">
           <h2 class="font-ExtraLight font-size40" style="color:white;font-weight:100;">{{$t('searchInput.slogan')}}</h2>
           <div class="input-group">
-            <input type="text" class="form-control input-search search-input-txt"
-                   v-model="searchContent" @keyup.13="submitSearch" :placeholder="$t('searchInput.placeholder')">
-            <div class="search-cut-wrapper"><div class="search-cut"></div></div>
-            <div class="input-group-addon input-submit-search search-input-txt search-btn text-center font-weight-bold"
-                 @click="submitSearch">
-              {{$t('searchInput.search')}}
+            <div class="input-wrap">
+              <input type="text" class="form-control input-search search-input-txt"
+                    v-model="searchContent" @keyup.13="submitSearch" :placeholder="$t('searchInput.placeholder')">
+              <!-- <div class="search-cut-wrapper"><div class="search-cut"></div></div> -->
+              <!-- <div class="input-group-addon input-submit-search search-input-txt search-btn text-center font-weight-bold"
+                  @click="submitSearch">
+                {{$t('searchInput.search')}}
+              </div> -->
+              <div style="padding: 6px 7px;">
+                <el-button type="info" icon="el-icon-search" style="width: 36px; height: 36px;padding: 0;background: #4C4D66" @click="submitSearch"></el-button>
+              </div>
             </div>
           </div>
         </div>
@@ -56,6 +61,7 @@
 
 <script>
   import axios from 'axios'
+  import $httpService from '../../common/utils'
   export default {
 
     components: {},
@@ -71,87 +77,119 @@
        this.$message({message: this.$t('error.format')});
       },
       searchHash($searchContent){
-        let apiUrl = (this.$route.params.net === "testnet") ? process.env.TEST_API_URL : process.env.API_URL;
-        axios.get(apiUrl + '/transaction/' + $searchContent).then(res=>{
-            if(res.data.Error != 0){
+        $httpService.get('/transactions/' + $searchContent).then(res=>{
+            if(res.code != 0){
                 this.notFound()
             }else{
                 if (this.$route.params.net == undefined){
-                    this.$router.push({name: 'TransactionDetail', params: {txnHash: this.searchContent}})
+                    this.$router.push({name: 'TransactionDetail', params: {tx_hash: this.searchContent}})
                 }else{
                     this.$router.push({
                       name: 'TransactionDetailTest',
-                      params: {txnHash: this.searchContent, net: 'testnet'}
+                      params: {tx_hash: this.searchContent, net: 'testnet'}
                     })
                 }
             }          
+        }).catch(error => {
+          this.notFound()
         })
       },
       searchAddress($searchContent){
-        if (this.$route.params.net == undefined) {
-          this.$router.push({
-            name: 'AddressDetail',
-            params: {address: this.searchContent, pageSize: 20, pageNumber: 1}
-          })
-        } else {
-          this.$router.push({
-            name: 'AddressDetailTest',
-            params: {address: this.searchContent, pageSize: 20, pageNumber: 1, net: 'testnet'}
-          })
-        }
-
+          if($searchContent.substr(0,1)!= "A"){
+                this.notFound()
+          }else{
+                if (this.$route.params.net == undefined) {
+                  this.$router.push({
+                    name: 'AddressDetail',
+                    params: {address: this.searchContent, assetName:"ALL", pageSize: 20, pageNumber: 1}
+                  })
+                } else {
+                  this.$router.push({
+                    name: 'AddressDetailTest',
+                    params: {address: this.searchContent, assetName:"ALL", pageSize: 20, pageNumber: 1, net: 'testnet'}
+                  })
+                }
+          }
       },
       searchContract($searchContent){
-        let apiUrl = (this.$route.params.net === "testnet") ? process.env.TEST_API_URL : process.env.API_URL;
-        let url = apiUrl + '/contract/' + $searchContent + '/10/1';
-        axios.get(url).then(response => {
-            if(response.data.Error != 0){
+        $httpService.get('/contracts/'+$searchContent).then(res => {
+            if(res.code != 0){
                 this.notFound()
             }else{
-              console.log(response)
-                if(response.data.Result == null){
+              console.log(res)
+              console.log("this.$route",this.$route)
+                if(res.result == null){
                   this.notFound()
                 }else{
-                  if (this.$route.params.net == undefined){
-                    this.$router.push({
-                      name: 'ContractDetail',
-                      params: {contractHash: this.searchContent, pageSize: 10, pageNumber: 1}
-                    })
+                  if(res.result.type == ""){
+                    if (this.$route.params.net == undefined){
+                      this.$router.push({
+                        name: 'ContractDetail',
+                        params: {contractHash: this.searchContent, contractType:"other",pageSize: 10, pageNumber: 1}
+                      })
+                    }else{
+                      this.$router.push({
+                        name: 'ContractDetailTest',
+                        params: {contractHash: this.searchContent, contractType:"other", pageSize: 10, pageNumber: 1, net: 'testnet'}
+                      })
+                    }
                   }else{
-                    this.$router.push({
-                      name: 'ContractDetailTest',
-                      params: {contractHash: this.searchContent, pageSize: 10, pageNumber: 1, net: 'testnet'}
-                    })
+                    if (this.$route.params.net == undefined) {
+                      this.$router.push({
+                          name: 'TokenDetail', 
+                          params: {
+                            contractType: res.result.type,
+                            tokenName: res.result.name,
+                            contractHash: this.searchContent,
+                            pageSize: 10,
+                            pageNumber: 1
+                          }
+                      })
+                    } else {
+                      this.$router.push({
+                          name: 'TokenDetailTest', 
+                          params: {
+                            contractType: res.result.type,
+                            tokenName: res.result.name,
+                            contractHash: this.searchContent,
+                            pageSize: 10,
+                            pageNumber: 1,
+                            net: 'testnet'
+                          }
+                      })
+                    }
                   }
                 }
             }  
+        }).catch(error => {
+          this.notFound()
         })
       },
-      searchONTID($searchContent){
-        let apiUrl = (this.$route.params.net === "testnet") ? process.env.TEST_API_URL : process.env.API_URL;
-        axios.get(apiUrl + '/ontid/'+$searchContent+'/20/1').then(response => {
-            if(response.data.Error != 0){
+      searchTSTID($searchContent){
+        $httpService.get('/tstids/'+$searchContent+'/ddo').then(res => {
+            if(res.code != 0){
               
                 this.notFound()
             }else{
               if (this.$route.params.net == undefined) {
                 this.$router.push({
-                  name: 'OntIdDetail',
-                  params: {ontid: this.searchContent, pageSize: 20, pageNumber: 1}
+                  name: 'TstIdDetail',
+                  params: {tstid: this.searchContent, pageSize: 20, pageNumber: 1}
                 })
               } else {
                 this.$router.push({
-                  name: 'OntIdDetailTest',
-                  params: {ontid: this.searchContent, pageSize: 20, pageNumber: 1, net: 'testnet'}
+                  name: 'TstIdDetailTest',
+                  params: {tstid: this.searchContent, pageSize: 20, pageNumber: 1, net: 'testnet'}
                 })
               }        
             }      
+        }).catch(error => {
+          this.notFound()
         })
       },
       searchHeight($searchContent){
-        let apiUrl = (this.$route.params.net === "testnet") ? process.env.TEST_API_URL : process.env.API_URL;
-        axios.get(apiUrl + '/block/' + $searchContent).then(response => {
-            if(response.data.Error != 0){
+        $httpService.get('/blocks/' + $searchContent).then(response => {
+            if(response.code != 0){
                 this.notFound()
             }else{
               if (this.$route.params.net == undefined) {
@@ -160,10 +198,13 @@
                 this.$router.push({name: 'blockDetailTest', params: {param: this.searchContent, net: 'testnet'}})
               }              
             }          
+        }).catch(error => {
+          this.notFound()
         })
       },
       submitSearch() {
         if (this.searchContent !== '') {
+          this.searchContent = this.searchContent.trim();
           switch (this.searchContent.length) {
             /* txhash */
             case 64:
@@ -177,9 +218,9 @@
             case 40:
               this.searchContract(this.searchContent)
               break;
-            /* ontid */
+            /* tstid */
             case 42:
-              this.searchONTID(this.searchContent)
+              this.searchTSTID(this.searchContent)
               break;
             /* block height */
             case 1:
@@ -223,7 +264,7 @@
 
 <style scoped>
   .search-area {
-    margin-top: 52px;
+    margin-top: 85px;
   }
 
   .input-submit-search:hover {
@@ -231,11 +272,27 @@
   }
 
   .input-group {
-    height: 48px;
-    max-width: 620px;
-    margin: 60px auto 0;
+    height: 135px;
+    width: 100%;
+    margin-top: 100px;
+    background-color: #fff;
+    box-shadow:0px 0px 18px 0px rgba(223,223,223,0.3);
+    border-radius:4px;
+    
   }
-
+  .input-wrap{
+    width: 90%;
+    margin: 0 auto;
+    height: 50px;
+    margin-top: 42.5px;
+    border:1px solid rgba(244,244,244,1);
+    border-radius:2px;
+    display: flex;
+    justify-content: start;
+  }
+  .input-wrap button .el-icon-search{
+    font-size: 16px;
+  }
   .input-search {
     padding: 0.5rem 1.1rem;
     color: #495057;
@@ -268,7 +325,7 @@
     line-height: 20px;
     max-width: 150px;
     width: 150px;
-    color: #32a4be;
+    color: #4C4D66;
     font-weight: 700;
     font-size: 18px;
   }
@@ -339,9 +396,9 @@
     font-size: 1.063rem;
     line-height: 1.5;
     border-radius: 0;
-    border-color: #32A4BE;
+    border-color: #4C4D66;
     background: #ffffff;
-    color: #32A4BE;
+    color: #4C4D66;
     /*  background-color: #AFACAC; */
     -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
     transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
@@ -351,22 +408,22 @@
 
   .upload_btn:hover {
     color: white;
-    background: #32A4BE;
-    border-color: #32A4BE !important;
+    background: #4C4D66;
+    border-color: #4C4D66 !important;
     box-shadow: 0 0 0 0rem rgba(69, 130, 236, 0) !important;
   }
 
   .upload_btn:focus {
     color: white;
-    background: #32A4BE;
-    border-color: #32A4BE !important;
+    background: #4C4D66;
+    border-color: #4C4D66 !important;
     box-shadow: 0 0 0 0rem rgba(69, 130, 236, 0) !important;
   }
 
   .upload_btn:active {
     color: white;
-    background-color: #32A4BE !important;
-    border-color: #32A4BE !important;
+    background-color: #4C4D66 !important;
+    border-color: #4C4D66 !important;
     box-shadow: 0 0 0 0rem rgba(69, 130, 236, 0) !important;
   }
   .search-cut-wrapper{

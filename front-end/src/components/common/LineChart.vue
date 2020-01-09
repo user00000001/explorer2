@@ -6,7 +6,7 @@
     extends: Line,
     props: ['labels', 'label', 'data', 'options'],
     mounted() {
-      // 使用本体蓝做渐变色
+      // 使用超算网络蓝做渐变色
       this.gradient = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450);
       this.gradient.addColorStop(0, 'rgba(54, 163 ,188, 0.5)');
       this.gradient.addColorStop(0.5, 'rgba(54, 163, 188, 0.25)');

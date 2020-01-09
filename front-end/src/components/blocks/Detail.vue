@@ -1,26 +1,26 @@
 <template>
   <div class="e-container container-margin-top">
     <list-title :name="$t('blockDetail.nickname')"></list-title>
-    <detail-title :name="$t('blockDetail.name')" :val="block.Height"></detail-title>
+    <detail-title :name="$t('blockDetail.name')" :val="block.block_height"></detail-title>
 
     <!--区块时间和大小-->
-    <detail-block-2 :name1="$t('blockDetail.BlockTime')" :val1="$HelperTools.getTransDate(block.BlockTime)" :rows1="'1.1'"
-                    :name2="$t('blockDetail.BlockSize')" :val2="block.BlockSize + ' bytes'" :rows2="'1.1'">
+    <detail-block-2 :name1="$t('blockDetail.BlockTime')" :val1="$HelperTools.getTransDate(block.block_time)" :rows1="'1.1'"
+                    :name2="$t('blockDetail.BlockSize')" :val2="block.block_size + ' bytes'" :rows2="'1.1'">
     </detail-block-2>
 
     <detail-block :params="detailParams" :styleVal="'new'"></detail-block>
 
     <!--上一个区块及下一个区块-->
-    <detail-block-2 :name1="$t('blockDetail.PrevBlock')" :val1="prevBlockUrl" :rows1="'2'"
-                    :params1="['block', block.Height-1]"
-                    :name2="$t('blockDetail.NextBlock')" :val2="nextBlockUrl" :rows2="'2'"
-                    :params2="nextBlockUrl !== 'Null' ? ['block', block.Height+1] : ''">
-    </detail-block-2>
+<!--     <detail-block-2 :name1="$t('blockDetail.PrevBlock')" :val1="block.block_height-1" :rows1="'2'"
+                    :params1="['block', block.block_height-1]"
+                    :name2="$t('blockDetail.NextBlock')" :val2="block.block_height+1" :rows2="'2'"
+                    :params2="nextBlockUrl !== 'Null' ? ['block', block.block_height+1] : ['block', block.block_height+1]">
+    </detail-block-2> -->
 
-    <div class="row" v-if="block.TxnNum !== 0">
+    <div class="row" v-if="block.tx_count !== 0">
       <div class="col">
         <div class="detail-col">
-          {{ block.TxnNum }}<span class="f-color"> {{ $t('blockDetail.txOnBlock') }}</span>
+          {{ block.tx_count }}<span class="f-color"> {{ $t('blockDetail.txOnBlock') }}</span>
           <div class="table-responsive">
             <table class="table">
               <thead>
@@ -31,18 +31,18 @@
               </tr>
               </thead>
               <tbody>
-              <tr v-for="tx in block.TxnList">
-                <td class="font-size14 important_color font-Regular pointer" @click="toTransDetailPage(tx.TxnHash)">
-                  {{tx.TxnHash.substr(0,4) + '...' + tx.TxnHash.substr(60)}}
+              <tr v-for="tx in block.txs">
+                <td class="font-size14 important_color font-Regular pointer" @click="toTransDetailPage(tx.tx_hash)">
+                  {{tx.tx_hash.substr(0,4) + '...' + tx.tx_hash.substr(60)}}
                 </td>
-                <td class="font-size14 s-color font-Regular" v-if="tx.ConfirmFlag === 1">
+                <td class="font-size14 s-color font-Regular" v-if="tx.confirm_flag === 1">
                   Confirmed
                 </td>
                 <td class="font-size14 f-color font-Regular" v-else>
                   Failed
                 </td>
                 <td class="font-size14 normal_color font-Regular">
-                  {{$HelperTools.getTransDate(tx.TxnTime)}}
+                  {{$HelperTools.getTransDate(tx.tx_time)}}
                 </td>
               </tr>
               </tbody>
@@ -58,22 +58,36 @@
   import {mapState} from 'vuex'
 
   export default {
-    created() {
+    data() {
+      return {
+        block:{},
+        nextFlag: false,
+        nextCheck: false,
+      }
+    },
+    mounted() {
       this.getBlock()
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
     },
     watch: {
-      '$route': 'getBlock'
+      '$route': function(){
+        this.getBlock()
+      },
+      'currentblock':function(){
+        this.block = this.currentblock
+        console.log("bingo")
+      }
     },
     computed: {
       ...mapState({
-        block: state => state.Blocks.Detail,
+        currentblock: state => state.Blocks.Detail,
       }),
       detailParams: function () {
         return [
-          {name: this.$t('blockDetail.hash'), val: this.block.Hash, rows: 2},
+          {name: this.$t('blockDetail.hash'), val: this.block.block_hash, rows: 2},
           {name: this.$t('blockDetail.keeper'), val: this.block.BookKeeper, rows: 2},
-          {name: this.$t('blockDetail.merkle'), val: this.block.TxnsRoot, rows: 2},
-          {name: this.$t('blockDetail.Consensus'), val: this.block.ConsensusData, rows: 2},
+          {name: this.$t('blockDetail.merkle'), val: this.block.txs_root, rows: 2},
+          {name: this.$t('blockDetail.Consensus'), val: this.block.consensus_data, rows: 2},
         ]
       },
       prevBlockUrl: function () {
@@ -102,9 +116,9 @@
       },
       toTransDetailPage($TxnId) {
         if (this.$route.params.net === 'testnet') {
-          this.$router.push({name: 'TransactionDetailTest', params: {txnHash: $TxnId, net: 'testnet'}})
+          this.$router.push({name: 'TransactionDetailTest', params: {tx_hash: $TxnId, net: 'testnet'}})
         } else {
-          this.$router.push({name: 'TransactionDetail', params: {txnHash: $TxnId}})
+          this.$router.push({name: 'TransactionDetail', params: {tx_hash: $TxnId}})
         }
       }
     }

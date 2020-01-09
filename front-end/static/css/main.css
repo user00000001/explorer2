@@ -1,16 +1,19 @@
 @font-face {
   font-family: 'SourceSansPro-Bold';
-  src: url('./../fonts/SourceSansPro-Bold.otf');
+  /* src: url('./../fonts/SourceSansPro-Bold.otf'); */
+  src: url('https://cdn.jsdelivr.net/npm/source-sans-pro@2.45.0/OTF/SourceSansPro-Bold.otf')
 }
 
 @font-face {
   font-family: 'SourceSansPro-ExtraLight';
-  src: url('./../fonts/SourceSansPro-ExtraLight.otf');
+  /* src: url('./../fonts/SourceSansPro-ExtraLight.otf'); */
+  src: url('https://cdn.jsdelivr.net/npm/source-sans-pro@2.45.0/OTF/SourceSansPro-ExtraLight.otf')
 }
 
 @font-face {
   font-family: 'SourceSansPro-Regular';
-  src: url('./../fonts/SourceSansPro-Regular.otf');
+  /* src: url('./../fonts/SourceSansPro-Regular.otf'); */
+  src: url('https://cdn.jsdelivr.net/npm/source-sans-pro@2.45.0/OTF/SourceSansPro-Regular.otf')
 }
 
 body {
@@ -170,7 +173,7 @@ th {
 
 .title-hover:hover {
   cursor: pointer;
-  color: #32A4BE;
+  color: #4C4D66;
   text-decoration: underline;
 }
 
@@ -276,14 +279,54 @@ th {
 }
 
 .pointer2:hover {
-  color: #32A4BE;
+  color: #4C4D66;
   text-decoration: underline;
 }
-
 .div-block-list {
   margin-top: 30px;
-  padding: 0 24px 12px 24px;
+  /* padding: 0 24px 12px 24px; */
   background-color: white;
+  border:1px solid rgba(219,219,224,1);
+
+}
+.block-title{
+  line-height: 52px;
+  padding: 0 15px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  margin-left: 0;
+  margin-bottom: 0;
+  font-weight: 700;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(219,219,224,1);
+}
+.block-list-box .list-item{
+  height: 52px;
+  padding: 0 15px;
+  line-height: 52px;
+  display: flex;
+  justify-content: space-between;
+  color: #4C4D66;
+}
+.block-list-box .list-item:hover{
+  color: #0068B7;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.block-list-box .list-item span{
+  min-width: 25%;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.block-list-box .list-item span:last-child{
+  text-align: right;
+}
+.block-list-box .list-item span:first-child{
+  text-align: left;
+  font-weight: bold;
 }
 
 .block-list-hr {
@@ -508,7 +551,7 @@ body {
   font-size: 16px;
 }
 .tooltip-style:hover {
-  color: #32A4BE !important;
+  color: #4C4D66 !important;
 }
 
 /* FONT */
@@ -517,10 +560,10 @@ body {
 }
 
 .important_color {
-  color: #32A4BE;
+  color: #4C4D66;
 }
 .ont-blue {
-  color: #32A4BE;
+  color: #4C4D66;
 }
 
 .s-color {
@@ -560,7 +603,7 @@ body {
   line-height: 1.5;
   border-radius: 0;
   background: #FFFFFF;
-  color: #32A4BE;
+  color: #4C4D66;
   -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -568,12 +611,12 @@ body {
 }
 
 .veriy_btn1:hover {
-  background: #32A4BE;
+  background: #4C4D66;
   color: #FFFFFF;
 }
 
 .veriy_btn1:focus {
-  background: #32A4BE;
+  background: #4C4D66;
   color: #FFFFFF;
   outline: 0 auto -webkit-focus-ring-color !important;
 }

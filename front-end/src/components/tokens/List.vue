@@ -10,11 +10,12 @@
       </div> -->
     </div>
 
-    <ont-pagination :total="tokens.total"></ont-pagination>
+    <tst-pagination :total="tokens.total"></tst-pagination>
 
     <div class="row justify-content-center">
       <div class="col">
-        <div class="table-responsive" style="padding: 24px; background: white">
+        <o-load :type="listType" v-if="!(tokens.list && loadingFlag)" ></o-load>
+        <div v-else class="table-responsive" style="padding: 24px; background: white">
           <table class="table table-hover">
             <thead>
             <tr>
@@ -32,39 +33,39 @@
             <tbody>
             <tr v-for="token in tokens.list" class="sc-have-img-line-height">
               <td class="font-size14 font-Regular normal_color">
-                <img v-if="token.Logo !== ''" class="sc-list-img" :src="token.Logo" alt="">
-                <div v-else class="sc-no-logo">{{ $route.params.type === 'oep4' ? token.Symbol : token.Name.substr(0, 2) }}</div>
+                <img v-if="token.logo !== ''" class="sc-list-img" :src="token.logo" alt="">
+                <div v-else class="sc-no-logo">{{ $route.params.type === 'oep4' ? token.symbol : token.name.substr(0, 2) }}</div>
               </td>
               <td class="font-size14 font-Regular normal_color sc-pointer" style="max-width:360px"
                   @click="goToTokenDetail(token)">
                 <div class=" font-blod font-size16">
-                  {{ token.Name }}
-                  <span v-if="$route.params.type === 'oep4' && token.Symbol !== ''">&nbsp;&nbsp;{{ ' ( ' + token.Symbol + ' )' }}</span>
+                  {{ token.name }}
+                  <span v-if="$route.params.type === 'oep4' && token.symbol !== ''">&nbsp;&nbsp;{{ ' ( ' + token.symbol + ' )' }}</span>
                 </div>
                 <div class="token-td" v-if="$route.params.type === 'oep8'">
-                  <b class="col" v-for="tS in token.Symbol">
+                  <b class="col" v-for="tS in token.symbol">
                     <span class="symbol-name-list">
                       {{ tS }}
                     </span>
                   </b>
                 </div>
-                <div class="f-color font-size14 token-td">{{ token.Description.substr(0,128) + '...' }}</div>
+                <div class="f-color font-size14 token-td word-break">{{ token.description.substr(0,128) + '...' }}</div>
               </td>
 
               <td v-if="$route.params.type === 'oep4'"
                   class="font-size14 font-Regular important_color">
-                {{ $HelperTools.toFinancialVal(token.TotalSupply) }}
+                {{ $HelperTools.toFinancialVal(token.total_supply) }}
               </td>
-              <td class="font-size14 font-Regular important_color">{{ token.Addresscount }}</td>
+              <td class="font-size14 font-Regular important_color">{{ token.address_count }}</td>
               <td class="font-size14 font-Regular important_color pointer"
                   @click="goToTokenDetail(token)">
-                {{ token.ContractHash.substr(0,8) + '...' + token.ContractHash.substr(32)}}
+                {{ token.contract_hash.substr(0,8) + '...' + token.contract_hash.substr(32)}}
               </td>
               <td class="font-size14 font-Regular important_color pointer"
-                  @click="goToAddressDetail(token.Creator)">
-                {{ token.Creator.substr(0,4) + '...' + token.Creator.substr(30)}}
+                  @click="goToAddressDetail(token.creator)">
+                {{ token.creator.substr(0,4) + '...' + token.creator.substr(30)}}
               </td>
-              <td class="font-size14 font-Regular normal_color">{{ token.TxCount }}</td>
+              <td class="font-size14 font-Regular normal_color">{{ token.tx_count }}</td>
               <!--<td class="font-size14 font-Regular normal_color">{{ $HelperTools.getTransDate(token.CreateTime) }}</td>-->
             </tr>
             </tbody>
@@ -73,7 +74,7 @@
       </div>
     </div>
 
-    <ont-pagination :total="tokens.total"></ont-pagination>
+    <tst-pagination :total="tokens.total"></tst-pagination>
   </div>
 </template>
 
@@ -84,14 +85,24 @@
     name: "Token-List",
     data() {
       return {
+        listType:"list",
+        loadingFlag:false,
         applyForUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSdszQp1BbviS83psIZUZYMKoNkn0e4zcYxrVqM6v5Qbmzby3g/viewform?vc=0&c=0&w=1'
       }
     },
-    created() {
+    mounted() {
       this.getTokensData()
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
     },
     watch: {
-      '$route': 'getTokensData'
+      '$route':function(){
+        this.getTokensData()
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+      },
+      'tokens':function(){
+        this.loadingFlag = true
+        console.log(this.tokens)
+      }
     },
     computed: {
       ...mapState({
@@ -100,6 +111,7 @@
     },
     methods: {
       getTokensData() {
+        this.loadingFlag = false
         this.tokens.list = ''; // 清空内容
         this.testNetPageSizeCheck()
         this.$store.dispatch('GetTokens', this.$route.params).then()
@@ -119,20 +131,24 @@
         if (this.$route.params.net == undefined) {
           this.$router.push({
             name: 'TokenDetail', params: {
-              type: this.$route.params.type,
-              contractHash: token.ContractHash,
+              contractType: this.$route.params.contractType,
+              tokenName: token.name,
+              contractHash: token.contract_hash,
               pageSize: 10,
-              pageNumber: 1
+              pageNumber: 1,
+              token:token
             }
           })
         } else {
           this.$router.push({
             name: 'TokenDetailTest', params: {
-              type: this.$route.params.type,
-              contractHash: token.ContractHash,
+              contractType: this.$route.params.contractType,
+              tokenName: token.name,
+              contractHash: token.contract_hash,
               pageSize: 10,
               pageNumber: 1,
-              net: 'testnet'
+              net: 'testnet',
+              token:token
             }
           })
         }
@@ -141,12 +157,12 @@
         if (this.$route.params.net === undefined) {
           this.$router.push({
             name: 'AddressDetail',
-            params: {address: address, pageSize: 20, pageNumber: 1}
+            params: {address: address, assetName:"ALL", pageSize: 20, pageNumber: 1}
           })
         } else {
           this.$router.push({
             name: 'AddressDetailTest',
-            params: {address: address, pageSize: 20, pageNumber: 1, net: 'testnet'}
+            params: {address: address, assetName:"ALL", pageSize: 20, pageNumber: 1, net: 'testnet'}
           })
         }
       }
@@ -169,7 +185,7 @@
     width: 32px;
     height: 32px;
     border-radius: 16px;
-    background-color: #32A4BE;
+    background-color: #4C4D66;
     color: white;
     font-weight: bold;
     line-height: 32px;
@@ -193,7 +209,7 @@
 
   .sc-pointer:hover {
     cursor: pointer;
-    color: #32A4BE;
+    color: #4C4D66;
     text-decoration: underline;
   }
 
@@ -203,5 +219,8 @@
 
   .token-td {
     margin-top: 6px;
+  }
+  .word-break{
+    word-break: break-word;
   }
 </style>

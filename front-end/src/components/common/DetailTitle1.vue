@@ -19,7 +19,6 @@
     <div class="col-10">
       <span class="f-color word-break d-block height-100 font-size14">
         <span id="detailVal" class="height-100">{{val}}</span>
-
         <span class="pointer font-size14">
           <i @click="copyDetailVal"
             data-clipboard-target="#detailVal"

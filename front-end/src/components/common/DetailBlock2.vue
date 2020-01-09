@@ -10,7 +10,7 @@
     <div class="d-none d-sm-block col">
       <div class="detail-col detail-col-right">
         <span class="f-color">{{name2}}</span>
-        <span class="word-break" :class="classObject2" @click="doAction(params2)">{{val2}}</span>
+        <span class="word-break" :class="classObject2" @click="doAction(params2)">{{val2?val2:1}}</span>
 
         <a v-if="tip === 'true'" href="#" data-toggle="tooltip" :title="tipTit" class="common-tooltip-style">
           <i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -44,13 +44,6 @@
 </template>
 
 <script>
-  import $ from 'jquery'
-
-  //提示框
-  $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
-  });
-
   export default {
     /**
      * 该全局子组件提供【Details】页面内详情的【单行双列】白色数据块。
@@ -64,14 +57,20 @@
      * 1    代表一行内字体默认；
      * 1.1  代表一行内字体颜色是划重点；#00AE1D 浅绿色；
      * 1.2  代表一行内可跳转，小字体
-     * 1.3  代表一行内字体颜色是划重点；本体蓝；
+     * 1.3  代表一行内字体颜色是划重点；超算网络蓝；
      * 2    代表2行内容点击可跳转；14号字体；
      *
      * params：
-     * 本体蓝字体，一般可跳转
+     * 超算网络蓝字体，一般可跳转
      */
     name: "DetailBlock2",
     props: ['name1', 'val1', 'rows1', 'params1', 'name2', 'val2', 'rows2', 'params2', 'tip', 'tipTit'],
+    mounted() {
+      //提示框
+      $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+      });
+    },
     computed: {
       /**
        * 是否换行，字体大小，颜色，是否可以点击跳转。
@@ -107,10 +106,13 @@
 
         if (params[0] === 'block') {
           this.toBlockDetailPage(params[1])
-        } else if (params[0] === 'ontId') {
-          this.toOntIdDetailPage(params[1])
+        } else if (params[0] === 'tstId') {
+          this.toTstIdDetailPage(params[1])
         } else if (params[0] === 'address') {
           this.goToAddressDetail(params[1])
+        }
+        if (params.indexOf("http")>-1) {
+          window.open(params)
         }
       },
       toBlockDetailPage($blockHeight) {
@@ -127,23 +129,23 @@
           this.$router.push({name: 'TransactionDetail', params: {txnHash: $TxnId}})
         }
       },
-      toOntIdDetailPage($OntId) {
+      toTstIdDetailPage($TstId) {
         if (this.$route.params.net === 'testnet') {
-          this.$router.push({name: 'OntIdDetailTest', params: {ontid: $OntId, net: "testnet"}})
+          this.$router.push({name: 'TstIdDetailTest', params: {tstid: $TstId, net: "testnet"}})
         } else {
-          this.$router.push({name: 'OntIdDetail', params: {ontid: $OntId}})
+          this.$router.push({name: 'TstIdDetail', params: {tstid: $TstId}})
         }
       },
       goToAddressDetail(address) {
         if (this.$route.params.net === 'testnet') {
           this.$router.push({
             name: 'AddressDetailTest',
-            params: {address: address, pageSize: 20, pageNumber: 1, net: 'testnet'}
+            params: {address: address, assetName:"ALL", pageSize: 20, pageNumber: 1, net: 'testnet'}
           })
         } else {
           this.$router.push({
             name: 'AddressDetail',
-            params: {address: address, pageSize: 20, pageNumber: 1}
+            params: {address: address, assetName:"ALL", pageSize: 20, pageNumber: 1}
           })
         }
       }

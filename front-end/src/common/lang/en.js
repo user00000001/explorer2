@@ -12,26 +12,28 @@ module.exports = {
     blocks: 'Blocks',
     addrs: 'Addresses',
     tarns: 'Transactions',
-    ontIds: 'ONT ID List',
+    tstIds: 'TST ID List',
     top: {
       blockchain: 'Blockchain',
-      contracts: 'Contracts',
+      contracts: 'Contract',
       tokens: 'Tokens',
-      ontId: 'ONT ID',
+      tstId: 'TST ID',
       apis: 'APIs',
-      mainNet: 'MainNet',
-      testNet: 'TestNet',
-      nodes: 'Nodes',
+      mainNet: 'Main Chain',
+      testNet: 'Computing Chain',
+      nodes: 'Node',
       stake: 'Stake Authorizations',
       nodeMap: 'Node Map',
-      blocks: 'Blocks',
-      txns: 'Transactions',
+      blocks: 'Block',
+      txns: 'Transaction',
       accounts: 'Accounts',
       oep4: 'OEP-4 Overview',
       oep5: 'OEP-5 Overview',
       oep8: 'OEP-8 Overview',
-      statistics: 'Statistics',
-      tool: 'Tools'
+      submit: 'Submit',
+      statistics: 'Statistic',
+      tool: 'Tool',
+      apiDocUrl:"https://dev-docs.ont.io/#/docs-en/explorer/overview"
     }
   },
   all: {
@@ -47,7 +49,7 @@ module.exports = {
     fee: 'Fee',
     amount: 'Amount',
     address: 'Address',
-    ontId: 'ONT ID',
+    tstId: 'TST ID',
     content: 'Content',
     confirmed: 'Confirmed',
     failed: 'Failed',
@@ -55,15 +57,16 @@ module.exports = {
     token: 'Token',
     txn: 'Transaction',
     txns: 'Transactions',
+    pk:"Public Key"
   },
-  ontPagination: {
+  tstPagination: {
     total: 'A total of ',
     data: ' data'
   },
   searchInput: {
     search: 'SEARCH',
-    placeholder: 'ONT ID, Block Height, TX Hash, Contract Hash, Address',
-    slogan: 'Blockchain Explorer & Trust Verifier'
+    placeholder: 'Block Height, TX Hash, Contract Hash, Address',
+    slogan: 'Blockchain Explorer'
   },
   runStatus: {
     name: 'The whole network operation status',
@@ -71,25 +74,25 @@ module.exports = {
     CurrentHeight: 'Block Height',
     BlockInterval: 'Average Block Time',
     TxnCount: 'Total Transactions',
-    NodeCount: 'Nodes',
+    NodeCount: 'Consensus Nodes',
     addressCount: 'Total addresses',
     second: 's',
     address: "addresses",
-    ontid: "Total ONT ID"
+    tstid: "Total TST ID"
   },
-  ontIdList: {
-    name: 'ONT ID EVENTS'
+  tstIdList: {
+    name: 'TST ID EVENTS'
   },
-  ontIdDetail: {
-    nickname: 'ONT ID DETAILS',
-    name: 'Ont ID: ',
-    msgName: 'Ont ID Event Log',
+  tstIdDetail: {
+    nickname: 'TST ID DETAILS',
+    name: 'TST ID: ',
+    msgName: 'TST ID Event Log',
     TxnId: 'Transaction ID',
     Height: 'Block height',
     TxnType: 'Transaction Type',
     TxnTime: 'Block Time',
     Description: 'Description',
-    events: 'Events on this ONT ID',
+    events: 'Events on this TST ID',
     owner: 'Owner',
     failed: 'FAIL, not found.'
   },
@@ -112,18 +115,20 @@ module.exports = {
   addressDetail: {
     name: 'ADDRESS DETAILS',
     address: 'Address: ',
-    ontBalance: 'ONT Balance: ',
-    ongBalance: 'ONG Balance: ',
-    claimable: 'Claimable ONG: ',
-    unbound: 'Unbound ONG: ',
+    tstBalance: 'TST Balance: ',
+    tsgBalance: 'TSG Balance: ',
+    claimable: 'Claimable TSG: ',
+    unbound: 'Unbound TSG: ',
     txOnAddr: 'Transactions on this Address:',
     txns: 'Transactions:',
     oep8Assets: 'OEP-8 Assets:',
+    oep4Assets: 'OEP-4 Assets:',
+    oep5Assets: 'OEP-5 Assets:',
     oepOtherAssets: 'Other OEP Assets:'
   },
   assetName: {
-    ont: 'ONT',
-    ong: 'ONG',
+    tst: 'TST',
+    tsg: 'TSG',
     pumpkin01: 'Red Pumpkin',
     pumpkin02: 'Orange Pumpkin',
     pumpkin03: 'Yellow Pumpkin',
@@ -158,11 +163,15 @@ module.exports = {
     time: 'Time: ',
     type: 'Type: ',
     deploySC: 'Deploy Smart Contract',
-    sc: 'Smart Contract',
+    sc: 'Invoke Smart Contract',
+    wasmsc: 'Invoke wasmvm Contract',
     height: 'Height: ',
     status: 'Status: ',
     fee: 'Fee: ',
-    issuer: 'Issuer OntId'
+    issuer: 'Issuer TstId',
+    detial:'Event: ',
+    open:'Detail',
+    close:'Close'
   },
   claimDetail: {
     name: 'CLAIM DETAILS'
@@ -193,7 +202,7 @@ module.exports = {
     blocks: 'blocks',
     detailTit: 'NODE DETAILS',
     nodeName: 'Node Name: ',
-    ontId: 'ONT ID:',
+    tstId: 'TST ID:',
     address: 'Address:',
     rewardRate: 'Reward Rate:',
     rank2: 'Rank:',
@@ -237,8 +246,8 @@ module.exports = {
       createdTime: 'Created Time: ',
       contractInfo: 'Info',
       logo: 'Logo',
-      ontFlow: 'ONT Flow: ',
-      ongFlow: 'ONG Flow: ',
+      tstFlow: 'TST Flow: ',
+      tsgFlow: 'TSG Flow: ',
       amount: 'Total Flow: ',
     }
   },
@@ -269,8 +278,8 @@ module.exports = {
       createdTime: 'Created Time: ',
       contractInfo: 'Info',
       logo: 'Logo',
-      ontFlow: 'ONT Flow: ',
-      ongFlow: 'ONG Flow: ',
+      tstFlow: 'TST Flow: ',
+      tsgFlow: 'TSG Flow: ',
       amount: 'Total Flow: ',
       txn: 'Transactions',
       volume: 'Volume',
@@ -290,13 +299,13 @@ module.exports = {
     newAddressLbl: 'New Address',
     activeAddressLbl: 'Active Address',
     blockLbl: 'New Block',
-    newOntIdLbl: 'New ONT-ID',
-    activeOntIdLbl: 'Active ONT-ID',
+    newTstIdLbl: 'New TST-ID',
+    activeTstIdLbl: 'Active TST-ID',
     sumAddressLbl: 'Address Growth',
-    sumOntIdLbl: 'ONT-ID Growth',
+    sumTstIdLbl: 'TST-ID Growth',
     txnLbl: 'Transaction History',
-    ontLbl: 'ONT Amount',
-    ongLbl: 'ONG Amount'
+    tstLbl: 'TST Amount',
+    tsgLbl: 'TSG Amount'
   },
   footer: {
     flag:"en",
@@ -309,14 +318,14 @@ module.exports = {
     SmartX: 'SmartX',
     Github: 'Github',
     Cooperation: 'Cooperation',
-    CooperateWithOntology: 'Cooperate with Ontology',
+    CooperateWithTesraSupernet: 'Cooperate with TesraSupernet',
     TrustEcosystem: 'Trust Ecosystem',
     Nodes: 'Nodes',
     About: 'About',
     Press: 'Press',
     TechNews: 'Tech News',
     Team: 'Team',
-    AboutOntology: 'About Ontology',
+    AboutTesraSupernet: 'About TesraSupernet',
     WhitePaper: 'White Paper',
     Explorer: 'Explorer',
     dApps: 'dApps',
@@ -331,7 +340,7 @@ module.exports = {
     description:"Project description",
     webLink:"Project official website and social media links",
     gitHubURL:"Project GitHub URL",
-    ONTID:"ONT ID",
+    TSTID:"TST ID",
     contractHash:"Contract hash ",
     contractABI:"Contract ABI ",
     contractByteCode:"Contract ByteCode ",
@@ -346,6 +355,28 @@ module.exports = {
   error:{
     format:"Sorry, the search string you entered could not be found.",
     copied:"Copied!",
-    pagesize:"pageSize limit 30"
+    pagesize:"pageSize limit 20",
+    searching:"Querying",
+    msg1:"Please enter Token hash",
+    msg2:"Please enter the token name",
+    msg3:"Please enter Token Abi",
+    msg4:"Please enter Token Code",
+    msg5:"Please enter Token Description",
+    msg6:"Please enter Token Symbol",
+    msg7:"Please enter Token Decimals",
+    msg8:"Please enter Token Total Supply",
+    msg9:"Please upload Token Logo",
+    msg10:"Please enter the email in the correct format",
+    msg11:"Please enter the contact email address",
+    msg12:"Please enter information for at least one token",
+    msg13:"Please select a virtual machine category",
+    msg14:"Please enter OEP8 Token ID",
+    msg15:"Please enter OEP8 Token Name",
+    msg16:"Please enter OEP8 Token Total Supply",
+    msg17:"Please enter OEP8 Token Symbol",
+    msg18:"OEP8 Token ID is duplicated",
+    msg19:"The token hash you submitted could not be found",
+    msg20:"The token has been submitted",
+    msg21:"Token total supply range 1-999999999999999"
   }
 };

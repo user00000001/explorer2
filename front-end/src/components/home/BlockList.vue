@@ -1,5 +1,23 @@
 <template>
   <div class="div-block-list">
+    <div class="block-title font-blod" @click="toBlockListPage">
+      <span>{{ $t('blockList.name') }}</span>
+      <span>{{ $t('all.more') }}</span>
+    </div>
+    <div class="block-list-box">
+      <div class="list-item" v-for="(block,index) in latestBlockList.info" :key="index" @click="toBlockDetailPage(block.block_height)">
+        <span :title="block.block_height">{{block.block_height}}</span>
+
+        <span v-if="block.tx_count ==1" :title="block.tx_count">{{block.tx_count}} Txns</span>
+        <span v-else :title="block.tx_count">{{block.tx_count}} Txns</span>
+
+        <span :title="block.block_size">{{block.block_size}}</span>
+        
+        <span v-if="$HelperTools.getDateTime(block.block_time) < 60" :title="showtime[index] + 's ago'">{{showtime[index]}}s ago</span>
+        <span v-else :title="getShowDate(block.block_time) + ' ago'">{{getShowDate(block.block_time)}} ago</span>
+      </div>
+    </div>
+<!-- 
     <div class="row title-color title-hover" @click="toBlockListPage">
       <div class="col-8 block-title-wrapper">
         <p class="title font-blod">{{ $t('blockList.name') }}</p>
@@ -10,20 +28,20 @@
     </div>
 
     <div class="row">
-      <div v-for="(block,index) in latestBlockList.info" class="col-12 block-item-wrapper">
+      <div v-for="(block,index) in latestBlockList.info" class="col-12 block-item-wrapper" :key="index">
         <div class="divider-line"></div>
         <div class="row block-item-sub-wrapper">
-          <div class="block-item col-6 text-left padding0 block-item-height font700 font-size22 pointer" @click="toBlockDetailPage(block.Height)" style="color:#32a4be;line-height: 27px;">{{block.Height}}</div>
-          <div v-if="block.TxnNum ==1" class="block-item col-6 text-right padding0 font-size14">{{block.TxnNum}} Txns</div>
-          <div v-else class="block-item col-6 text-right padding0 font-size14">{{block.TxnNum}} Txns</div>
+          <div class="block-item col-6 text-left padding0 block-item-height font700 font-size22 pointer" @click="toBlockDetailPage(block.block_height)" style="color:#4C4D66;line-height: 27px;">{{block.block_height}}</div>
+          <div v-if="block.tx_count ==1" class="block-item col-6 text-right padding0 font-size14">{{block.tx_count}} Txns</div>
+          <div v-else class="block-item col-6 text-right padding0 font-size14">{{block.tx_count}} Txns</div>
         </div>
         <div class="row block-item-sub-wrapper-s">
-          <span class="block-item col-6 text-left padding0 font-size14">{{block.BlockSize}} byte</span>
-          <span v-if="$HelperTools.getDateTime(block.BlockTime) < 60" class="block-item col-6 text-right padding0 font-size14 ">{{showtime[index]}}s ago</span>
-          <span v-else class="block-item col-6 text-right padding0 font-size14 ">{{getShowDate(block.BlockTime)}} ago</span>
+          <span class="block-item col-6 text-left padding0 font-size14">{{block.block_size}} byte</span>
+          <span v-if="$HelperTools.getDateTime(block.block_time) < 60" class="block-item col-6 text-right padding0 font-size14 ">{{showtime[index]}}s ago</span>
+          <span v-else class="block-item col-6 text-right padding0 font-size14 ">{{getShowDate(block.block_time)}} ago</span>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -35,12 +53,12 @@
     data() {
       return {
         info: [],
-        blocktime: [0, 0, 0, 0, 0],
+        block_time: [0, 0, 0, 0, 0],
         timestamp: (new Date()).valueOf(),
         showtime: [0, 0, 0, 0, 0]
       }
     },
-    created() {
+    mounted() {
       this.getBlockList()
       this.intervalBlock = setInterval(() => {
         this.getBlockList()
@@ -55,8 +73,8 @@
     watch: {
       '$route': 'getBlockList',
       'latestBlockList.info': function () {
-        for (var i = 0; i < 5; i++) {
-          this.showtime[i] = this.$HelperTools.getDateTime(this.latestBlockList.info[i].BlockTime)
+        for (var i = 0; i < 10; i++) {
+          this.showtime[i] = this.$HelperTools.getDateTime(this.latestBlockList.info[i].block_time)
         }
       },
     },

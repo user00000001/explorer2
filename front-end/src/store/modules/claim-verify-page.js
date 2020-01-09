@@ -19,7 +19,7 @@ export default {
         Version: "1.0.0",
         Type: ""
       }
-      return axios.post( 'https://dev.ont.io/ont/claim/verify/'+$param.cardId+"/"+$param.ownerOntId,formData).then(response => {
+      return axios.post( 'https://dev.ont.io/ont/claim/verify/'+$param.cardId+"/"+$param.ownerTstId,formData).then(response => {
         var msg = JSON.parse(response.request.response)
         commit({
           type: types.GET_CLAIM,

@@ -4,22 +4,22 @@
     <detail-title :name="$t('addressDetail.address')" :val="$route.params.address"></detail-title>
 
     <!--主要余额显示-->
-    <detail-block-2 :name1="$t('addressDetail.ontBalance')" :val1="assetsVal.ong" :rows1="'1.3'"
-                    :name2="$t('addressDetail.ongBalance')" :val2="assetsVal.ont" :rows2="'1.3'">
+    <detail-block-2 v-if="NativeBalance.list" :name1="$t('addressDetail.tstBalance')" :val1="nativeAssetsVal.tst" :rows1="'1.3'"
+                    :name2="$t('addressDetail.tsgBalance')" :val2="nativeAssetsVal.tsg" :rows2="'1.3'">
     </detail-block-2>
 
-    <!--可领取和未领取的ONG显示-->
-    <div class="detail-col">
+    <!--可领取和未领取的TSG显示-->
+    <div v-if="NativeBalance" class="detail-col">
       <div class="row">
         <div class="col table1_item_title">
           <span class="f-color">{{ $t('addressDetail.claimable') }}</span>
-          <span class="important_color">{{assetsVal.waitboundong}}</span>
+          <span class="important_color">{{nativeAssetsVal.unboundtsg}}</span>
         </div>
       </div>
       <div class="row table1_item_title">
         <div class="col">
           <span class="f-color">{{ $t('addressDetail.unbound') }}</span>
-          <span class="important_color">{{assetsVal.unboundong}}</span>
+          <span class="important_color">{{nativeAssetsVal.waitboundtsg}}</span>
         </div>
       </div>
     </div>
@@ -32,53 +32,67 @@
           <div class="row pumpkin-color font-size14 text-center" style="margin-top: 20px">
             <div class="col">
               <div>{{ $t('assetName.pumpkin08' ) }}</div>
-              <div class="font-size24">{{assetsVal.pumpkin08}}</div>
+              <div class="font-size24">{{zeroPlus(oep8AssetsVal.pumpkin08)}}</div>
             </div>
             <div class="col">
               <div>{{ $t('assetName.pumpkin01' ) }}</div>
-              <div class="font-size24">{{assetsVal.pumpkin01}}</div>
+              <div class="font-size24">{{zeroPlus(oep8AssetsVal.pumpkin01)}}</div>
             </div>
             <div class="col">
               <div>{{ $t('assetName.pumpkin02' ) }}</div>
-              <div class="font-size24">{{assetsVal.pumpkin02}}</div>
+              <div class="font-size24">{{zeroPlus(oep8AssetsVal.pumpkin02)}}</div>
             </div>
             <div class="col">
               <div>{{ $t('assetName.pumpkin03' ) }}</div>
-              <div class="font-size24">{{assetsVal.pumpkin03}}</div>
+              <div class="font-size24">{{zeroPlus(oep8AssetsVal.pumpkin03)}}</div>
             </div>
           </div>
 
           <div class="row pumpkin-color font-size14 text-center" style="margin-top: 20px">
             <div class="col">
               <div>{{ $t('assetName.pumpkin04' ) }}</div>
-              <div class="font-size24">{{assetsVal.pumpkin04}}</div>
+              <div class="font-size24">{{zeroPlus(oep8AssetsVal.pumpkin04)}}</div>
             </div>
             <div class="col">
               <div>{{ $t('assetName.pumpkin05' ) }}</div>
-              <div class="font-size24">{{assetsVal.pumpkin05}}</div>
+              <div class="font-size24">{{zeroPlus(oep8AssetsVal.pumpkin05)}}</div>
             </div>
             <div class="col">
               <div>{{ $t('assetName.pumpkin06' ) }}</div>
-              <div class="font-size24">{{assetsVal.pumpkin06}}</div>
+              <div class="font-size24">{{zeroPlus(oep8AssetsVal.pumpkin06)}}</div>
             </div>
             <div class="col">
               <div>{{ $t('assetName.pumpkin07' ) }}</div>
-              <div class="font-size24">{{assetsVal.pumpkin07}}</div>
+              <div class="font-size24">{{zeroPlus(oep8AssetsVal.pumpkin07)}}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!--有其他的OEP-4/5资产-->
-    <div class="row" v-if="haveOtherOep">
+    <!--有其他的OEP-4资产-->
+    <div class="row" v-if="have4Oep">
       <div class="col">
         <div class="detail-col">
-          <span class="font-blod table1_item_title">{{ $t('addressDetail.oepOtherAssets') }}</span>
-          <div v-for="(asset,index) in AssetBalance" v-if="index > 12" class="row font-size14 oep-4-5-div">
+          <span class="font-blod table1_item_title">{{ $t('addressDetail.oep4Assets') }}</span>
+          <div v-for="(asset,index) in oep4AssetBalance"  class="row font-size14 oep-4-5-div">
             <div class="table1_item_title font-Regular">
-              <span class="f-color">{{ asset.AssetName.toUpperCase() + ": " }}</span>
-              <span class="important_color">{{parseFloat(asset.Balance)}}</span>
+              <span class="f-color">{{ asset.asset_name.toUpperCase() + ": " }}</span>
+              <span class="important_color">{{parseFloat(asset.balance)}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--有其他的OEP-5资产-->
+    <div class="row" v-if="have5Oep">
+      <div class="col">
+        <div class="detail-col">
+          <span class="font-blod table1_item_title">{{ $t('addressDetail.oep5Assets') }}</span>
+          <div v-for="(asset,index) in oep5AssetBalance"  class="row font-size14 oep-4-5-div">
+            <div class="table1_item_title font-Regular">
+              <span class="f-color">{{ asset.asset_name.toUpperCase() + ": " }}</span>
+              <span class="important_color">{{parseFloat(asset.balance)}}</span>
             </div>
           </div>
         </div>
@@ -99,9 +113,9 @@
             </div>
           </div>
 
-          <ont-pagination :total="addressDetail.total"></ont-pagination>
-
-          <div class="row table-responsive">
+          <!-- <tst-pagination :total="showTxList.total"></tst-pagination> -->
+          <o-load v-if="!loadingFlag" ></o-load>
+          <div  v-else class="row table-responsive">
             <div class="col">
               <table v-if="info.TxnTotal !== 0" class="table">
                 <thead>
@@ -113,48 +127,48 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="tx in TxnList">
-                  <td class="font-size14 font-Regular f-color pointer" @click="toTransactionDetailPage(tx.TxnHash)">
-                    {{tx.TxnHash.substr(0,16) + '...'}}
+                <tr v-for="tx in showTxList.list">
+                  <td class="font-size14 font-Regular f-color pointer" @click="toTransactionDetailPage(tx.tx_hash)">
+                    {{tx.tx_hash.substr(0,16) + '...'}}
                   </td>
 
                   <td class="font-size14 font-Regular">
-                    <span v-for="(tl,index) in tx.TransferList">
+                    <span v-for="(tl,index) in tx.transfers">
                       <!--支出-->
-                      <span class="expenditure-color" v-if="tl.FromAddress === $route.params.address">
-                        <span v-if="tl.AssetName.indexOf('pumpkin') > -1">
-                          {{ '-' + $HelperTools.toFinancialVal(tl.Amount) + ' ' + $t('assetName.' + tl.AssetName ) }}
+                      <span class="expenditure-color" v-if="tl.from_address === $route.params.address">
+                        <span v-if="tl.asset_name.indexOf('pumpkin') > -1">
+                          {{ '-' + $HelperTools.toFinancialVal(tl.amount) + ' ' + $t('assetName.' + tl.asset_name ) }}
                         </span>
                         <span v-else>
-                          {{ '-' + $HelperTools.toFinancialVal(tl.Amount) + ' ' + tl.AssetName.toUpperCase() }}
+                          {{ '-' + $HelperTools.toFinancialVal(tl.amount) + ' ' + tl.asset_name.toUpperCase() }}
                         </span>
                       </span>
                       <!--收入-->
                       <span class="income-color" v-else>
-                        <span v-if="tl.AssetName.indexOf('pumpkin') > -1">
-                          {{ $HelperTools.toFinancialVal(tl.Amount) + ' ' + $t('assetName.' + tl.AssetName ) }}
+                        <span v-if="tl.asset_name.indexOf('pumpkin') > -1">
+                          {{ $HelperTools.toFinancialVal(tl.amount) + ' ' + $t('assetName.' + tl.asset_name ) }}
                         </span>
                         <span v-else>
-                          {{ $HelperTools.toFinancialVal(tl.Amount) + ' ' + tl.AssetName.toUpperCase() }}
+                          {{ $HelperTools.toFinancialVal(tl.amount) + ' ' + tl.asset_name.toUpperCase() }}
                         </span>
                       </span>
 
                       <!--逗号分隔符-->
-                      <span v-if="index !== tx.TransferList.length - 1"
-                            :class="tl.FromAddress === $route.params.address ? 'expenditure-color' : 'income-color'">
+                      <span v-if="index !== tx.transfers.length - 1"
+                            :class="tl.from_address === $route.params.address ? 'expenditure-color' : 'income-color'">
                         {{ ', ' }}
                       </span>
                     </span>
                   </td>
-                  <td class="font-size14 font-Regular s-color">{{ tx.ConfirmFlag === 1 ? 'Confirmed' : 'Failed' }}</td>
-                  <td class="font-size14 font-Regular normal_color">{{$HelperTools.getTransDate(tx.TxnTime)}}</td>
+                  <td class="font-size14 font-Regular s-color">{{ tx.confirm_flag === 1 ? 'Confirmed' : 'Failed' }}</td>
+                  <td class="font-size14 font-Regular normal_color">{{$HelperTools.getTransDate(tx.tx_time)}}</td>
                 </tr>
                 </tbody>
               </table>
             </div>
           </div>
 
-          <ont-pagination :total="addressDetail.total"></ont-pagination>
+          <tst-pagination :total="showTxList.total"></tst-pagination>
         </div>
       </div>
     </div>
@@ -171,72 +185,167 @@
         Ddo: {},
         claimflag: true,
         AssetBalance: [],
+        nativeAssetBalance: [],
+        oep4AssetBalance: [],
+        oep5AssetBalance: [],
+        oep8AssetBalance: [],
+        otherAssetBalance: [],
+        showOtherAssetBalance: [],
         havePumpkin: false, // 标识是否显示2018年万圣节南瓜资产
         haveOtherOep: false, // 标识是否显示OEP-4/5资产
+        have4Oep:false,// 标识是否显示OEP-4/5资产
+        have5Oep:false,// 标识是否显示OEP-4/5资产
         TxnList: [],
         info: [],
-        tmpDown: ''
+        tmpDown: '',
+        showTxList:[],
+        loadingFlag:false,
       }
     },
-    created() {
-      if (this.$route.params.pageSize == undefined || this.$route.params.pageNumber == undefined) {
+    mounted() {
+      console.log(this.$route.params)
+      if (this.$route.params.pageSize == 'testnet' || this.$route.params.pageNumber == 'testnet' || this.$route.params.assetName == 'testnet') {
+        this.$route.params.net = 'testnet'
         this.toAddressDetailPage(this.$route.params.address)
       } else {
-        this.getAddressDetailData()
+        if (this.$route.params.pageSize == undefined || this.$route.params.pageNumber == undefined || this.$route.params.assetName == undefined) {
+          this.toAddressDetailPage(this.$route.params.address)
+        } else {
+          this.getAddressDetailData()
+        }
       }
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
     },
     watch: {
       '$route': 'getAddressDetailData',
-      'addressDetail': function () {
-        this.info = this.addressDetail.list;
-        this.AssetBalance = this.info.AssetBalance;
-        if (this.info.AssetBalance.length > 4) { // 有南瓜资产
-          this.havePumpkin = (this.info.AssetBalance[12].Balance !== '0' && this.info.AssetBalance[12].Balance !== 0)
+      'Oep4Balance':function(){
+        this.oep4AssetBalance =[]
+        this.oep4AssetBalance = this.oep4AssetBalance.concat(this.Oep4Balance.list)
+        if(this.Oep4Balance.list.length>0){
+          this.have4Oep = true
         }
-        if (this.info.AssetBalance.length > 13) { // 有OEP4、5的其他资产
-          this.haveOtherOep = true
+      },
+      'Oep5Balance':function(){
+        this.oep5AssetBalance =[]
+        this.oep5AssetBalance = this.oep5AssetBalance.concat(this.Oep5Balance.list)
+        if(this.Oep5Balance.list.length>0){
+          this.have5Oep = true
         }
-        this.TxnList = this.info.TxnList;
+      },
+      'Oep8Balance':function(){
+        this.oep8AssetBalance = this.oep8AssetBalance.concat(this.Oep8Balance.list)
+        if(this.Oep8Balance.list.length>0){
+          this.havePumpkin = true
+        }
+      },
+      'NativeBalance':function(){
+        this.nativeAssetBalance = this.nativeAssetBalance.concat(this.NativeBalance.list)
+      },
+      'TxList':function(){
+        /* console.log("TxList",this.TxList) */
+        this.showTxList = this.TxList
+        this.loadingFlag = true
+      },
+      'AssetTxList':function(){
+        /* console.log("AssetTxList",this.AssetTxList) */
+        this.showTxList = this.AssetTxList
+        this.loadingFlag = true
       }
     },
     computed: {
       ...mapState({
-        addressDetail: state => state.Addresses.Detail
+        Oep4Balance: state => state.Addresses.Oep4Balance,
+        Oep5Balance: state => state.Addresses.Oep5Balance,
+        Oep8Balance: state => state.Addresses.Oep8Balance,
+        NativeBalance: state => state.Addresses.NativeBalance,
+        TxList: state => state.Addresses.TxList,
+        AssetTxList:state => state.Addresses.AssetTxList,
       }),
       /**
-       * 取出全部资产名称和值
+       * 取出全部原生资产名称和值
        */
-      assetsVal: function () {
+      nativeAssetsVal: function () {
         let retAssets = {};
 
-        for (let index in this.AssetBalance) {
-          retAssets[this.AssetBalance[index].AssetName] = this.$HelperTools.toFinancialVal(this.AssetBalance[index].Balance)
+        for (let index in this.nativeAssetBalance) {
+          retAssets[this.nativeAssetBalance[index].asset_name] = this.$HelperTools.toFinancialVal(this.nativeAssetBalance[index].balance)
         }
+        return retAssets
+      },
+      /**
+       * 取出全部oep4 oep5资产名称和值
+       */
+      oep4AssetsVal: function () {
+        let retAssets = {};
 
+        for (let index in this.oep4AssetBalance) {
+          retAssets[this.oep4AssetBalance[index].asset_name] = this.$HelperTools.toFinancialVal(this.oep4AssetBalance[index].balance)
+        }
+        return retAssets
+      },
+      /**
+       * 取出全部oep4 oep5资产名称和值
+       */
+      oep5AssetsVal: function () {
+        let retAssets = {};
+
+        for (let index in this.oep5AssetBalance) {
+          retAssets[this.oep5AssetBalance[index].asset_name] = this.$HelperTools.toFinancialVal(this.oep5AssetBalance[index].balance)
+        }
+        return retAssets
+      },
+      /**
+       * 取出全部oep8资产名称和值
+       */
+      oep8AssetsVal: function () {
+        let retAssets = {};
+
+        for (let index in this.oep8AssetBalance) {
+          retAssets[this.oep8AssetBalance[index].asset_name] = this.$HelperTools.toFinancialVal(this.oep8AssetBalance[index].balance)
+        }
         return retAssets
       }
     },
     methods: {
       getAddressDetailData() {
-        this.$store.dispatch('GetAddressDetail', this.$route.params).then()
+        this.loadingFlag = false
+        var params = this.$route.params
+        /* console.log(params) */
+        params.contractType = 'native'
+        this.$store.dispatch('GetAddressNativeDetail', params).then()
+        params.contractType = 'oep4'
+        this.$store.dispatch('GetAddressOep4Detail', params).then()
+        params.contractType = 'oep5'
+        this.$store.dispatch('GetAddressOep5Detail', params).then()
+        params.contractType = 'oep8'
+        this.$store.dispatch('GetAddressOep8Detail', params).then()
+        if(params.assetName == "ALL"){
+          this.$store.dispatch('GetAddressTX',params).then()
+        }else{
+          this.$store.dispatch('GetAddressAssetTX',params).then()
+        }
+      },
+      /* 20190524 新增的接口设计是某种南瓜没有就不返回，所以手动补0 */
+      zeroPlus(num){
+        return num ? num : 0
       },
       toReturn() {
         this.$router.go(-1)
       },
       toTransactionDetailPage($TxnId) {
         if (this.$route.params.net == undefined) {
-          this.$router.push({name: 'TransactionDetail', params: {txnHash: $TxnId}})
+          this.$router.push({name: 'TransactionDetail', params: {tx_hash: $TxnId}})
         } else {
-          this.$router.push({name: 'TransactionDetailTest', params: {txnHash: $TxnId, net: "testnet"}})
+          this.$router.push({name: 'TransactionDetailTest', params: {tx_hash: $TxnId, net: "testnet"}})
         }
       },
       toAddressDetailPage($address) {
         if (this.$route.params.net == undefined) {
-          this.$router.push({name: 'AddressDetail', params: {address: $address, pageSize: 20, pageNumber: 1}})
+          this.$router.push({name: 'AddressDetail', params: {address: $address, assetName:"ALL", pageSize: 20, pageNumber: 1}})
         } else {
           this.$router.push({
             name: 'AddressDetailTest',
-            params: {address: $address, pageSize: 20, pageNumber: 1, net: "testnet"}
+            params: {address: $address, assetName:"ALL", pageSize: 20, pageNumber: 1, net: "testnet"}
           })
         }
       },
@@ -266,7 +375,7 @@
   }
 
   .expenditure-color {
-    color: #32A4BE;
+    color: #4C4D66;
   }
 
   .oep-4-5-div {

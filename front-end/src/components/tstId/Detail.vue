@@ -1,13 +1,13 @@
 <template>
   <div class="e-container container-margin-top">
-    <list-title :name="$t('ontIdDetail.nickname')"></list-title>
-    <detail-title :name="$t('ontIdDetail.name')" :val="$route.params.ontid"></detail-title>
+    <list-title :name="$t('tstIdDetail.nickname')"></list-title>
+    <detail-title :name="$t('tstIdDetail.name')" :val="$route.params.tstid"></detail-title>
 
     <!-- Owners info -->
     <div class="row" v-if="haveData && Ddo.Owners">
       <div class="col">
         <div class="detail-col">
-          <p class="font-blod">{{ $t('ontIdDetail.owner') }}</p>
+          <p class="font-blod">{{ $t('tstIdDetail.owner') }}</p>
           <div class="row" v-for="owner in Ddo.Owners">
             <div class="col">
               <div class="font-size14 font-Regular normal_color txt-overflow">
@@ -37,8 +37,8 @@
               <div class="font-size14 font-Regular normal_color"><p>Claim Hash: {{claim.Claim.ClaimId}}</p></div>
               <div class="font-size14 font-Regular normal_color"><p>Claim Context: {{claim.Claim.ClaimContext}}</p></div>
               <div class="font-size14 font-Regular normal_color"><p>Context Desc: {{claim.Claim.ContextDesc}}</p></div>
-              <div class="font-size14 font-Regular normal_color" @click="toOntIdDetailPage(claim.Claim.IssuerOntId)">
-                <p>Issuer: <span class="important_color pointer">{{claim.Claim.IssuerOntId}}</span></p>
+              <div class="font-size14 font-Regular normal_color" @click="toTstIdDetailPage(claim.Claim.IssuerTstId)">
+                <p>Issuer: <span class="important_color pointer">{{claim.Claim.IssuerTstId}}</span></p>
               </div>
 <!--               <div v-if="claim.SelfDefined">
                 <p class="font-size14 font-Regular normal_color">Claim SelfDefined: {{claim.SelfDefined}}</p>
@@ -59,11 +59,11 @@
             </div> -->
             <div class="work-trustAnchor-wrapper">
               <span class="work-group-font">Trust Anchor: </span>
-              <span class="work-group-font">{{work.trust_anchor == "GGCA"?"GGAC":work.trust_anchor}} </span>
+              <span class="work-group-font">{{work.trust_anchor}} </span>
             </div>
             <div class="work-description-wrapper">
               <!-- <p class="work-normal-font"><span class="work-normal-font">Description: </span>{{work.description.length > 120 ? work.description.substr(0,120)+'...':work.description}} </p> -->
-              <p  class="work-p-normal-font p-work-normal-font"><span class="work-normal-font">Description: </span>{{work.description1}} </p>
+              <p class="work-p-normal-font p-work-normal-font"><span class="work-normal-font">Description: </span>{{work.description}} </p>
             </div>
             <div class="work-cryptoFunction-wrapper">
               <span class="work-normal-font">crypto_function </span>
@@ -78,7 +78,7 @@
               <span class="work-normal-font">{{work.uploadTime}} </span>
             </div>
             <div class="work-logo-wrapper">
-              <img src="../../assets/ontid/logoEN.png" class="work-logo-img" />
+              <img src="../../assets/tstid/logoEN.png" class="work-logo-img" />
             </div>
             <div class="work-hash-wrapper">
               <span class="work-hash-font">Work HASH: </span>
@@ -91,15 +91,15 @@
 
     <div class="row" v-show="!haveData">
       <div class="col">
-        <div class="detail-col">{{ $t('ontIdDetail.failed') }}</div>
+        <div class="detail-col">{{ $t('tstIdDetail.failed') }}</div>
       </div>
     </div>
 
-    <!-- Events on this ONT ID -->
+    <!-- Events on this TST ID -->
     <div class="row" v-if="TxnTotal">
       <div class="col">
         <div class="detail-col">
-          <span class="font-blod">{{ $t('ontIdDetail.events') }}</span>
+          <span class="font-blod">{{ $t('tstIdDetail.events') }}</span>
           <div class="table-responsive">
             <table class="table ">
               <thead>
@@ -112,22 +112,23 @@
               </thead>
               <tbody>
               <tr v-for="tx in TxnList">
-                <td class="font-size14 important_color font-Regular pointer" @click="toTransactionDetailPage(tx.TxnHash)">
-                  {{tx.TxnHash.substr(0,4) + '...' + tx.TxnHash.substr(60)}}
+                <td class="font-size14 important_color font-Regular pointer" @click="toTransactionDetailPage(tx.tx_hash)">
+                  {{tx.tx_hash.substr(0,4) + '...' + tx.tx_hash.substr(60)}}
                 </td>
                 <td class="font-size14 font-Regular normal_color ">
-                  {{getOntIDEvent(tx.Description)}}
+                  {{getTstIDEvent(tx.description)}}
                 </td>
                 <td class="font-size14 font-Regular normal_color">
-                  {{tx.Fee}}
+                  {{tx.fee}}
                 </td>
                 <td class="font-size14 font-Regular normal_color">
-                  {{$HelperTools.getTransDate(tx.TxnTime)}}
+                  {{$HelperTools.getTransDate(tx.tx_time)}}
                 </td>
               </tr>
               </tbody>
             </table>
           </div>
+          <tst-pagination :total="TxnTotal"></tst-pagination>
         </div>
       </div>
     </div>
@@ -159,38 +160,31 @@
         workFlag:false
       }
     },
-    created() {
-      this.getOntIdDetail()
+    mounted() {
+      if (this.$route.params.pageSize == undefined || this.$route.params.pageNumber == undefined) {
+        this.toTstIdDetailPageReload(this.$route.params.tstid)
+      }else{
+        this.getTstIdDetail()
+      }
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
     },
     watch: {
-      '$route': 'getOntIdDetail',
-      'OntIdDetail': function () {
-        console.log(this.OntIdDetail)
-        if (this.OntIdDetail.info === false) {
+      '$route': 'getTstIdDetail',
+      'TstIdDetail': function () {
+        console.log(this.TstIdDetail)
+
+        if (this.TstIdDetail.info === false) {
           this.haveData = false
         } else {
-          this.Ddo = this.OntIdDetail.Ddo
-          this.TxnList = this.OntIdDetail.TxnList
-          this.TxnTotal = this.OntIdDetail.TxnTotal
+          this.Ddo = this.TstIdDetail.Ddo
+          this.TxnList = this.TstIdDetail.TxnList
+          this.TxnTotal = this.TstIdDetail.TxnTotal
         }
         if(this.Ddo.Attributes[5].SelfDefined['trust anchor'] == 'GGCA'){
           this.workFlag = true
           this.work.awards = this.Ddo.Attributes[0].SelfDefined['awards']
-          this.work.group = this.Ddo.Attributes[1].SelfDefined['group']          
+          this.work.group = this.Ddo.Attributes[1].SelfDefined['group']
           this.work.description = this.Ddo.Attributes[2].SelfDefined['description']
-          let descLength = this.getLength(this.work.description)
-          console.log( descLength )
-          for(var i=0; i<this.work.description.length; i++) {
-                    let trueText = this.work.description.substr(0, i)
-                    let trueLength = this.getLength(trueText)
-                    if(trueLength > 210) { 
-                      this.work.description1 = this.work.description.substr(0, i-4) + ' ...';  //最后三个字
-                      break;
-                    }else{
-                      this.work.description1 = this.work.description
-                    }
-          }
-          console.log( this.work.description1 )
           this.work.owner_id = this.Ddo.Attributes[3].SelfDefined['owner_id']
           this.work.work_name = this.Ddo.Attributes[4].SelfDefined['work name']
           this.work.trust_anchor = this.Ddo.Attributes[5].SelfDefined['trust anchor']
@@ -199,53 +193,56 @@
           this.work.work_HASH = this.Ddo.Attributes[8].SelfDefined['work HASH']
           /* console.log(this.work) */
         }
+      },
+      'TstIdDdo':function(){
+        console.log(this.TstIdDdo)
+        this.Ddo = this.TstIdDdo
+      },
+      'TstIdTxnList':function(){
+        console.log(this.TstIdTxnList)
+        this.TxnList = this.TstIdTxnList.records
+        this.TxnTotal = this.TstIdTxnList.total
       }
     },
     computed: {
       ...mapState({
-        OntIdDetail: state => state.OntIDs.Detail,
+        TstIdDdo: state => state.TstIDs.Ddo,
+        TstIdTxnList: state => state.TstIDs.Tx,
       })
     },
     methods: {
-      getLength(str) {
-        var realLength = 0, len = str.length, charCode = -1;
-        for (var i = 0; i < len; i++) {
-          charCode = str.charCodeAt(i);
-          if (charCode >= 0 && charCode <= 128) {
-            realLength += 0.85;
-            /* console.log(str.substr(i,1),charCode,"1") */
-          }else{
-            realLength += 2;
-            /* console.log(str.substr(i,1),charCode,"2") */
-          }
+      toTstIdDetailPageReload($TstId) {
+        if (this.$route.params.net == undefined) {
+          this.$router.push({name: 'TstIdDetail', params: {tstid: $TstId,pageSize:10,pageNumber:1}})
+        } else {
+          this.$router.push({name: 'TstIdDetailTest', params: {tstid: $TstId,pageSize:10,pageNumber:1, net: "testnet"}})
         }
-        /* console.log(realLength) */
-        return realLength;
       },
-      getOntIdDetail() {
-        this.$store.dispatch('GetOntIdDetail', this.$route.params).then()
+      getTstIdDetail() {
+        this.$store.dispatch('GetTstIdDdoDetail', this.$route.params).then()
+        this.$store.dispatch('GetTstIdTxDetail', this.$route.params).then()
       },
       toReturn() {
         this.$router.go(-1)
       },
       toTransactionDetailPage($TxnId) {
         if (this.$route.params.net == undefined) {
-          this.$router.push({name: 'TransactionDetail', params: {txnHash: $TxnId}})
+          this.$router.push({name: 'TransactionDetail', params: {tx_hash: $TxnId}})
         } else {
-          this.$router.push({name: 'TransactionDetailTest', params: {txnHash: $TxnId, net: "testnet"}})
+          this.$router.push({name: 'TransactionDetailTest', params: {tx_hash: $TxnId, net: "testnet"}})
         }
       },
-      toOntIdDetailPage($OntId) {
+      toTstIdDetailPage($TstId) {
         if (this.$route.params.net == undefined) {
-          this.$router.push({name: 'OntIdDetail', params: {ontid: $OntId}})
+          this.$router.push({name: 'TstIdDetail', params: {tstid: $TstId}})
         } else {
-          this.$router.push({name: 'OntIdDetailTest', params: {ontid: $OntId, net: "testnet"}})
+          this.$router.push({name: 'TstIdDetailTest', params: {tstid: $TstId, net: "testnet"}})
         }
       },
-      getOntIDEvent: function ($event) {
+      getTstIDEvent: function ($event) {
         switch ($event.substr(0, 12)) {
-          case "register Ont":
-            return "Register ONT ID"
+          case "register Tst":
+            return "Register TST ID"
           case "add publicKe":
             return "Add publickey"
           case "remove publi":
@@ -262,6 +259,8 @@
             return "Add recovery"
           case "remove attri":
             return "Remove attribute"
+          case "create new c":
+            return "create new claim"
         }
       }
     }
@@ -270,7 +269,7 @@
 
 <style scoped>
 .special-ddo-wrapper{
-    background-image: url(../../assets/ontid/dianqingback.png);
+    background-image: url(../../assets/tstid/dianqingback.png);
     background-repeat: no-repeat;
     background-size: 950px 699px;
     height: 699px;
@@ -283,12 +282,8 @@
     /* 3 times the line-height to show 3 lines */
     height:72px;
     overflow:hidden;
-    text-overflow: ellipsis;
-/*     display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical; */
 }
-/* .p-work-normal-font::after {
+.p-work-normal-font::after {
     content:"...";
     font-weight:bold;
     position:absolute;
@@ -297,7 +292,7 @@
     padding:0 20px 1px 45px;
     background:url(http://newimg88.b0.upaiyun.com/newimg88/2014/09/ellipsis_bg.png) repeat-y;
     opacity: 1;
-} */
+}
 .work-normal-font{
     font-size:16px;
     font-family:SourceSansPro-Regular;
@@ -397,7 +392,7 @@
     left: 369px;
     transform: translate(-50%,0);
     top: 580px;    
-    /* border-top: 2px solid #32a4be; */
+    /* border-top: 2px solid #4C4D66; */
     min-width: 146px;
     text-align: center;
 }
@@ -406,7 +401,7 @@
     left: 369px;
     transform: translate(-50%,0);
     top: 624px;    
-    /* border-top: 2px solid #32a4be; */
+    /* border-top: 2px solid #4C4D66; */
     min-width: 146px;
     text-align: center;
 }
@@ -415,7 +410,7 @@
     left: 832px;
     transform: translate(-50%,0);
     top: 580px;
-    /* border-top: 2px solid #32a4be; */
+    /* border-top: 2px solid #4C4D66; */
     min-width: 146px;
     text-align: center;
 }
@@ -424,7 +419,7 @@
     left: 832px;
     transform: translate(-50%,0);
     top: 624px;
-    /* border-top: 2px solid #32a4be; */
+    /* border-top: 2px solid #4C4D66; */
     min-width: 146px;
     text-align: center;
 }

@@ -10,11 +10,12 @@
       </div>
     </div> -->
 
-    <ont-pagination :total="contracts.total"></ont-pagination>
+    <tst-pagination :total="contracts.total"></tst-pagination>
 
     <div class="row justify-content-center">
       <div class="col">
-        <div class="table-responsive">
+        <o-load :type="listType" v-if="!(contracts.list && loadingFlag)" ></o-load>
+        <div v-else class="table-responsive">
           <table class="table table-hover">
             <thead>
             <tr>
@@ -28,20 +29,20 @@
             <tbody>
             <tr v-for="contract in contracts.list">
               <td class="font-size14 font-Regular normal_color logo-td-width">
-                <img v-if="contract.Logo !== ''" class="sc-list-img" :src="contract.Logo" alt="">
+                <img v-if="contract.logo !== ''" class="sc-list-img" :src="contract.logo" alt="">
                 <div v-else class="sc-no-logo">C</div>
               </td>
               <td class="font-size14 font-Regular normal_color sc-pointer"
                   @click="goToContractDetail(contract)">
-                <div class="font-blod font-size16">{{ contract.Name }}</div>
-                <div class="f-color font-size14 token-td token-desc">{{ contract.Description ? contract.Description.length > 128 ? contract.Description.substr(0,128) + '...' : contract.Description.substr(0,128) : '' }}</div>
+                <div class="font-blod font-size16">{{ contract.name }}</div>
+                <div class="f-color font-size14 token-td token-desc">{{ contract.description ? contract.description.length > 128 ? contract.description.substr(0,128) + '...' : contract.description.substr(0,128) : '' }}</div>
               </td>
               <td class="font-size14 font-Regular important_color pointer"
                   @click="goToContractDetail(contract)">
-                {{ contract.ContractHash.substr(0,8) + '...' + contract.ContractHash.substr(32)}}
+                {{ contract.contract_hash.substr(0,8) + '...' + contract.contract_hash.substr(32)}}
               </td>
-              <td class="font-size14 font-Regular normal_color" style="width: 100px">{{ contract.TxCount }}</td>
-              <td class="font-size14 font-Regular normal_color" style="width: 180px">{{ $HelperTools.getTransDate(contract.CreateTime) }}</td>
+              <td class="font-size14 font-Regular normal_color" style="width: 100px">{{ contract.tx_count }}</td>
+              <td class="font-size14 font-Regular normal_color" style="width: 180px">{{ $HelperTools.getTransDate(contract.update_time) }}</td>
             </tr>
             </tbody>
           </table>
@@ -49,7 +50,7 @@
       </div>
     </div>
 
-    <ont-pagination :total="contracts.total"></ont-pagination>
+    <tst-pagination :total="contracts.total"></tst-pagination>
   </div>
 </template>
 
@@ -60,14 +61,24 @@
     name: "Contracts-List",
     data() {
       return {
+        loadingFlag:false,
+        listType:'list',
         applyForUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSdszQp1BbviS83psIZUZYMKoNkn0e4zcYxrVqM6v5Qbmzby3g/viewform?vc=0&c=0&w=1'
       }
     },
-    created() {
+    mounted() {
       this.getContractsData()
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
     },
     watch: {
-      '$route': 'getContractsData'
+      '$route': function(){
+        this.getContractsData()
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+      },
+      'contracts':function(){
+        console.log(this.contracts)
+        this.loadingFlag = true
+      }
     },
     computed: {
       ...mapState({
@@ -76,6 +87,7 @@
     },
     methods: {
       getContractsData() {
+        this.loadingFlag =false
         this.testNetPageSizeCheck()
         this.$store.dispatch('GetContracts', this.$route.params).then()
       },
@@ -96,7 +108,8 @@
         if (this.$route.params.net == undefined) {
           this.$router.push({
             name: 'ContractDetail', params: {
-              contractHash: contract.ContractHash,
+              contractHash: contract.contract_hash,
+              contractType: contract.type==''?'other':contract.type,
               pageSize: 10,
               pageNumber: 1
             }
@@ -104,7 +117,8 @@
         } else {
           this.$router.push({
             name: 'ContractDetailTest', params: {
-              contractHash: contract.ContractHash,
+              contractHash: contract.contract_hash,
+              contractType: contract.type==''?'other':contract.type,
               pageSize: 10,
               pageNumber: 1,
               net: 'testnet'
@@ -133,7 +147,7 @@
   .sc-no-logo {
     width: 32px;
     height: 32px;
-    background-color: #32A4BE;
+    background-color: #4C4D66;
     color: white;
     font-weight: bold;
     line-height: 32px;
@@ -142,7 +156,7 @@
 
   .sc-pointer:hover {
     cursor: pointer;
-    color: #32A4BE;
+    color: #4C4D66;
     text-decoration: underline;
   }
 
@@ -163,9 +177,9 @@
   .checkin-btn {
     line-height: 30px;
     width: 128px;
-    color: #32a4be;
+    color: #4C4D66;
     background-color:#fff;
-    border:1px solid #32A4BE;
+    border:1px solid #4C4D66;
     font-weight: 700;
     font-size: 14px;
     cursor: pointer;

@@ -1,8 +1,8 @@
 <template>
   <div class="div-block-list">
-    <div class="row title-color title-hover" @click="toOntIdListPage">
+    <div class="row title-color title-hover" @click="toTstIdListPage">
       <div class="col-8 block-title-wrapper">
-        <p class="title font-blod">{{ $t('ontIdList.name') }}</p>
+        <p class="title font-blod">{{ $t('tstIdList.name') }}</p>
       </div>
       <div class="col-4 block-title-wrapper">
         <p class="title-more float-right">{{ $t('all.more') }}</p>
@@ -10,23 +10,23 @@
     </div>
 
     <div class="row">
-      <div v-for="(OntId,index) in latestOntIdList.info" class="col-12 block-item-wrapper">
+      <div v-for="(TstId,index) in latestTstIdList.info" class="col-12 block-item-wrapper">
         <div class="divider-line"></div>
         <div class="row padding0 block-item-sub-wrapper">
           <div :class="( index <1) ?'block-item col-8 text-left padding0 font-size16':'block-item col-8 text-left padding0 block-item-top font-size16'"
-               @click="toTransactionDetailPage(OntId.TxnHash)">
-            <span class="ontID-text font700 padding0">{{OntId.TxnHash.substr(0,8)}}...{{OntId.TxnHash.substr(56)}}</span>
+               @click="toTransactionDetailPage(TstId.tx_hash)">
+            <span class="tstID-text font700 padding0">{{TstId.tx_hash.substr(0,8)}}...{{TstId.tx_hash.substr(56)}}</span>
           </div>
-          <span v-if="$HelperTools.getDateTime(OntId.TxnTime) <60" class="font-size14 block-item col-4 text-right padding0 block-item-top">
+          <span v-if="$HelperTools.getDateTime(TstId.tx_time) <60" class="font-size14 block-item col-4 text-right padding0 block-item-top">
             {{showtime[index]}}s ago
           </span>
           <span v-else class="font-size14 block-item col-4 text-right padding0 block-item-top">
-            {{getShowDate(OntId.TxnTime)}} ago
+            {{getShowDate(TstId.tx_time)}} ago
           </span>
         </div>
         <div class="row padding0 block-item-sub-wrapper-s">
           <span :class="( index >4) ? ' block-item col-12 text-left padding0 font-size14 ':'block-item col-12 text-left padding0  font-size14 '"
-                >{{getOntIDEvent(OntId.Description)}}</span>
+                >{{getTstIDEvent(TstId.description)}}</span>
         </div>
       </div>
     </div>
@@ -35,20 +35,20 @@
 
 <script>
   import {mapState} from 'vuex'
-  import GetTransactionType from './../../common/OntMsg/GetTransactionType.js'
+  import GetTransactionType from './../../common/TstMsg/GetTransactionType.js'
 
   export default {
-    name: "ont-id-list",
+    name: "tst-id-list",
     data() {
       return {
         info: [],
         showtime: [0, 0, 0, 0, 0]
       }
     },
-    created() {
-      this.getOntIdList()
+    mounted() {
+      this.getTstIdList()
       this.intervalBlock1 = setInterval(() => {
-        this.getOntIdList()
+        this.getTstIdList()
       }, 6000)
       this.intervalBlockstandard = setInterval(() => {
         for (var i = 0; i < 5; i++) {
@@ -58,27 +58,27 @@
       }, 1000)
     },
     watch: {
-      '$route': 'getOntIdList',
-      'latestOntIdList.info': function () {
-        for (var i = 0; i < this.latestOntIdList.info.length; i++) {
-          this.showtime[i] = this.$HelperTools.getDateTime(this.latestOntIdList.info[i].TxnTime)
+      '$route': 'getTstIdList',
+      'latestTstIdList.info': function () {
+        for (var i = 0; i < this.latestTstIdList.info.length; i++) {
+          this.showtime[i] = this.$HelperTools.getDateTime(this.latestTstIdList.info[i].tx_time)
         }
       }
     },
     computed: {
       ...mapState({
-        latestOntIdList: state => state.OntIdList.LatestOntIdList
+        latestTstIdList: state => state.TstIdList.LatestTstIdList
       })
     },
     methods: {
-      getOntIdList() {
-        this.$store.dispatch('getOntIdList', this.$route.params).then()
+      getTstIdList() {
+        this.$store.dispatch('getTstIdList', this.$route.params).then()
       },
-      toOntIdListPage() {
+      toTstIdListPage() {
         if (this.$route.params.net === 'testnet') {
-          this.$router.push({name: 'OntIdListDetailTest', params: {pageSize: 20, pageNumber: 1, net: 'testnet'}})
+          this.$router.push({name: 'TstIdListDetailTest', params: {pageSize: 20, pageNumber: 1, net: 'testnet'}})
         } else {
-          this.$router.push({name: 'OntIdListDetail', params: {pageSize: 20, pageNumber: 1}})
+          this.$router.push({name: 'TstIdListDetail', params: {pageSize: 20, pageNumber: 1}})
         }
       },
       getShowDate($time) {
@@ -90,16 +90,16 @@
       },
       toTransactionDetailPage($TxnId) {
         if (this.$route.params.net === 'testnet') {
-          this.$router.push({name: 'TransactionDetailTest', params: {txnHash: $TxnId, net: 'testnet'}})
+          this.$router.push({name: 'TransactionDetailTest', params: {tx_hash: $TxnId, net: 'testnet'}})
         } else {
-          this.$router.push({name: 'TransactionDetail', params: {txnHash: $TxnId}})
+          this.$router.push({name: 'TransactionDetail', params: {tx_hash: $TxnId}})
         }
       },
-      toOntIdDetailPage($OntId) {
+      toTstIdDetailPage($TstId) {
         if (this.$route.params.net === 'testnet') {
-          this.$router.push({name: 'OntIdDetailTest', params: {ontid: $OntId, net: 'testnet'}})
+          this.$router.push({name: 'TstIdDetailTest', params: {tstid: $TstId, net: 'testnet'}})
         } else {
-          this.$router.push({name: 'OntIdDetail', params: {ontid: $OntId}})
+          this.$router.push({name: 'TstIdDetail', params: {tstid: $TstId}})
         }
       },
       countDownTime: function () {
@@ -107,10 +107,10 @@
           this.info[i].showtime = this.info[i].showtime + 1
         }
       },
-      getOntIDEvent: function ($event) {
+      getTstIDEvent: function ($event) {
         switch ($event.substr(0, 12)) {
-          case "register Ont":
-            return "Register ONT ID";
+          case "register Tst":
+            return "Register TST ID";
           case "add publicKe":
             return "Add publickey";
           case "remove publi":
@@ -126,7 +126,9 @@
           case "add recovery":
             return "Add recovery";
           case "remove attri":
-            return "Remove attribute"
+            return "Remove attribute";
+          case "create new c":
+            return "Create new claim"
         }
       }
     },
@@ -138,13 +140,13 @@
 </script>
 
 <style scoped>
-  .ontID-text{
+  .tstID-text{
     background-color: #fff;
-    color:#32a4be;
+    color:#4C4D66;
     cursor: pointer;
     padding: 4px;
   }
-  .ontID-text:hover{
+  .tstID-text:hover{
     text-decoration: underline;
   }
 </style>

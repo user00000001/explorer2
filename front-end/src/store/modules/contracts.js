@@ -1,11 +1,13 @@
 import axios from 'axios'
 import * as types from "../mutation-type"
 import HelperTool from "./../../helpers/helper"
+import $httpService from '../../common/utils'
 
 export default {
   state: {
     List: {},
-    Detail: {}
+    Detail: {},
+    TxList: {}
   },
   mutations: {
     [types.SET_CONTRACTS_DATA](state, payload) {
@@ -13,6 +15,9 @@ export default {
     },
     [types.SET_CONTRACT_DATA](state, payload) {
       state.Detail = payload.info
+    },
+    [types.SET_CONTRACT_TX_DATA](state, payload) {
+      state.TxList = payload.info
     }
   },
   actions: {
@@ -25,15 +30,18 @@ export default {
      * @return {Promise<AxiosResponse | never>}
      */
     GetContracts({dispatch, commit}, $param) {
-      let apiUrl = ($param.net === "testnet") ? process.env.TEST_API_URL : process.env.API_URL;
-      let url = apiUrl + '/contract/' + $param.pageSize + '/' + $param.pageNumber;
 
-      return axios.get(url).then(response => {
+      return $httpService.get('/contracts',{
+        params: {
+          page_size: $param.pageSize,
+          page_number: $param.pageNumber
+        }
+      }).then(response => {
         commit({
           type: types.SET_CONTRACTS_DATA,
           info: {
-            list: response.data.Result.ContractList,
-            total: response.data.Result.Total
+            list: response.result.records,
+            total: response.result.total
           }
         })
       }).catch(error => {
@@ -49,27 +57,48 @@ export default {
      * @return {Promise<AxiosResponse | never>}
      */
     GetContract({dispatch, commit}, $param) {
-      let apiUrl = ($param.net === "testnet") ? process.env.TEST_API_URL : process.env.API_URL;
-      let url = apiUrl + '/contract/' + $param.contractHash + '/' + $param.pageSize + '/' + $param.pageNumber;
-
-      return axios.get(url).then(response => {
-        let list = response.data.Result;
+      return $httpService.get('/contracts/'+$param.contractHash).then(response => {
+        let list = response.result;
 
         // string to json
-        list.ABI = HelperTool.HelperTools.strToJson(list.ABI);
-        list.Code = HelperTool.HelperTools.strToJson(list.Code);
-        list.ContactInfo = HelperTool.HelperTools.strToJson(list.ContactInfo);
+        list.contact_info = HelperTool.HelperTools.strToJson(list.contact_info);
 
         commit({
           type: types.SET_CONTRACT_DATA,
           info: {
-            list: list,
-            total: response.data.Result.Total
+            list: list
           }
         })
       }).catch(error => {
         console.log(error)
       })
-    }
+    },
+    GetContractTx({dispatch, commit}, $param) {
+      var url = ""
+      /* 存在直接从搜索框进入的情况，此时无法得知合约的type */
+      if($param.contractType == "all"){
+        url = '/contracts/'+$param.contractHash+'/transactions'
+      }else{
+        url = '/contracts/'+$param.contractType +'/'+$param.contractHash+'/transactions'
+      }
+      return $httpService.get(url,{
+        params: {
+          page_size: $param.pageSize,
+          page_number: $param.pageNumber
+        }
+      }).then(response => {
+        // string to json
+
+        commit({
+          type: types.SET_CONTRACT_TX_DATA,
+          info: {
+            list: response.result.records,
+            total: response.result.total
+          }
+        })
+      }).catch(error => {
+        console.log(error)
+      })
+    },
   }
 }

@@ -1,6 +1,6 @@
-# ont-explorer-frontEnd
+# tst-explorer-frontEnd
 
-> ONTology Explorer FrontEnd
+> Tesra Explorer FrontEnd
 
 ## Build Setup
 

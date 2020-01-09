@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import XLSX from 'xlsx'
+  /* import XLSX from 'xlsx' */
 
 	export default {
     name: "DownloadExcel",
@@ -19,7 +19,7 @@
         isShow: true
       }
     },
-    created() {
+    mounted() {
       let nowDate = new Date();
       this.excelFileName = this.excelFileName + '-' + nowDate.toLocaleDateString() + '.xlsx';
     },
@@ -27,8 +27,9 @@
       downloadExcel() {
         this.isShow = false;
 
-        this.$store.dispatch('getAddressDetailAllData', this.$route.params).then(res => {
+        this.$store.dispatch('getAddressDetailAllData', {address:this.$route.params.address,pageSize:20,pageNumber:1}).then(res => {
           if (res !== false) this.generatingExcelData(res)
+
         })
       },
       generatingExcelData(json) {
@@ -108,6 +109,6 @@
 
   .download-excel-btn:hover {
     cursor: pointer;
-    color: #32A4BE;
+    color: #4C4D66;
   }
 </style>

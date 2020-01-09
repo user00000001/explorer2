@@ -2,11 +2,12 @@
   <div class="e-container container-margin-top">
     <list-title :name="$t('transList.name')"></list-title>
 
-    <ont-pagination :total="transactions.total"></ont-pagination>
+    <tst-pagination :total="transactions.total"></tst-pagination>
 
     <div class="row justify-content-center">
       <div class="col">
-        <div class="table-responsive">
+        <o-load :type="listType" v-if="!(transactions.list && loadingFlag)" ></o-load>
+        <div v-else class="table-responsive">
           <table class="table table-hover">
             <thead>
             <tr>
@@ -21,15 +22,15 @@
             </thead>
             <tbody>
             <tr v-for="tx in transactions.list" class="font-size14 font-Regular">
-              <td class="important_color pointer" @click="toTransactionDetailPage(tx.TxnHash)">
-                {{tx.TxnHash.substr(0,8) + '...' + tx.TxnHash.substr(56)}}
+              <td class="important_color pointer" @click="toTransactionDetailPage(tx.tx_hash)">
+                {{tx.tx_hash.substr(0,8) + '...' + tx.tx_hash.substr(56)}}
               </td>
-              <td class="s-color">{{ tx.ConfirmFlag === 1 ? 'Confirmed' : 'Failed' }}</td>
+              <td class="s-color">{{ tx.confirm_flag === 1 ? 'Confirmed' : 'Failed' }}</td>
               <!--<td class="s-color">{{ tx.TxnType === 208 ? 'Deploy' : 'Run' }}</td>-->
               <!--<td class="s-color">{{ tx.BlockIndex }}</td>-->
-              <td class="normal_color">{{tx.Height}}</td>
-              <td class="normal_color">{{$HelperTools.toFinancialVal(tx.Fee)}}</td>
-              <td class="normal_color">{{$HelperTools.getTransDate(tx.TxnTime)}}</td>
+              <td class="normal_color">{{tx.block_height}}</td>
+              <td class="normal_color">{{$HelperTools.toFinancialVal(tx.fee)}}</td>
+              <td class="normal_color">{{$HelperTools.getTransDate(tx.tx_time)}}</td>
             </tr>
             </tbody>
           </table>
@@ -37,13 +38,13 @@
       </div>
     </div>
 
-    <ont-pagination :total="transactions.total"></ont-pagination>
+    <tst-pagination :total="transactions.total"></tst-pagination>
   </div>
 </template>
 
 <script>
   import {mapState} from 'vuex'
-  import GetTransactionType from './../../common/OntMsg/GetTransactionType.js'
+  import GetTransactionType from './../../common/TstMsg/GetTransactionType.js'
 
   export default {
     data() {
@@ -53,13 +54,23 @@
         allpage: 1,
         allnum: '',
         size: 0,
+        loadingFlag:false,
+        listType:'littlelist',
       }
     },
-    created() {
+    mounted() {
       this.getTransactions()
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
     },
     watch: {
-      '$route': 'getTransactions'
+      '$route':function(){
+        this.getTransactions()
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+      },
+      'transactions':function(){
+        this.loadingFlag = true
+        console.log(this.transactions)
+      }
     },
     computed: {
       ...mapState({
@@ -68,6 +79,7 @@
     },
     methods: {
       getTransactions() {
+        this.loadingFlag = false
         this.testNetPageSizeCheck()
         this.$store.dispatch('GetTransactions', this.$route.params).then()
       },
@@ -83,9 +95,9 @@
       },
       toTransactionDetailPage($TxnId) {
         if (this.$route.params.net == undefined) {
-          this.$router.push({name: 'TransactionDetail', params: {txnHash: $TxnId}})
+          this.$router.push({name: 'TransactionDetail', params: {tx_hash: $TxnId}})
         } else {
-          this.$router.push({name: 'TransactionDetailTest', params: {txnHash: $TxnId, net: 'testnet'}})
+          this.$router.push({name: 'TransactionDetailTest', params: {tx_hash: $TxnId, net: 'testnet'}})
         }
       },
       getTransactionType($case) {

@@ -1,6 +1,19 @@
 <template>
   <div class="div-block-list">
-    <div class="row title-color title-hover" @click="toTransactionListPage">
+    <div class="block-title font-blod" @click="toTransactionListPage">
+      <span>{{ $t('transList.name') }}</span>
+      <span>{{ $t('all.more') }}</span>
+    </div>
+    <div class="block-list-box">
+      <div class="list-item" v-for="(tx,index) in latestTransactionList.info" :key="index" @click="toTransactionDetailPage(tx.tx_hash)">
+        <span>{{tx.tx_hash.substr(0,8)}}...{{tx.tx_hash.substr(56)}}</span>
+        <span>{{getTxtype(tx.tx_type)}}</span>
+        <span v-if="$HelperTools.getDateTime(tx.tx_time) < 60">{{showtime[index]}}s ago</span>
+        <span v-else>{{getShowDate(tx.tx_time)}} ago</span>
+      </div>
+    </div>
+
+    <!-- <div class="row title-color title-hover" @click="toTransactionListPage">
       <div class="col-8 block-title-wrapper">
         <p class="title font-blod">{{ $t('transList.name') }}</p>
       </div>
@@ -14,23 +27,23 @@
         <div class="divider-line"></div>
         <div class="row  block-item-sub-wrapper">
           <div :class="( index <1) ?'block-item col-8 text-left padding0 font-size16':' font-size16 block-item col-8 text-left padding0 block-item-top'"
-               @click="toTransactionDetailPage(tx.TxnHash)">
-            <span class="txhash-text font700 padding0">{{tx.TxnHash.substr(0,8)}}...{{tx.TxnHash.substr(56)}}</span>
+               @click="toTransactionDetailPage(tx.tx_hash)">
+            <span class="txhash-text font700 padding0">{{tx.tx_hash.substr(0,8)}}...{{tx.tx_hash.substr(56)}}</span>
           </div>
-          <span v-if="$HelperTools.getDateTime(tx.TxnTime) < 60" class="font-size14 block-item col-4 text-right padding0 block-item-top">{{showtime[index]}}s ago</span>
-          <span v-else class="font-size14 block-item col-4 text-right padding0 block-item-top">{{getShowDate(tx.TxnTime)}} ago</span>
+          <span v-if="$HelperTools.getDateTime(tx.tx_time) < 60" class="font-size14 block-item col-4 text-right padding0 block-item-top">{{showtime[index]}}s ago</span>
+          <span v-else class="font-size14 block-item col-4 text-right padding0 block-item-top">{{getShowDate(tx.tx_time)}} ago</span>
         </div>
         <div class="row  block-item-sub-wrapper-s">
-          <span :class="( index >4) ? ' block-item col-12 text-left padding0 font-size14':'block-item col-12 text-left padding0  font-size14'">{{getTxtype(tx.TxnType)}}</span>
+          <span :class="( index >4) ? ' block-item col-12 text-left padding0 font-size14':'block-item col-12 text-left padding0  font-size14'">{{getTxtype(tx.tx_type)}}</span>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
   import {mapState} from 'vuex'
-  import GetTransactionType from './../../common/OntMsg/GetTransactionType.js'
+  import GetTransactionType from './../../common/TstMsg/GetTransactionType.js'
 
   export default {
     name: "transaction-list",
@@ -40,13 +53,13 @@
         showtime: [0, 0, 0, 0, 0]
       }
     },
-    created() {
+    mounted() {
       this.getTransactionList()
       this.intervalBlock2 = setInterval(() => {
         this.getTransactionList()
       }, 6000)
       this.intervalBlockstandard = setInterval(() => {
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 10; i++) {
           var time = this.showtime[i] + 1
           this.$set(this.showtime, i, time)
         }
@@ -56,7 +69,7 @@
       '$route': 'getTransactionList',
       'latestTransactionList.info': function () {
         for (var i = 0; i < 5; i++) {
-          this.showtime[i] = this.$HelperTools.getDateTime(this.latestTransactionList.info[i].TxnTime)
+          this.showtime[i] = this.$HelperTools.getDateTime(this.latestTransactionList.info[i].tx_time)
         }
       }
     },
@@ -79,9 +92,9 @@
       },
       toTransactionDetailPage($TxnId) {
         if (this.$route.params.net == undefined) {
-          this.$router.push({name: 'TransactionDetail', params: {txnHash: $TxnId}})
+          this.$router.push({name: 'TransactionDetail', params: {tx_hash: $TxnId}})
         } else {
-          this.$router.push({name: 'TransactionDetailTest', params: {txnHash: $TxnId, net: "testnet"}})
+          this.$router.push({name: 'TransactionDetailTest', params: {tx_hash: $TxnId, net: "testnet"}})
         }
       },
       getTransactionType($case) {
@@ -102,6 +115,8 @@
             return "Deploy Smart Contract"
           case 209:
             return "Invoke Smart Contract"
+          case 210:
+            return "Invoke wasmvm Contract"
         }
       }
     },
@@ -115,7 +130,7 @@
 <style scoped>
   .txhash-text{
     background-color: #fff;
-    color:#32a4be;
+    color:#4C4D66;
     cursor: pointer;
     padding: 4px;
   }

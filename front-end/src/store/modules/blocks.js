@@ -1,4 +1,4 @@
-import axios from 'axios'
+import $httpService from '../../common/utils'
 import * as types from "../mutation-type"
 
 export default {
@@ -16,22 +16,25 @@ export default {
   },
   actions: {
     GetBlocks({dispatch, commit}, $param) {
-      let apiUrl = ($param.net === "testnet") ? process.env.TEST_API_URL : process.env.API_URL;
 
-      return axios.get(apiUrl + '/blocklist/' + $param.pageSize + '/' + $param.pageNumber).then(response => {
-        let msg = response.data;
-        let list = msg.Result.BlockList;
+      return $httpService.get('/blocks', {
+        params: {
+          page_size: $param.pageSize,
+          page_number: $param.pageNumber
+        }
+      }).then(response => {
+        let list = response.result.records
 
         // 将bookkeeper拆成数组
         for (let index in list) {
-          list[index].BookKeeper = list[index].BookKeeper.split('&')
+          list[index].BookKeeper = list[index].bookkeepers.split('&')
         }
 
         commit({
           type: types.SET_BLOCK_LIST_PAGE,
           info: {
             info: list,
-            total: msg.Result.Total
+            total: response.result.total
           }
         })
       }).catch(error => {
@@ -39,14 +42,13 @@ export default {
       })
     },
     GetBlock({dispatch, commit}, $param) {
-      let apiUrl = ($param.net === "testnet") ? process.env.TEST_API_URL : process.env.API_URL;
 
-      return axios.get(apiUrl + '/block/' + $param.param).then(response => {
-        let msg = response.data;
-        let blockData = msg.Result;
+      return $httpService.get('/blocks/'+$param.param).then(response => {
+        let msg = response;
+        let blockData = msg.result;
 
         // 将bookkeeper拆成数组
-        blockData.BookKeeper = blockData.BookKeeper.split('&');
+        blockData.BookKeeper = blockData.bookkeepers.split('&');
 
         commit({
           type: types.SET_BLOCK_DETAIL_PAGE,

@@ -2,11 +2,12 @@
   <div class="e-container container-margin-top">
     <list-title :name="$t('blockList.name')"></list-title>
 
-    <ont-pagination :total="blocks.total"></ont-pagination>
+    <tst-pagination :total="blocks.total"></tst-pagination>
 
     <div class="row justify-content-center">
       <div class="col">
-        <div class="table-responsive">
+        <o-load :type="listType" v-if="!(blocks.info && loadingFlag)" ></o-load>
+        <div v-else class="table-responsive">
           <table class="table table-hover">
             <thead>
             <tr>
@@ -19,11 +20,11 @@
             </thead>
             <tbody>
             <tr v-for="block in blocks.info">
-              <td class="font-size14 font-Regular important_color pointer" @click="toBlockDetailPage(block.Height)">{{block.Height}}</td>
-              <td class="font-size14 font-Regular normal_color">{{block.TxnNum}}</td>
+              <td class="font-size14 font-Regular important_color pointer" @click="toBlockDetailPage(block.block_height)">{{block.block_height}}</td>
+              <td class="font-size14 font-Regular normal_color">{{block.tx_count}}</td>
               <td class="font-size14 font-Regular normal_color">{{block.BookKeeper.length}}</td>
-              <td class="font-size14 font-Regular normal_color">{{block.BlockSize}}</td>
-              <td class="font-size14 font-Regular normal_color">{{$HelperTools.getTransDate(block.BlockTime)}}</td>
+              <td class="font-size14 font-Regular normal_color">{{block.block_size}}</td>
+              <td class="font-size14 font-Regular normal_color">{{$HelperTools.getTransDate(block.block_time)}}</td>
             </tr>
             </tbody>
           </table>
@@ -31,7 +32,7 @@
       </div>
     </div>
 
-    <ont-pagination :total="blocks.total"></ont-pagination>
+    <tst-pagination :total="blocks.total"></tst-pagination>
   </div>
 </template>
 
@@ -39,19 +40,33 @@
   import {mapState} from 'vuex'
 
   export default {
-    created() {
+    mounted() {
       this.getBlocks()
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
     },
     watch: {
-      '$route': 'getBlocks'
+      '$route':function(){
+        this.getBlocks()
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+      },
+      'blocks':function(){
+        this.loadingFlag = true
+      }
     },
     computed: {
       ...mapState({
         blocks: state => state.Blocks.List,
       })
     },
+    data() {
+      return {
+        loadingFlag:false,
+        listType:'list'
+      }
+    },
     methods: {
       getBlocks() {
+        this.loadingFlag = false
         this.testNetPageSizeCheck()
         this.$store.dispatch('GetBlocks', this.$route.params).then()
       },

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import * as types from "../mutation-type"
+import $httpService from '../../common/utils'
 
 export default {
   state: {
@@ -14,14 +15,14 @@ export default {
   },
   actions: {
     getBlockList({dispatch, commit},$param) {
-      let apiUrl = ($param.net === "testnet") ? process.env.TEST_API_URL : process.env.API_URL;
 
-      return axios.get(apiUrl + '/blocklist/5').then(response => {
-        var msg = JSON.parse(response.request.response)
-        commit({
-          type: types.SET_BLOCK_LIST,
-          info: msg.Result
-        })
+      return $httpService.get('/latest-blocks?count=10').then(response => {
+        if(response.code === 0) {
+          commit({
+            type: types.SET_BLOCK_LIST,
+            info: response.result
+          })
+        }
       }).catch(error => {
         console.log(error)
       })

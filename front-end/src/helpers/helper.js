@@ -40,6 +40,26 @@ const HelperTools = {
   },
 
   /**
+   * 获取统计用UTC标准时间
+   *
+   * @param inputTime
+   * @return {string}
+   */
+  getStatisticsTime(inputTime) {
+    inputTime = inputTime * 1000;
+    let date = new Date(inputTime);
+    let Y = date.getUTCFullYear();
+    let mouth = (date.getUTCMonth() + 1 < 10 ? '0' + (date.getUTCMonth() + 1) : date.getUTCMonth() + 1);
+
+    let D = date.getUTCDate() < 10 ? '0' + date.getUTCDate() + '-' : date.getUTCDate() + '-';
+    let h = date.getUTCHours() < 10 ? '0' + date.getUTCHours() : date.getUTCHours();
+    let m = date.getUTCMinutes() < 10 ? '0' + date.getUTCMinutes() : date.getUTCMinutes();
+    let s = date.getUTCSeconds() < 10 ? '0' + date.getUTCSeconds() : date.getUTCSeconds();
+
+    return mouth +'-' + D + Y + ' ' + h + ':' + m + ':' + s + " UTC";
+  },
+
+  /**
    * 获取UTC标准时间
    *
    * @param inputTime

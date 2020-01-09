@@ -33,11 +33,11 @@
                     @click="toStatistics('14')"
                     :class="$route.params.day === '14' ? 'btn-current' : 'btn-choose'"
                     class="btn">{{ '14' + $t('statistics.day') }}</button>
-            <button type="button"
+            <!-- <button type="button"
                     :disabled="$route.params.day === '30'"
                     @click="toStatistics('30')"
                     :class="$route.params.day === '30' ? 'btn-current' : 'btn-choose'"
-                    class="btn btn-left-0-border">{{ '30' + $t('statistics.day') }}</button>
+                    class="btn btn-left-0-border">{{ '30' + $t('statistics.day') }}</button> -->
           </div>
         </div>
       </div>
@@ -75,12 +75,14 @@
 
   export default {
     name: "StatisticsTable",
-    created() {
+    mounted() {
       this.getTableData();
-      this.getContractList()
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+     // this.getContractList()
     },
     watch: {
-      '$route': ['getTableData', 'getContractList'],
+      '$route': ['getTableData'],
+      'statistics.day':['getTableData'],
     },
     computed: {
       ...mapState({
@@ -180,8 +182,8 @@
   }
 
   .btn-choose {
-    border: 1px solid #32a4be;
-    color: #32a4be;
+    border: 1px solid #4C4D66;
+    color: #4C4D66;
   }
 
   .line-chart-style {

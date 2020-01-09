@@ -4,10 +4,10 @@ import Vuex from 'vuex'
 import RunStatus from './modules/run-status'
 import BlockList from './modules/block-list'
 import TransactionList from './modules/transaction-list'
-import OntIdList from './modules/ont-id-list'
+import TstIdList from './modules/tst-id-list'
 import Blocks from './modules/blocks'
 import Transactions from './modules/transactions'
-import OntIDs from './modules/ont-ids'
+import TstIDs from './modules/tst-ids'
 import Addresses from './modules/addresses'
 import ClaimDetailPage from './modules/claim-verify-page'
 import NodeAuthorization from './modules/node-authorization'
@@ -20,8 +20,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   modules: {
     RunStatus,
-    OntIdList,
-    OntIDs,
+    TstIdList,
+    TstIDs,
     BlockList,
     Blocks,
     TransactionList,
