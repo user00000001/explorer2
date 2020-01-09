@@ -7,7 +7,7 @@ spring:
     encoding:
       charset: UTF-8
   datasource:
-    url: jdbc:mysql://localhost:3306/explorer?serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/explorer_v2?serverTimezone=UTC
     username: root
     password: ${MYSQL_TEST_PASSWORD}
     initialization-mode: always
@@ -21,8 +21,8 @@ spring:
 mybatis:
   check-config-location: true
   mapper-locations: classpath:/mybatis/mapper/*Mapper.xml
-  type-aliases-package: com.ont.controller
-  type-handlers-package: com.ont.handler
+  type-aliases-package: com.tst.controller
+  type-handlers-package: com.tst.handler
   configuration:
     map-underscore-to-camel-case: true
 
@@ -55,9 +55,9 @@ config:
   block:
     interval: 6000
   contract:
-    ont: 0100000000000000000000000000000000000000
-    ong: 0200000000000000000000000000000000000000
-    ontId: 0300000000000000000000000000000000000000
+    tst: 0100000000000000000000000000000000000000
+    tsg: 0200000000000000000000000000000000000000
+    tstId: 0300000000000000000000000000000000000000
     auth: 0600000000000000000000000000000000000000
     claimRecord: 36bb5c053b6b839c8f6b923fe852f91239b9fccc
     pumpkin: b2ae73193b07043e75de65edd4ad74b0fa6148b3

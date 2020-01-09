@@ -16,5 +16,10 @@ yarn-error.log*
 package-lock.json
 yarn.lock
 
-logs
-target
+/logs
+/target
+/.settings
+/.classpath
+/.project
+/.settings
+/.factorypath

@@ -78,16 +78,16 @@ public class Contract {
     private Integer txCount;
 
     /**
-     * 该合约的总的ont流通量
+     * 该合约的总的tst流通量
      */
-    @Column(name = "ont_sum")
-    private BigDecimal ontSum;
+    @Column(name = "tst_sum")
+    private BigDecimal tstSum;
 
     /**
-     * 该合约的总的ong流通量
+     * 该合约的总的tsg流通量
      */
-    @Column(name = "ong_sum")
-    private BigDecimal ongSum;
+    @Column(name = "tsg_sum")
+    private BigDecimal tsgSum;
 
     /**
      * 该合约的总的token流通量.json格式字符串
@@ -141,7 +141,7 @@ public class Contract {
     private String sourceCode;
 
     @Builder
-    public Contract(String contractHash, String name, Integer createTime, Integer updateTime, Boolean auditFlag, String contactInfo, String description, String type, String logo, String creator, Integer addressCount, Integer txCount, BigDecimal ontSum, BigDecimal ongSum, String tokenSum, String category, String dappName, Boolean dappstoreFlag, BigDecimal totalReward, BigDecimal lastweekReward, String abi, String code, String sourceCode) {
+    public Contract(String contractHash, String name, Integer createTime, Integer updateTime, Boolean auditFlag, String contactInfo, String description, String type, String logo, String creator, Integer addressCount, Integer txCount, BigDecimal ontSum, BigDecimal tsgSum, String tokenSum, String category, String dappName, Boolean dappstoreFlag, BigDecimal totalReward, BigDecimal lastweekReward, String abi, String code, String sourceCode) {
         this.contractHash = contractHash;
         this.name = name;
         this.createTime = createTime;
@@ -154,8 +154,8 @@ public class Contract {
         this.creator = creator;
         this.addressCount = addressCount;
         this.txCount = txCount;
-        this.ontSum = ontSum;
-        this.ongSum = ongSum;
+        this.tstSum = tstSum;
+        this.tsgSum = tsgSum;
         this.tokenSum = tokenSum;
         this.category = category;
         this.dappName = dappName;
@@ -384,39 +384,39 @@ public class Contract {
     }
 
     /**
-     * 获取该合约的总的ont流通量
+     * 获取该合约的总的tst流通量
      *
-     * @return ont_sum - 该合约的总的ont流通量
+     * @return tst_sum - 该合约的总的tst流通量
      */
     public BigDecimal getTstSum() {
-        return ontSum;
+        return tstSum;
     }
 
     /**
-     * 设置该合约的总的ont流通量
+     * 设置该合约的总的tst流通量
      *
-     * @param ontSum 该合约的总的ont流通量
+     * @param tstSum 该合约的总的tst流通量
      */
-    public void setTstSum(BigDecimal ontSum) {
-        this.ontSum = ontSum;
+    public void setTstSum(BigDecimal tstSum) {
+        this.tstSum = tstSum;
     }
 
     /**
-     * 获取该合约的总的ong流通量
+     * 获取该合约的总的tsg流通量
      *
-     * @return ong_sum - 该合约的总的ong流通量
+     * @return tsg_sum - 该合约的总的tsg流通量
      */
     public BigDecimal getOngSum() {
-        return ongSum;
+        return tsgSum;
     }
 
     /**
-     * 设置该合约的总的ong流通量
+     * 设置该合约的总的tsg流通量
      *
-     * @param ongSum 该合约的总的ong流通量
+     * @param tsgSum 该合约的总的tsg流通量
      */
-    public void setOngSum(BigDecimal ongSum) {
-        this.ongSum = ongSum;
+    public void setOngSum(BigDecimal tsgSum) {
+        this.tsgSum = tsgSum;
     }
 
     /**

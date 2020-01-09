@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
-@Table(name = "tbl_ontid_tx_detail")
+@Table(name = "tbl_tstid_tx_detail")
 public class TstidTxDetail {
     /**
      * 交易hash
@@ -25,7 +25,7 @@ public class TstidTxDetail {
     /**
      * TST ID
      */
-    private String ontid;
+    private String tstid;
 
     /**
      * 交易时间戳
@@ -50,10 +50,10 @@ public class TstidTxDetail {
     private BigDecimal fee;
 
     @Builder
-    public TstidTxDetail(String txHash, Integer txType, String ontid, Integer txTime, Integer blockHeight, String description, BigDecimal fee) {
+    public TstidTxDetail(String txHash, Integer txType, String tstid, Integer txTime, Integer blockHeight, String description, BigDecimal fee) {
         this.txHash = txHash;
         this.txType = txType;
-        this.ontid = ontid;
+        this.tstid = tstid;
         this.txTime = txTime;
         this.blockHeight = blockHeight;
         this.description = description;
@@ -99,19 +99,19 @@ public class TstidTxDetail {
     /**
      * 获取TST ID
      *
-     * @return ontid - TST ID
+     * @return tstid - TST ID
      */
     public String getTstid() {
-        return ontid;
+        return tstid;
     }
 
     /**
      * 设置TST ID
      *
-     * @param ontid TST ID
+     * @param tstid TST ID
      */
-    public void setTstid(String ontid) {
-        this.ontid = ontid == null ? null : ontid.trim();
+    public void setTstid(String tstid) {
+        this.tstid = tstid == null ? null : tstid.trim();
     }
 
     /**

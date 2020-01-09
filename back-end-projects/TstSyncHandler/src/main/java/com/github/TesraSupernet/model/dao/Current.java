@@ -21,21 +21,21 @@ public class Current {
     /**
      * 当前同步的最新TST ID数量
      */
-    @Column(name = "ontid_count")
-    private Integer ontidCount;
+    @Column(name = "tstid_count")
+    private Integer tstidCount;
 
     /**
      * 当前同步的最新TST ID相关的交易数量
      */
-    @Column(name = "ontid_tx_count")
-    private Integer ontidTxCount;
+    @Column(name = "tstid_tx_count")
+    private Integer tstidTxCount;
 
     @Builder
-    public Current(Integer blockHeight, Integer txCount, Integer ontidCount, Integer ontidTxCount) {
+    public Current(Integer blockHeight, Integer txCount, Integer tstidCount, Integer tstidTxCount) {
         this.blockHeight = blockHeight;
         this.txCount = txCount;
-        this.ontidCount = ontidCount;
-        this.ontidTxCount = ontidTxCount;
+        this.tstidCount = tstidCount;
+        this.tstidTxCount = tstidTxCount;
     }
 
     /**
@@ -77,36 +77,36 @@ public class Current {
     /**
      * 获取当前同步的最新TST ID数量
      *
-     * @return ontid_count - 当前同步的最新TST ID数量
+     * @return tstid_count - 当前同步的最新TST ID数量
      */
     public Integer getTstidCount() {
-        return ontidCount;
+        return tstidCount;
     }
 
     /**
      * 设置当前同步的最新TST ID数量
      *
-     * @param ontidCount 当前同步的最新TST ID数量
+     * @param tstidCount 当前同步的最新TST ID数量
      */
-    public void setTstidCount(Integer ontidCount) {
-        this.ontidCount = ontidCount;
+    public void setTstidCount(Integer tstidCount) {
+        this.tstidCount = tstidCount;
     }
 
     /**
      * 获取当前同步的最新TST ID相关的交易数量
      *
-     * @return ontid_tx_count - 当前同步的最新TST ID相关的交易数量
+     * @return tstid_tx_count - 当前同步的最新TST ID相关的交易数量
      */
     public Integer getTstidTxCount() {
-        return ontidTxCount;
+        return tstidTxCount;
     }
 
     /**
      * 设置当前同步的最新TST ID相关的交易数量
      *
-     * @param ontidTxCount 当前同步的最新TST ID相关的交易数量
+     * @param tstidTxCount 当前同步的最新TST ID相关的交易数量
      */
-    public void setTstidTxCount(Integer ontidTxCount) {
-        this.ontidTxCount = ontidTxCount;
+    public void setTstidTxCount(Integer tstidTxCount) {
+        this.tstidTxCount = tstidTxCount;
     }
 }

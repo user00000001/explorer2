@@ -17,8 +17,8 @@
     <result column="creator" jdbcType="VARCHAR" property="creator" />
     <result column="address_count" jdbcType="INTEGER" property="addressCount" />
     <result column="tx_count" jdbcType="INTEGER" property="txCount" />
-    <result column="ont_sum" jdbcType="DECIMAL" property="ontSum" />
-    <result column="ong_sum" jdbcType="DECIMAL" property="ongSum" />
+    <result column="tst_sum" jdbcType="DECIMAL" property="tstSum" />
+    <result column="tsg_sum" jdbcType="DECIMAL" property="tsgSum" />
     <result column="token_sum" jdbcType="VARCHAR" property="tokenSum" />
     <result column="category" jdbcType="VARCHAR" property="category" />
     <result column="dapp_name" jdbcType="VARCHAR" property="dappName" />
@@ -48,8 +48,8 @@
     `creator`,
     `address_count`,
     `tx_count`,
-    `ont_sum`,
-    `ong_sum`,
+    `tst_sum`,
+    `tsg_sum`,
     `token_sum`,
     `category`,
     `dapp_name`,
@@ -75,8 +75,8 @@
       #{item.creator},
       #{item.addressCount},
       #{item.txCount},
-      #{item.ontSum},
-      #{item.ongSum},
+      #{item.tstSum},
+      #{item.tsgSum},
       #{item.tokenSum},
       #{item.category},
       #{item.dappName},

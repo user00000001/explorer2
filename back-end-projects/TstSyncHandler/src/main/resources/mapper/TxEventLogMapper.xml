@@ -14,7 +14,7 @@
     <result column="confirm_flag" jdbcType="INTEGER" property="confirmFlag" />
     <result column="event_log" jdbcType="VARCHAR" property="eventLog" />
     <result column="called_contract_hash" jdbcType="VARCHAR" property="calledContractHash" />
-    <result column="ontid_tx_flag" jdbcType="BIT" property="ontidTxFlag" />
+    <result column="tstid_tx_flag" jdbcType="BIT" property="tstidTxFlag" />
   </resultMap>
 
 
@@ -30,7 +30,7 @@
     `confirm_flag`,
     `event_log`,
     `called_contract_hash`,
-    `ontid_tx_flag`
+    `tstid_tx_flag`
     )
     VALUES
     <foreach collection="list" index="index" item="item" separator=",">
@@ -44,7 +44,7 @@
       #{item.confirmFlag},
       #{item.eventLog},
       #{item.calledContractHash},
-      #{item.ontidTxFlag}
+      #{item.tstidTxFlag}
       )
     </foreach>
   </insert>

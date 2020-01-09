@@ -32,7 +32,7 @@ public class CommonService {
 
     private final ParamsConfig paramsConfig;
     private final CurrentMapper currentMapper;
-    private final TstidTxDetailMapper ontidTxDetailMapper;
+    private final TstidTxDetailMapper tstidTxDetailMapper;
     private final TxDetailMapper txDetailMapper;
     private final Oep4TxDetailMapper oep4TxDetailMapper;
     private final Oep5TxDetailMapper oep5TxDetailMapper;
@@ -50,7 +50,7 @@ public class CommonService {
         this.txDetailMapper = txDetailMapper;
         this.paramsConfig = paramsConfig;
         this.currentMapper = currentMapper;
-        this.ontidTxDetailMapper = ontidTxDetailMapper;
+        this.tstidTxDetailMapper = tstidTxDetailMapper;
         this.oep4TxDetailMapper = oep4TxDetailMapper;
         this.oep5TxDetailMapper = oep5TxDetailMapper;
         this.oep8TxDetailMapper = oep8TxDetailMapper;
@@ -111,18 +111,18 @@ public class CommonService {
                 txEventLogMapper.batchInsert(batchBlockDto.getTxEventLogs());
             }
         }
-        //插入tbl_ontid_tx_detail表
+        //插入tbl_tstid_tx_detail表
         if (batchBlockDto.getTstidTxDetails().size() > 0) {
             int count = batchBlockDto.getTstidTxDetails().size();
             if (count > paramsConfig.BATCHINSERT_SQL_COUNT) {
                 for (int j = 0; j <= count / paramsConfig.BATCHINSERT_SQL_COUNT; j++) {
                     List<TstidTxDetail> list = batchBlockDto.getTstidTxDetails().subList(j * paramsConfig.BATCHINSERT_SQL_COUNT, (j + 1) * paramsConfig.BATCHINSERT_SQL_COUNT > count ? count : (j + 1) * paramsConfig.BATCHINSERT_SQL_COUNT);
                     if (list.size() > 0) {
-                        ontidTxDetailMapper.batchInsert(list);
+                        tstidTxDetailMapper.batchInsert(list);
                     }
                 }
             } else {
-                ontidTxDetailMapper.batchInsert(batchBlockDto.getTstidTxDetails());
+                tstidTxDetailMapper.batchInsert(batchBlockDto.getTstidTxDetails());
             }
         }
         //插入tbl_oep4_tx_detail表
@@ -192,13 +192,13 @@ public class CommonService {
         //更新current表
         List<Current> currents = currentMapper.selectAll();
         int txCount = currents.get(0).getTxCount();
-        int ontIdCount = currents.get(0).getTstidCount();
-        int ontIdTxCount = currents.get(0).getTstidTxCount();
+        int tstIdCount = currents.get(0).getTstidCount();
+        int tstIdTxCount = currents.get(0).getTstidTxCount();
         Current current = Current.builder()
                 .blockHeight(tHeight)
                 .txCount(txCount + ConstantParam.BATCHBLOCK_TX_COUNT)
-                .ontidCount(ontIdCount + ConstantParam.BATCHBLOCK_TSTID_COUNT)
-                .ontidTxCount(ontIdTxCount + batchBlockDto.getTstidTxDetails().size())
+                .tstidCount(tstIdCount + ConstantParam.BATCHBLOCK_TSTID_COUNT)
+                .tstidTxCount(tstIdTxCount + batchBlockDto.getTstidTxDetails().size())
                 .build();
         currentMapper.update(current);
     }

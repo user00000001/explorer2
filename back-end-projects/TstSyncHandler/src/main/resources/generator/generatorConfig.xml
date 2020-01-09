@@ -59,7 +59,7 @@
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
 
-<!--        <table tableName="tbl_ontid_tx_detail" domainObjectName="TstidTxDetail">
+<!--        <table tableName="tbl_tstid_tx_detail" domainObjectName="TstidTxDetail">
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>-->
 

@@ -48,12 +48,12 @@ public class EventParseTest {
 
             System.out.println("contractAddress:" + contractAddress2);
 
-            String nodeRestfulUrl = "http://dappnode1.ont.io:20334";
-            TstSdk ontSdk = TstSdk.getInstance();
-            ontSdk.setRestful(nodeRestfulUrl);
+            String nodeRestfulUrl = "http://dapp2.tesra.me:25770";
+            TstSdk tstSdk = TstSdk.getInstance();
+            tstSdk.setRestful(nodeRestfulUrl);
 
             String txHash = "b2a73f5b42aefd8ac03baec2c97ba95285f0ff681f1bc679668b80fa48c4cf39";
-            JSONObject eventObj = (JSONObject) ontSdk.getConnect().getSmartCodeEvent(txHash);
+            JSONObject eventObj = (JSONObject) tstSdk.getConnect().getSmartCodeEvent(txHash);
             System.out.println("eventObj:" + eventObj.toJSONString());
 
             JSONArray notifyList = eventObj.getJSONArray("Notify");
@@ -113,12 +113,12 @@ public class EventParseTest {
     @Test
     public void parseCLaimRecordTx() throws Exception{
 
-        String nodeRestfulUrl = "http://dappnode1.ont.io:20334";
-        TstSdk ontSdk = TstSdk.getInstance();
-        ontSdk.setRestful(nodeRestfulUrl);
+        String nodeRestfulUrl = "http://dapp2.tesra.me:25770";
+        TstSdk tstSdk = TstSdk.getInstance();
+        tstSdk.setRestful(nodeRestfulUrl);
 
         String txHash = "00002e607b2d5e353c31a0db43afa4212500e35ff4807d9c7da0537454e438c5";
-        JSONObject eventObj = (JSONObject) ontSdk.getConnect().getSmartCodeEvent(txHash);
+        JSONObject eventObj = (JSONObject) tstSdk.getConnect().getSmartCodeEvent(txHash);
         System.out.println("eventObj:" + eventObj.toJSONString());
 
         JSONArray notifyArray = eventObj.getJSONArray("Notify");
@@ -148,13 +148,13 @@ public class EventParseTest {
     @Test
     public void ParseOep4Tx() throws Exception{
 
-        String nodeRestfulUrl = "http://dappnode1.ont.io:20334";
-        TstSdk ontSdk = TstSdk.getInstance();
-        ontSdk.setRestful(nodeRestfulUrl);
+        String nodeRestfulUrl = "http://dapp2.tesra.me:25770";
+        TstSdk tstSdk = TstSdk.getInstance();
+        tstSdk.setRestful(nodeRestfulUrl);
 
 
         String txHash = "03cef6720e3935bc684ba98d32129b1206f5d076ebf0eaa22e485cc5922ffa54";
-        JSONObject eventObj = (JSONObject) ontSdk.getConnect().getSmartCodeEvent(txHash);
+        JSONObject eventObj = (JSONObject) tstSdk.getConnect().getSmartCodeEvent(txHash);
         System.out.println("eventObj:" + eventObj.toJSONString());
 
         JSONArray notifyArray = eventObj.getJSONArray("Notify");
@@ -178,13 +178,13 @@ public class EventParseTest {
     @Test
     public void parseContract() throws Exception{
 
-        String nodeRestfulUrl = "http://dappnode1.ont.io:20334";
-        TstSdk ontSdk = TstSdk.getInstance();
-        ontSdk.setRestful(nodeRestfulUrl);
+        String nodeRestfulUrl = "http://dapp2.tesra.me:25770";
+        TstSdk tstSdk = TstSdk.getInstance();
+        tstSdk.setRestful(nodeRestfulUrl);
 
        // String txHash = "bdbd56ca56bb5e5d6b1cebd4379f2eb8a3fb39d061075edf1cc0b756cbcc323e";
         String txHash = "152532973f3d35c1b420440487fe1098d5f04ad9076613ec72434931bddd4fd4";
-        DeployCode deployCodeObj = (DeployCode) ontSdk.getConnect().getTransaction(txHash);
+        DeployCode deployCodeObj = (DeployCode) tstSdk.getConnect().getTransaction(txHash);
         //根据code转成合约hash
         String code = Helper.toHexString(deployCodeObj.code);
         String contractHash = Address.AddressFromVmCode(code).toHexString();
@@ -192,7 +192,7 @@ public class EventParseTest {
 
         //1514857e55b0f711af93c9b5a3a3eb32b53efaab
         //4e4a9b860fb7ffba41f91ea112712191bd7eca53
-        JSONObject contractObj = (JSONObject) ontSdk.getConnect().getContractJson(contractHash);
+        JSONObject contractObj = (JSONObject) tstSdk.getConnect().getContractJson(contractHash);
         System.out.println("contract:"+contractObj.toJSONString());
 
     }

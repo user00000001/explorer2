@@ -164,7 +164,7 @@ public class TxHandlerThread {
 
                     } else if (paramsConfig.TSTID_CONTRACTHASH.equals(contractAddress)) {
                         isTstidTx = true;
-                        //ontId operation transaction
+                        //tstId operation transaction
                         handleTstIdTx(stateArray, txType, txHash, blockHeight, blockTime, indexInBlock,
                                 gasConsumed, i + 1, contractAddress, payer, calledContractHash);
 
@@ -286,7 +286,7 @@ public class TxHandlerThread {
                 .calledContractHash(callednContractHash)
                 //表字段长度为5000
                 .eventLog(eventLog.substring(0, eventLog.length() > 5000 ? 5000 : eventLog.length()))
-                .ontidTxFlag(ontidTxFlag)
+                .tstidTxFlag(tstidTxFlag)
                 .build();
         ConstantParam.BATCHBLOCKDTO.getTxEventLogs().add(txEventLog);
     }
@@ -380,8 +380,8 @@ public class TxHandlerThread {
                     .creator(player)
                     .txCount(0)
                     .addressCount(0)
-                    .ongSum(ConstantParam.ZERO)
-                    .ontSum(ConstantParam.ZERO)
+                    .tsgSum(ConstantParam.ZERO)
+                    .tstSum(ConstantParam.ZERO)
                     .tokenSum(new JSONObject().toJSONString())
                     .dappstoreFlag(false)
                     .auditFlag(false)
@@ -400,7 +400,7 @@ public class TxHandlerThread {
 
 
     /**
-     * 处理原生ont，ong转账
+     * 处理原生tst，tsg转账
      *
      * @param stateList
      * @param txType
@@ -469,7 +469,7 @@ public class TxHandlerThread {
 
 
     /**
-     * 处理ontid交易
+     * 处理tstid交易
      *
      * @param stateList
      * @param txType
@@ -487,36 +487,36 @@ public class TxHandlerThread {
                                String contractAddress, String payer, String calledContractHash) throws Exception {
 
         String action = stateList.getString(0);
-        String ontId = "";
+        String tstId = "";
         if (TstIdEventDesEnum.REGISTERTSTID.des().equals(action)) {
-            ontId = stateList.getString(1);
+            tstId = stateList.getString(1);
         } else {
-            ontId = stateList.getString(2);
+            tstId = stateList.getString(2);
         }
-        String descriptionStr = formatTstIdOperation(ontId, action, stateList);
+        String descriptionStr = formatTstIdOperation(tstId, action, stateList);
 
-        TstidTxDetail ontidTxDetail = TstidTxDetail.builder()
+        TstidTxDetail tstidTxDetail = TstidTxDetail.builder()
                 .blockHeight(blockHeight)
                 .txHash(txHash)
                 .txType(txType)
                 .txTime(blockTime)
-                .ontid(ontId)
+                .tstid(tstId)
                 .fee(gasConsumed)
                 .description(descriptionStr)
                 .build();
-        ConstantParam.BATCHBLOCKDTO.getTstidTxDetails().add(ontidTxDetail);
+        ConstantParam.BATCHBLOCKDTO.getTstidTxDetails().add(tstidTxDetail);
 
         insertTxBasicInfo(txType, txHash, blockHeight, blockTime, indexInBlock, 1, EventTypeEnum.Tstid.des() + action,
                 gasConsumed, indexInTx, EventTypeEnum.Tstid.type(), contractAddress, payer, calledContractHash);
 
-        //如果是注册ontid交易，ontid数量加1
+        //如果是注册tstid交易，tstid数量加1
         if (ConstantParam.REGISTER.equals(action)) {
             addOneBlockTstIdCount();
         }
     }
 
     /**
-     * 累加一个区块里注册ontid的交易
+     * 累加一个区块里注册tstid的交易
      */
     public synchronized void addOneBlockTstIdCount() {
         ConstantParam.BATCHBLOCK_TSTID_COUNT++;
@@ -524,13 +524,13 @@ public class TxHandlerThread {
 
 
     /**
-     * format ontId operation description
+     * format tstId operation description
      *
      * @param action
      * @param stateList
      * @return
      */
-    private String formatTstIdOperation(String ontId, String action, JSONArray stateList) throws Exception {
+    private String formatTstIdOperation(String tstId, String action, JSONArray stateList) throws Exception {
 
         String str = "";
         StringBuilder descriptionSb = new StringBuilder(140);
@@ -539,9 +539,9 @@ public class TxHandlerThread {
 
         if (TstIdEventDesEnum.REGISTERTSTID.des().equals(action)) {
 
-            descriptionSb.append(ontId);
+            descriptionSb.append(tstId);
             str = descriptionSb.toString();
-            log.info("####Register TstId:{}", ontId);
+            log.info("####Register TstId:{}", tstId);
 
         } else if (TstIdEventDesEnum.PUBLICKEYOPE.des().equals(action)) {
 
@@ -552,7 +552,7 @@ public class TxHandlerThread {
 
             descriptionSb.append(op);
             descriptionSb.append(ConstantParam.TSTID_SEPARATOR);
-            descriptionSb.append(ontId);
+            descriptionSb.append(tstId);
             descriptionSb.append(ConstantParam.TSTID_SEPARATOR);
             descriptionSb.append(publicKey);
             descriptionSb.append(ConstantParam.TSTID_SEPARATOR);
@@ -566,7 +566,7 @@ public class TxHandlerThread {
 
             descriptionSb.append(op);
             descriptionSb.append(ConstantParam.TSTID_SEPARATOR);
-            descriptionSb.append(ontId);
+            descriptionSb.append(tstId);
             descriptionSb.append(ConstantParam.TSTID_SEPARATOR);
 
             if (ConstantParam.ADD.equals(op)) {
@@ -591,11 +591,11 @@ public class TxHandlerThread {
 
             String op = stateList.getString(1);
             String address = Address.parse(stateList.getString(3)).toBase58();
-            log.info("####Recovery op:{}, ontid:{}, address:{}####", op, ontId, address);
+            log.info("####Recovery op:{}, tstid:{}, address:{}####", op, tstId, address);
 
             descriptionSb.append(op);
             descriptionSb.append(ConstantParam.TSTID_SEPARATOR);
-            descriptionSb.append(ontId);
+            descriptionSb.append(tstId);
             descriptionSb.append(ConstantParam.TSTID_SEPARATOR);
             descriptionSb.append(address);
 
@@ -636,22 +636,22 @@ public class TxHandlerThread {
                 sb.append(action);
                 sb.append("claimId:");
                 sb.append(claimId);
-                //创建claim的动作也记录到ontid的表中
+                //创建claim的动作也记录到tstid的表中
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append(action);
                 stringBuilder.append("claimId:");
                 stringBuilder.append(claimId);
 
-                TstidTxDetail ontidTxDetail = TstidTxDetail.builder()
+                TstidTxDetail tstidTxDetail = TstidTxDetail.builder()
                         .blockHeight(blockHeight)
                         .txHash(txHash)
                         .txType(txType)
                         .txTime(blockTime)
-                        .ontid(issuerTstId)
+                        .tstid(issuerTstId)
                         .fee(gasConsumed)
                         .description(stringBuilder.toString())
                         .build();
-                ConstantParam.BATCHBLOCKDTO.getTstidTxDetails().add(ontidTxDetail);
+                ConstantParam.BATCHBLOCKDTO.getTstidTxDetails().add(tstidTxDetail);
             }
         }
 

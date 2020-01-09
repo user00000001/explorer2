@@ -7,8 +7,8 @@
     -->
     <result column="block_height" jdbcType="INTEGER" property="blockHeight" />
     <result column="tx_count" jdbcType="INTEGER" property="txCount" />
-    <result column="ontid_count" jdbcType="INTEGER" property="ontidCount" />
-    <result column="ontid_tx_count" jdbcType="INTEGER" property="ontidTxCount" />
+    <result column="tstid_count" jdbcType="INTEGER" property="tstidCount" />
+    <result column="tstid_tx_count" jdbcType="INTEGER" property="tstidTxCount" />
   </resultMap>
 
 
@@ -16,8 +16,8 @@
     update tbl_current
     set block_height = #{blockHeight},
     tx_count = #{txCount},
-    ontid_count = #{ontidCount},
-    ontid_tx_count = #{ontidTxCount}
+    tstid_count = #{tstidCount},
+    tstid_tx_count = #{tstidTxCount}
   </update>
 
   <select id="selectBlockHeight" resultType="java.lang.Integer">

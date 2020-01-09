@@ -5,7 +5,7 @@
 
 	<groupId>com.github.TesraSupernet</groupId>
 	<artifactId>tstsynchandler</artifactId>
-	<version>1.1.1-RELEASE</version>
+	<version>0.0.1-RELEASE</version>
 	<name>tstsynchandler</name>
 	<description>explorer information sync handler for TesraSupernet</description>
 	<packaging>jar</packaging>

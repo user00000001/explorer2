@@ -48,7 +48,7 @@ public final class ConstantParam {
     public static TstSdk TST_SDKSERVICE = null;
 
     /**
-     * the number of new ontid of batch block
+     * the number of new tstid of batch block
      */
     public static int BATCHBLOCK_TSTID_COUNT = 0;
 
@@ -88,10 +88,10 @@ public final class ConstantParam {
 
     public static final BigDecimal TSG_DECIMAL = new BigDecimal("1000000000");
 
-    //ontid operation description separator
+    //tstid operation description separator
     public static final String TSTID_SEPARATOR = "||";
 
-    //ontid operation description separator
+    //tstid operation description separator
     public static final String TSTID_SEPARATOR2 = "&";
 
     public static Map<String, JSONObject> OEP4MAP = new HashMap<>();

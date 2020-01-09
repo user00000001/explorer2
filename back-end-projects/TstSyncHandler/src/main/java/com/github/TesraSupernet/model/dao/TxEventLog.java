@@ -64,13 +64,13 @@ public class TxEventLog {
     private String calledContractHash;
 
     /**
-     * 是否属于ontid事件交易 true:属于 false：不属于
+     * 是否属于tstid事件交易 true:属于 false：不属于
      */
-    @Column(name = "ontid_tx_flag")
-    private Boolean ontidTxFlag;
+    @Column(name = "tstid_tx_flag")
+    private Boolean tstidTxFlag;
 
     @Builder
-    public TxEventLog(String txHash, Integer txType, Integer txTime, Integer blockHeight, Integer blockIndex, BigDecimal fee, Integer confirmFlag, String eventLog, String calledContractHash, Boolean ontidTxFlag) {
+    public TxEventLog(String txHash, Integer txType, Integer txTime, Integer blockHeight, Integer blockIndex, BigDecimal fee, Integer confirmFlag, String eventLog, String calledContractHash, Boolean tstidTxFlag) {
         this.txHash = txHash;
         this.txType = txType;
         this.txTime = txTime;
@@ -80,7 +80,7 @@ public class TxEventLog {
         this.confirmFlag = confirmFlag;
         this.eventLog = eventLog;
         this.calledContractHash = calledContractHash;
-        this.ontidTxFlag = ontidTxFlag;
+        this.tstidTxFlag = tstidTxFlag;
     }
 
     /**
@@ -246,20 +246,20 @@ public class TxEventLog {
     }
 
     /**
-     * 获取是否属于ontid事件交易 true:属于 false：不属于
+     * 获取是否属于tstid事件交易 true:属于 false：不属于
      *
-     * @return ontid_tx_flag - 是否属于ontid事件交易 true:属于 false：不属于
+     * @return tstid_tx_flag - 是否属于tstid事件交易 true:属于 false：不属于
      */
     public Boolean getTstidTxFlag() {
-        return ontidTxFlag;
+        return tstidTxFlag;
     }
 
     /**
-     * 设置是否属于ontid事件交易 true:属于 false：不属于
+     * 设置是否属于tstid事件交易 true:属于 false：不属于
      *
-     * @param ontidTxFlag 是否属于ontid事件交易 true:属于 false：不属于
+     * @param tstidTxFlag 是否属于tstid事件交易 true:属于 false：不属于
      */
-    public void setTstidTxFlag(Boolean ontidTxFlag) {
-        this.ontidTxFlag = ontidTxFlag;
+    public void setTstidTxFlag(Boolean tstidTxFlag) {
+        this.tstidTxFlag = tstidTxFlag;
     }
 }

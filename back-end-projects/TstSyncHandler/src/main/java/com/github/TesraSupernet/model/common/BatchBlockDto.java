@@ -25,7 +25,7 @@ public class BatchBlockDto {
 
     private List<TxEventLog> txEventLogs= Collections.synchronizedList(new ArrayList<TxEventLog>());
 
-    private List<TstidTxDetail> ontidTxDetails=Collections.synchronizedList(new ArrayList<TstidTxDetail>());
+    private List<TstidTxDetail> tstidTxDetails=Collections.synchronizedList(new ArrayList<TstidTxDetail>());
 
     private List<Oep4TxDetail> oep4TxDetails= Collections.synchronizedList(new ArrayList<Oep4TxDetail>());
 

@@ -59,19 +59,19 @@ public class ParamsConfig {
     /**
      * tesra blockchain TST asset smartcontract codehash
      */
-    @Value("${ont.contractHash}")
+    @Value("${tst.contractHash}")
     public String TST_CONTRACTHASH;
 
     /**
      * tesra blockchain TSG asset smartcontract codehash
      */
-    @Value("${ong.contractHash}")
+    @Value("${tsg.contractHash}")
     public String TSG_CONTRACTHASH;
 
     /**
-     * tesra blockchain ontId smartcontract codehash
+     * tesra blockchain tstId smartcontract codehash
      */
-    @Value("${ontId.contractHash}")
+    @Value("${tstId.contractHash}")
     public String TSTID_CONTRACTHASH;
 
     /**

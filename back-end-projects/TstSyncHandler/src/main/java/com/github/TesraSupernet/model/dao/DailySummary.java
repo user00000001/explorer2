@@ -26,26 +26,26 @@ public class DailySummary {
     /**
      * 当天的活跃TST ID数量
      */
-    @Column(name = "active_ontid_count")
+    @Column(name = "active_tstid_count")
     private Integer activeTstidCount;
 
     /**
      * 当天的新TST ID数量
      */
-    @Column(name = "new_ontid_count")
+    @Column(name = "new_tstid_count")
     private Integer newTstidCount;
 
     /**
-     * 当天的ont流通量
+     * 当天的tst流通量
      */
-    @Column(name = "ont_sum")
-    private BigDecimal ontSum;
+    @Column(name = "tst_sum")
+    private BigDecimal tstSum;
 
     /**
-     * 当天的ong流通量
+     * 当天的tsg流通量
      */
-    @Column(name = "ong_sum")
-    private BigDecimal ongSum;
+    @Column(name = "tsg_sum")
+    private BigDecimal tsgSum;
 
     /**
      * 当天的活跃地址数量
@@ -116,7 +116,7 @@ public class DailySummary {
     /**
      * 获取当天的活跃TST ID数量
      *
-     * @return active_ontid_count - 当天的活跃TST ID数量
+     * @return active_tstid_count - 当天的活跃TST ID数量
      */
     public Integer getActiveTstidCount() {
         return activeTstidCount;
@@ -134,7 +134,7 @@ public class DailySummary {
     /**
      * 获取当天的新TST ID数量
      *
-     * @return new_ontid_count - 当天的新TST ID数量
+     * @return new_tstid_count - 当天的新TST ID数量
      */
     public Integer getNewTstidCount() {
         return newTstidCount;
@@ -150,39 +150,39 @@ public class DailySummary {
     }
 
     /**
-     * 获取当天的ont流通量
+     * 获取当天的tst流通量
      *
-     * @return ont_sum - 当天的ont流通量
+     * @return tst_sum - 当天的tst流通量
      */
     public BigDecimal getTstSum() {
-        return ontSum;
+        return tstSum;
     }
 
     /**
-     * 设置当天的ont流通量
+     * 设置当天的tst流通量
      *
-     * @param ontSum 当天的ont流通量
+     * @param tstSum 当天的tst流通量
      */
-    public void setTstSum(BigDecimal ontSum) {
-        this.ontSum = ontSum;
+    public void setTstSum(BigDecimal tstSum) {
+        this.tstSum = tstSum;
     }
 
     /**
-     * 获取当天的ong流通量
+     * 获取当天的tsg流通量
      *
-     * @return ong_sum - 当天的ong流通量
+     * @return tsg_sum - 当天的tsg流通量
      */
     public BigDecimal getOngSum() {
-        return ongSum;
+        return tsgSum;
     }
 
     /**
-     * 设置当天的ong流通量
+     * 设置当天的tsg流通量
      *
-     * @param ongSum 当天的ong流通量
+     * @param tsgSum 当天的tsg流通量
      */
-    public void setOngSum(BigDecimal ongSum) {
-        this.ongSum = ongSum;
+    public void setOngSum(BigDecimal tsgSum) {
+        this.tsgSum = tsgSum;
     }
 
     /**

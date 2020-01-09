@@ -27,16 +27,16 @@ public class ContractDailySummary {
     private Integer txCount;
 
     /**
-     * 此合约当天的ont流通量
+     * 此合约当天的tst流通量
      */
-    @Column(name = "ont_sum")
-    private BigDecimal ontSum;
+    @Column(name = "tst_sum")
+    private BigDecimal tstSum;
 
     /**
-     * 此合约当天的ong流通量
+     * 此合约当天的tsg流通量
      */
-    @Column(name = "ong_sum")
-    private BigDecimal ongSum;
+    @Column(name = "tsg_sum")
+    private BigDecimal tsgSum;
 
     /**
      * 此合约当天的活跃地址数
@@ -125,39 +125,39 @@ public class ContractDailySummary {
     }
 
     /**
-     * 获取此合约当天的ont流通量
+     * 获取此合约当天的tst流通量
      *
-     * @return ont_sum - 此合约当天的ont流通量
+     * @return tst_sum - 此合约当天的tst流通量
      */
     public BigDecimal getTstSum() {
-        return ontSum;
+        return tstSum;
     }
 
     /**
-     * 设置此合约当天的ont流通量
+     * 设置此合约当天的tst流通量
      *
-     * @param ontSum 此合约当天的ont流通量
+     * @param tstSum 此合约当天的tst流通量
      */
-    public void setTstSum(BigDecimal ontSum) {
-        this.ontSum = ontSum;
+    public void setTstSum(BigDecimal tstSum) {
+        this.tstSum = tstSum;
     }
 
     /**
-     * 获取此合约当天的ong流通量
+     * 获取此合约当天的tsg流通量
      *
-     * @return ong_sum - 此合约当天的ong流通量
+     * @return tsg_sum - 此合约当天的tsg流通量
      */
     public BigDecimal getOngSum() {
-        return ongSum;
+        return tsgSum;
     }
 
     /**
-     * 设置此合约当天的ong流通量
+     * 设置此合约当天的tsg流通量
      *
-     * @param ongSum 此合约当天的ong流通量
+     * @param tsgSum 此合约当天的tsg流通量
      */
-    public void setOngSum(BigDecimal ongSum) {
-        this.ongSum = ongSum;
+    public void setOngSum(BigDecimal tsgSum) {
+        this.tsgSum = tsgSum;
     }
 
     /**
