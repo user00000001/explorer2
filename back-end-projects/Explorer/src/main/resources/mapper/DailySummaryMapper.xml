@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.ontio.mapper.DailySummaryMapper">
-  <resultMap id="BaseResultMap" type="com.github.ontio.model.dao.DailySummary">
+<mapper namespace="com.github.TesraSupernet.mapper.DailySummaryMapper">
+  <resultMap id="BaseResultMap" type="com.github.TesraSupernet.model.dao.DailySummary">
     <!--
       WARNING - @mbg.generated
     -->
     <id column="time" jdbcType="INTEGER" property="time" />
     <result column="block_count" jdbcType="INTEGER" property="blockCount" />
     <result column="tx_count" jdbcType="INTEGER" property="txCount" />
-    <result column="active_ontid_count" jdbcType="INTEGER" property="activeOntidCount" />
-    <result column="new_ontid_count" jdbcType="INTEGER" property="newOntidCount" />
-    <result column="ont_sum" jdbcType="DECIMAL" property="ontSum" />
-    <result column="ong_sum" jdbcType="DECIMAL" property="ongSum" />
+    <result column="active_tstid_count" jdbcType="INTEGER" property="activeTstidCount" />
+    <result column="new_tstid_count" jdbcType="INTEGER" property="newTstidCount" />
+    <result column="tst_sum" jdbcType="DECIMAL" property="tstSum" />
+    <result column="tsg_sum" jdbcType="DECIMAL" property="tsgSum" />
     <result column="active_address_count" jdbcType="INTEGER" property="activeAddressCount" />
     <result column="new_address_count" jdbcType="INTEGER" property="newAddressCount" />
   </resultMap>
@@ -20,16 +20,16 @@
     time as time,
     block_count as blockCount,
     tx_count as txCount,
-    active_ontid_count as activeOntidCount,
-    new_ontid_count as newOntidCount,
-    ont_sum as ontSum,
-    ong_sum as ongSum,
+    active_tstid_count as activeTstidCount,
+    new_tstid_count as newTstidCount,
+    tst_sum as tstSum,
+    tsg_sum as tsgSum,
     active_address_count as activeAddressCount,
     new_address_count as newAddressCount
   </sql>
 
 
-  <select id="selectSummaryByTime" resultType="com.github.ontio.model.dto.DailySummaryDto">
+  <select id="selectSummaryByTime" resultType="com.github.TesraSupernet.model.dto.DailySummaryDto">
     select <include refid="basicColumns"/>
     from tbl_daily_summary
     where time &gt;= #{startTime}
@@ -37,8 +37,8 @@
     order by time
   </select>
 
-  <select id="selectAddrAndOntIdTotal" resultType="java.util.Map">
-    select SUM(new_address_count) as addressTotal, SUM(new_ontid_count) as ontidTotal
+  <select id="selectAddrAndTstIdTotal" resultType="java.util.Map">
+    select SUM(new_address_count) as addressTotal, SUM(new_tstid_count) as tstidTotal
     from tbl_daily_summary
     where <![CDATA[ time <= #{startTime} ]]>
   </select>

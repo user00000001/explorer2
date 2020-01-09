@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.ontio.mapper.NetNodeInfoMapper">
-    <resultMap id="BaseResultMap" type="com.github.ontio.model.dao.NetNodeInfo">
+<mapper namespace="com.github.TesraSupernet.mapper.NetNodeInfoMapper">
+    <resultMap id="BaseResultMap" type="com.github.TesraSupernet.model.dao.NetNodeInfo">
         <!--
           WARNING - @mbg.generated
         -->
@@ -15,13 +15,13 @@
         <result column="latitude" jdbcType="VARCHAR" property="latitude"/>
     </resultMap>
 
-    <cache type="com.github.ontio.config.RedisCache">
+    <cache type="com.github.TesraSupernet.config.RedisCache">
         <property name="eviction" value="LRU"/>
         <property name="size" value="1024"/>
         <property name="readOnly" value="false"/>
     </cache>
 
-    <select id="selectAllNodes" resultType="com.github.ontio.model.dao.NetNodeInfo" useCache="true">
+    <select id="selectAllNodes" resultType="com.github.TesraSupernet.model.dao.NetNodeInfo" useCache="true">
         SELECT ip,
                version,
                is_consensus     AS isConsensus,
@@ -33,7 +33,7 @@
         FROM tbl_net_node_info;
     </select>
 
-    <select id="selectAllActiveNodes" resultType="com.github.ontio.model.dao.NetNodeInfo" useCache="true">
+    <select id="selectAllActiveNodes" resultType="com.github.TesraSupernet.model.dao.NetNodeInfo" useCache="true">
         SELECT ip,
                version,
                is_consensus     AS isConsensus,

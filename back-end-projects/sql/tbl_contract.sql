@@ -7,13 +7,13 @@ Target Server Type    : MYSQL
 Target Server Version : 50639
 File Encoding         : 65001
 
-Date: 2019-04-12 10:56:00
+Date: 2020-01-02 10:56:00
 */
 
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for tbl_ont_contracts
+-- Table structure for tbl_tst_contracts
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_contract`;
 CREATE TABLE `tbl_contract`
@@ -33,8 +33,8 @@ CREATE TABLE `tbl_contract`
     `creator`         varchar(255)   NOT NULL DEFAULT '' COMMENT '合约创建者',
     `address_count`   int(11)        NOT NULL COMMENT '该合约的总的地址数 ',
     `tx_count`        int(11)        NOT NULL COMMENT '合约总的交易量',
-    `ont_sum`         decimal(25, 9) NOT NULL COMMENT '该合约的总的ont流通量',
-    `ong_sum`         decimal(25, 9) NOT NULL COMMENT '该合约的总的ong流通量',
+    `tst_sum`         decimal(25, 9) NOT NULL COMMENT '该合约的总的tst流通量',
+    `tsg_sum`         decimal(25, 9) NOT NULL COMMENT '该合约的总的tsg流通量',
     `token_sum`       varchar(255)   NOT NULL COMMENT '该合约的总的token流通量.json格式字符串',
     `category`        varchar(255)   NOT NULL DEFAULT '' COMMENT '合约分类',
     `dapp_name`       varchar(255)   NOT NULL DEFAULT '' COMMENT '合约所属Dapp名称',

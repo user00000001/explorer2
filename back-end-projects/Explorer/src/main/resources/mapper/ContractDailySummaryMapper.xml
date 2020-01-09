@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.ontio.mapper.ContractDailySummaryMapper">
-  <resultMap id="BaseResultMap" type="com.github.ontio.model.dao.ContractDailySummary">
+<mapper namespace="com.github.TesraSupernet.mapper.ContractDailySummaryMapper">
+  <resultMap id="BaseResultMap" type="com.github.TesraSupernet.model.dao.ContractDailySummary">
     <!--
       WARNING - @mbg.generated
     -->
@@ -9,8 +9,8 @@
     <result column="time" jdbcType="INTEGER" property="time" />
     <result column="contract_hash" jdbcType="VARCHAR" property="contractHash" />
     <result column="tx_count" jdbcType="INTEGER" property="txCount" />
-    <result column="ont_sum" jdbcType="DECIMAL" property="ontSum" />
-    <result column="ong_sum" jdbcType="DECIMAL" property="ongSum" />
+    <result column="tst_sum" jdbcType="DECIMAL" property="tstSum" />
+    <result column="tsg_sum" jdbcType="DECIMAL" property="tsgSum" />
     <result column="active_address_count" jdbcType="INTEGER" property="activeAddressCount" />
     <result column="new_address_count" jdbcType="INTEGER" property="newAddressCount" />
     <result column="dapp_name" jdbcType="VARCHAR" property="dappName" />
@@ -20,14 +20,14 @@
     <sql id="basicColumns">
       time as time,
       tx_count as txCount,
-      ont_sum as ontSum,
-      ong_sum as ongSum,
+      tst_sum as tstSum,
+      tsg_sum as tsgSum,
       active_address_count as activeAddressCount,
       new_address_count as newAddressCount
     </sql>
 
 
-  <select id="selectDailySummaryByContractHash" resultType="com.github.ontio.model.dto.ContractDailySummaryDto">
+  <select id="selectDailySummaryByContractHash" resultType="com.github.TesraSupernet.model.dto.ContractDailySummaryDto">
     select <include refid="basicColumns"/>
     from tbl_contract_daily_summary
     where contract_hash = #{contractHash}
@@ -42,8 +42,8 @@
     SELECT
     dapp_name,
     SUM(tx_count) AS week_tx_count,
-    SUM(ont_sum) AS week_ont_sum,
-    SUM(ong_sum) AS week_ong_sum,
+    SUM(tst_sum) AS week_tst_sum,
+    SUM(tsg_sum) AS week_tsg_sum,
     SUM(active_address_count) AS week_activeaddress_count
     FROM
     tbl_contract_daily_summary
@@ -66,8 +66,8 @@
     SELECT
     dapp_name,
     SUM(tx_count) AS day_tx_count,
-    SUM(ont_sum) AS day_ont_sum,
-    SUM(ong_sum) AS day_ong_sum,
+    SUM(tst_sum) AS day_tst_sum,
+    SUM(tsg_sum) AS day_tsg_sum,
     SUM(active_address_count) AS day_activeaddress_count
     FROM
     tbl_contract_daily_summary
@@ -87,8 +87,8 @@
   <select id="selectAllDappstoreDappYesterdayInfo" parameterType="java.util.Map" resultType="java.util.Map" >
     SELECT
     SUM(tx_count) AS day_tx_count,
-    SUM(ont_sum) AS day_ont_sum,
-    SUM(ong_sum) AS day_ong_sum,
+    SUM(tst_sum) AS day_tst_sum,
+    SUM(tsg_sum) AS day_tsg_sum,
     SUM(active_address_count) AS day_activeaddress_count
     FROM
     tbl_contract_daily_summary

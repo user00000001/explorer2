@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.ontio.mapper.Oep5TxDetailMapper">
-  <resultMap id="BaseResultMap" type="com.github.ontio.model.dao.Oep5TxDetail">
+<mapper namespace="com.github.TesraSupernet.mapper.Oep5TxDetailMapper">
+  <resultMap id="BaseResultMap" type="com.github.TesraSupernet.model.dao.Oep5TxDetail">
     <!--
       WARNING - @mbg.generated
     -->
@@ -25,7 +25,7 @@
   </resultMap>
 
 
-  <cache type="com.github.ontio.config.RedisCache">
+  <cache type="com.github.TesraSupernet.config.RedisCache">
     <property name="eviction" value="LRU" />
     <property name="size" value="1024" />
     <property name="readOnly" value="false" />
@@ -42,7 +42,7 @@
   </sql>
 
 
-  <select id="selectTxsByCalledContractHash" resultType="com.github.ontio.model.dto.Oep5TxDetailDto">
+  <select id="selectTxsByCalledContractHash" resultType="com.github.TesraSupernet.model.dto.Oep5TxDetailDto">
     select DISTINCT <include refid="txBasicColumns"/>
     from tbl_oep5_tx_detail
     where called_contract_hash = #{calledContractHash}
@@ -50,7 +50,7 @@
     limit #{startIndex}, #{pageSize}
   </select>
 
-  <select id="selectTxs4Dragon" resultType="com.github.ontio.model.dto.Oep5TxDetailDto">
+  <select id="selectTxs4Dragon" resultType="com.github.TesraSupernet.model.dto.Oep5TxDetailDto">
       SELECT
       a.*, b.json_url as jsonUrl
       FROM

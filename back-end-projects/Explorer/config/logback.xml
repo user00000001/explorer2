@@ -51,7 +51,7 @@
    </logger>  
   
   <!-- For loggers in the these namespaces, log at DEBUG levels above. -->
-    <logger name="com.github.ontio" level="INFO" additivity="false">
+    <logger name="com.github.TesraSupernet" level="INFO" additivity="false">
     	<appender-ref ref="STDOUT"/>
    </logger>
 

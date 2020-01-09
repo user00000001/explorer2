@@ -13,7 +13,7 @@ Date: 2019-04-12 10:55:16
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for tbl_ont_address_summary
+-- Table structure for tbl_tst_address_summary
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_address_daily_summary`;
 CREATE TABLE `tbl_address_daily_summary`

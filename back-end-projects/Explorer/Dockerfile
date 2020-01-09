@@ -9,11 +9,11 @@ RUN apt update && \
     apt install -y \
     git
 
-RUN git clone https://github.com/ontio/ontology-explorer.git && \
-    cd ontology-explorer && \
+RUN git clone https://github.com/TesraSupernet/tesra-explorer.git && \
+    cd tesra-explorer && \
     git checkout $VERSION
 
-WORKDIR /ontology-explorer
+WORKDIR /tesra-explorer
 
 RUN cd back-end-projects/Explorer && \
     mvn clean package
@@ -25,15 +25,15 @@ FROM openjdk:8-jdk-alpine
 
 RUN apk add --no-cache ca-certificates bash
 
-RUN addgroup ontology && \
-    adduser -G ontology -s /bin/sh -D ontology -h /home/ontology
+RUN addgroup tesra && \
+    adduser -G tesra -s /bin/sh -D tesra -h /home/tesra
 
-COPY --from=builder /ontology-explorer/back-end-projects/Explorer/target/explorer-1.1.0.RELEASE.jar /home/ontology/app.jar
-COPY --from=builder /ontology-explorer/back-end-projects/Explorer/config /home/ontology/config
+COPY --from=builder /tesra-explorer/back-end-projects/Explorer/target/explorer-0.0.1.RELEASE.jar /home/tesra/app.jar
+COPY --from=builder /tesra-explorer/back-end-projects/Explorer/config /home/tesra/config
 
 # # Run as non root
-USER ontology
-WORKDIR /home/ontology
+USER tesra
+WORKDIR /home/tesra
 
 EXPOSE 8090
 

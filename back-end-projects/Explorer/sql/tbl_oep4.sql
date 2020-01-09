@@ -13,7 +13,7 @@ Date: 2019-04-12 10:59:58
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for tbl_ont_oep4
+-- Table structure for tbl_tst_oep4
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_oep4`;
 CREATE TABLE `tbl_oep4`

@@ -1,6 +1,6 @@
 # explorer
 
-Provide Restful API about block,transaction,ontid information for the Explorer front-end and DApp.
+Provide Restful API about block,transaction,tstid information for the Explorer front-end and DApp.
 
 
 

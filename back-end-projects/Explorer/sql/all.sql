@@ -20,7 +20,7 @@ source tbl_oep5_dragon.sql
 source tbl_oep5_tx_detail.sql
 source tbl_oep8.sql
 source tbl_oep8_tx_detail.sql
-source tbl_ontid_tx_detail.sql
+source tbl_tstid_tx_detail.sql
 source tbl_tx_detail.sql
 source tbl_tx_detail_daily.sql
 source tbl_tx_detail_tmp.sql

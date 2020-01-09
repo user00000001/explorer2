@@ -13,7 +13,7 @@ Date: 2019-04-12 10:55:33
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for tbl_ont_block
+-- Table structure for tbl_tst_block
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_block`;
 CREATE TABLE `tbl_block` (

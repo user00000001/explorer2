@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.ontio.mapper.TxEventLogMapper">
-  <resultMap id="BaseResultMap" type="com.github.ontio.model.dao.TxEventLog">
+<mapper namespace="com.github.TesraSupernet.mapper.TxEventLogMapper">
+  <resultMap id="BaseResultMap" type="com.github.TesraSupernet.model.dao.TxEventLog">
     <!--
       WARNING - @mbg.generated
     -->
@@ -14,10 +14,10 @@
     <result column="confirm_flag" jdbcType="INTEGER" property="confirmFlag" />
     <result column="event_log" jdbcType="VARCHAR" property="eventLog" />
     <result column="called_contract_hash" jdbcType="VARCHAR" property="calledContractHash" />
-    <result column="ontid_tx_flag" jdbcType="BIT" property="ontidTxFlag" />
+    <result column="tstid_tx_flag" jdbcType="BIT" property="tstidTxFlag" />
   </resultMap>
 
-  <cache type="com.github.ontio.config.RedisCache">
+  <cache type="com.github.TesraSupernet.config.RedisCache">
     <property name="eviction" value="LRU" />
     <property name="size" value="1024" />
     <property name="readOnly" value="false" />
@@ -41,22 +41,22 @@
     and <![CDATA[ tx_time <= #{endTime} ]]>
   </select>
 
-  <select id="selectTxsByPage" parameterType="java.lang.Integer" resultType="com.github.ontio.model.dto.TxEventLogDto">
+  <select id="selectTxsByPage" parameterType="java.lang.Integer" resultType="com.github.TesraSupernet.model.dto.TxEventLogDto">
     select <include refid="txBasicColumns" />
     from tbl_tx_eventlog
     order by block_height DESC
     limit #{startIndex}, #{pageSize}
   </select>
 
-  <select id="selectNonontidTxsByPage" parameterType="java.lang.Integer" resultType="com.github.ontio.model.dto.TxEventLogDto">
+  <select id="selectNontstidTxsByPage" parameterType="java.lang.Integer" resultType="com.github.TesraSupernet.model.dto.TxEventLogDto">
     select <include refid="txBasicColumns" />
     from tbl_tx_eventlog
-    where ontid_tx_flag = false
+    where tstid_tx_flag = false
     order by block_height DESC
     limit #{startIndex}, #{pageSize}
   </select>
 
-  <select id="selectTxsByCalledContractHash" resultType="com.github.ontio.model.dto.TxEventLogDto">
+  <select id="selectTxsByCalledContractHash" resultType="com.github.TesraSupernet.model.dto.TxEventLogDto">
     select <include refid="txBasicColumns"/>
     from tbl_tx_eventlog
     where called_contract_hash = #{calledContractHash}
@@ -70,7 +70,7 @@
     where called_contract_hash = #{calledContractHash}
   </select>
 
-  <select id="selectTxsByBlockHeight" parameterType="java.lang.Integer" resultType="com.github.ontio.model.dto.TxBasicDto">
+  <select id="selectTxsByBlockHeight" parameterType="java.lang.Integer" resultType="com.github.TesraSupernet.model.dto.TxBasicDto">
     select <include refid="txBasicColumns" />
     from tbl_tx_eventlog
     where block_height = #{blockHeight}

@@ -7,13 +7,13 @@ Target Server Type    : MYSQL
 Target Server Version : 50639
 File Encoding         : 65001
 
-Date: 2019-04-12 11:00:33
+Date: 2020-01-02 11:00:33
 */
 
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for tbl_ont_oep5_dragon
+-- Table structure for tbl_tst_oep5_dragon
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_oep5_dragon`;
 CREATE TABLE `tbl_oep5_dragon`

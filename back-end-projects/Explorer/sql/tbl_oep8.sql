@@ -13,7 +13,7 @@ Date: 2019-04-12 11:01:01
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for tbl_ont_oep8
+-- Table structure for tbl_tst_oep8
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_oep8`;
 CREATE TABLE `tbl_oep8`

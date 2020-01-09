@@ -7,13 +7,13 @@ Target Server Type    : MYSQL
 Target Server Version : 50639
 File Encoding         : 65001
 
-Date: 2019-04-12 11:00:47
+Date: 2020-01-02 11:00:47
 */
 
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for tbl_ont_oep5txn_detail
+-- Table structure for tbl_tst_oep5txn_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_oep5_tx_detail`;
 CREATE TABLE `tbl_oep5_tx_detail`
@@ -31,7 +31,7 @@ CREATE TABLE `tbl_oep5_tx_detail`
     `block_index`          int(11)        NOT NULL COMMENT '交易在区块里的索引',
     `tx_index`             int(11)        NOT NULL COMMENT '该event在交易eventlog里的索引',
     `confirm_flag`         int(11)        NOT NULL COMMENT '交易落账标识  1：成功 0：失败',
-    `event_type`           int(11)        NOT NULL COMMENT '交易event类型 0:其他 1:部署合约 2:手续费 3:转账 4:ONT ID 5:存证 6:权限',
+    `event_type`           int(11)        NOT NULL COMMENT '交易event类型 0:其他 1:部署合约 2:手续费 3:转账 4:TST ID 5:存证 6:权限',
     `contract_hash`        varchar(255)   NOT NULL DEFAULT '' COMMENT '该event对应的合约hash',
     `payer`                varchar(255)   NOT NULL DEFAULT '' COMMENT '交易的payer',
     `called_contract_hash` varchar(255)   NOT NULL DEFAULT '' COMMENT '该交易真正调用的合约hash',

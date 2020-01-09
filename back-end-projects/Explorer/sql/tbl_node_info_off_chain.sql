@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `tbl_node_info_off_chain`
 (
     name         VARCHAR(64)   NOT NULL DEFAULT '',
     address      CHARACTER(34) NOT NULL,
-    ont_id       CHARACTER(42) NOT NULL,
+    tst_id       CHARACTER(42) NOT NULL,
     public_key   VARCHAR(70)   NOT NULL,
     node_type    INT           NOT NULL,
     introduction VARCHAR(1000) NOT NULL DEFAULT '',

@@ -16,12 +16,12 @@
         </plugin>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/explorer?serverTimezone=UTC&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/explorer_v2?serverTimezone=UTC&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"
                         userId="root"
                         password="${MYSQL_ROOT_PASSWORD}">
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.github.ontio.model.dao" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.github.TesraSupernet.model.dao" targetProject="src/main/java">
             <!-- 是否对model添加 构造函数 -->
             <property name="constructorBased" value="false"/>
             <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
@@ -36,7 +36,7 @@
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator targetPackage="com.github.ontio.mapper" targetProject="src/main/java"
+        <javaClientGenerator targetPackage="com.github.TesraSupernet.mapper" targetProject="src/main/java"
                              type="XMLMAPPER">
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
@@ -57,7 +57,7 @@
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
 
-        <table tableName="tbl_ontid_tx_detail" domainObjectName="OntidTxDetail">
+        <table tableName="tbl_tstid_tx_detail" domainObjectName="TstidTxDetail">
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.ontio.mapper.NodeInfoOnChainMapper">
-    <resultMap id="BaseResultMap" type="com.github.ontio.model.dao.NodeInfoOnChain">
+<mapper namespace="com.github.TesraSupernet.mapper.NodeInfoOnChainMapper">
+    <resultMap id="BaseResultMap" type="com.github.TesraSupernet.model.dao.NodeInfoOnChain">
         <!--
           WARNING - @mbg.generated
         -->
@@ -20,13 +20,13 @@
         <result column="current_stake_percentage" jdbcType="VARCHAR" property="currentStakePercentage"/>
     </resultMap>
 
-    <cache type="com.github.ontio.config.RedisCache">
+    <cache type="com.github.TesraSupernet.config.RedisCache">
         <property name="eviction" value="LRU"/>
         <property name="size" value="1024"/>
         <property name="readOnly" value="false"/>
     </cache>
 
-    <select id="selectAllInfo" resultType="com.github.ontio.model.dto.NodeInfoOnChainDto" useCache="true">
+    <select id="selectAllInfo" resultType="com.github.TesraSupernet.model.dto.NodeInfoOnChainDto" useCache="true">
         SELECT node_rank,
                name,
                current_stake,
@@ -48,7 +48,7 @@
         FROM tbl_node_info_on_chain
     </select>
 
-    <select id="selectByPublicKey" resultType="com.github.ontio.model.dto.NodeInfoOnChainDto" useCache="true">
+    <select id="selectByPublicKey" resultType="com.github.TesraSupernet.model.dto.NodeInfoOnChainDto" useCache="true">
         SELECT node_rank,
                name,
                current_stake,
@@ -67,7 +67,7 @@
         LIMIT 1;
     </select>
 
-    <select id="searchByName" resultType="com.github.ontio.model.dto.NodeInfoOnChainDto" useCache="true">
+    <select id="searchByName" resultType="com.github.TesraSupernet.model.dto.NodeInfoOnChainDto" useCache="true">
         SELECT node_rank,
                name,
                current_stake,

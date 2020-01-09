@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.ontio.mapper.Oep8Mapper">
-  <resultMap id="BaseResultMap" type="com.github.ontio.model.dao.Oep8">
+<mapper namespace="com.github.TesraSupernet.mapper.Oep8Mapper">
+  <resultMap id="BaseResultMap" type="com.github.TesraSupernet.model.dao.Oep8">
     <!--
       WARNING - @mbg.generated
     -->
@@ -16,7 +16,7 @@
     <result column="vm_category" jdbcType="VARCHAR" property="vmCategory" />
   </resultMap>
 
-	<cache type="com.github.ontio.config.RedisCache">
+	<cache type="com.github.TesraSupernet.config.RedisCache">
 		<property name="eviction" value="LRU" />
 		<property name="size" value="1024" />
 		<property name="readOnly" value="false" />
@@ -33,7 +33,7 @@
     GROUP BY contract_hash
   </select>
 
-  <select id="selectOep8Tokens" resultType="com.github.ontio.model.dto.Oep8DetailDto">
+  <select id="selectOep8Tokens" resultType="com.github.TesraSupernet.model.dto.Oep8DetailDto">
 	SELECT
 		a.contract_hash as contractHash,
 		b.`name` as name,
@@ -59,7 +59,7 @@
 		b.create_time desc
   </select>
 
-	<select id="selectOep8TokenDetail" resultType="com.github.ontio.model.dto.Oep8DetailDto">
+	<select id="selectOep8TokenDetail" resultType="com.github.TesraSupernet.model.dto.Oep8DetailDto">
 		SELECT
 			a.contract_hash AS contractHash,
 			a.name AS name,
@@ -74,8 +74,8 @@
 			a.update_time as updateTime,
 			a.contact_info as contactInfo,
 			a.type as type,
-			a.ong_sum as ongSum,
-			a.ont_sum as ontSum,
+			a.tsg_sum as tsgSum,
+			a.tst_sum as tstSum,
 			a.token_sum as tokenSum,
 			a.address_count as addressCount,
 			a.tx_count as txCount,

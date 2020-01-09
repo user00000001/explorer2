@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.ontio.mapper.Oep8TxDetailMapper">
-  <resultMap id="BaseResultMap" type="com.github.ontio.model.dao.Oep8TxDetail">
+<mapper namespace="com.github.TesraSupernet.mapper.Oep8TxDetailMapper">
+  <resultMap id="BaseResultMap" type="com.github.TesraSupernet.model.dao.Oep8TxDetail">
     <!--
       WARNING - @mbg.generated
     -->
@@ -25,7 +25,7 @@
   </resultMap>
 
 
-  <cache type="com.github.ontio.config.RedisCache">
+  <cache type="com.github.TesraSupernet.config.RedisCache">
     <property name="eviction" value="LRU" />
     <property name="size" value="1024" />
     <property name="readOnly" value="false" />
@@ -42,7 +42,7 @@
   </sql>
 
 
-  <select id="selectTxsByCalledContractHashAndTokenName" resultType="com.github.ontio.model.dto.Oep8TxDetailDto">
+  <select id="selectTxsByCalledContractHashAndTokenName" resultType="com.github.TesraSupernet.model.dto.Oep8TxDetailDto">
     select DISTINCT <include refid="txBasicColumns"/>
     from tbl_oep8_tx_detail
     where called_contract_hash = #{calledContractHash}
