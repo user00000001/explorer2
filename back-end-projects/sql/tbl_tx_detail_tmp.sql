@@ -35,6 +35,7 @@ CREATE TABLE `tbl_tx_detail_tmp`
     `payer`                varchar(255)   NOT NULL DEFAULT '' COMMENT '交易的payer',
     `called_contract_hash` varchar(255)   NOT NULL DEFAULT '' COMMENT '该交易真正调用的合约hash',
     PRIMARY KEY (`tx_hash`, `tx_index`),
+    KEY `idx_asset_name` (`asset_name`),
     KEY `idx_from_address` (`from_address`),
     KEY `idx_to_address` (`to_address`),
     KEY `idx_block_height` (`block_height`) USING BTREE,
