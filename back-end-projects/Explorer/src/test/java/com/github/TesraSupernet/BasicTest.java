@@ -59,7 +59,7 @@ public class BasicTest {
         String contractHash = "939053a288f44eb560cad17c36df5ad34dafca2c";
 
         TstSdk tstSdk = TstSdk.getInstance();
-        tstSdk.setRestful("http://dappnode2.ont.io:20334");
+        tstSdk.setRestful("http://dapp2.tesra.me:25770");
 
 
         List paramList = new ArrayList();
@@ -91,7 +91,7 @@ public class BasicTest {
         String contractHash = "939053a288f44eb560cad17c36df5ad34dafca2c";
 
         TstSdk tstSdk = TstSdk.getInstance();
-        tstSdk.setRestful("http://dappnode1.ont.io:20334");
+        tstSdk.setRestful("http://dapp2.tesra.me:25770");
 
         List paramList = new ArrayList();
         paramList.add("get_binded_dapp".getBytes());

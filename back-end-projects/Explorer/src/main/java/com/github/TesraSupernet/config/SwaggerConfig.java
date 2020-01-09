@@ -27,9 +27,9 @@ public class SwaggerConfig {
     public Docket swaggerSpringfoxDocket() {
         //联系信息
         Contact contact = new Contact(
-                "zzsZhou",
-                "https://explorer.ont.io",
-                "contact@ont.io");
+                "user00000001",
+                "https://www.tesra.me",
+                "956809670@qq.com");
 
         List<VendorExtension> vext = new ArrayList<>();
         //api基本信息，展示在页面
@@ -81,9 +81,9 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         //联系信息
         Contact contact = new Contact(
-                "zzsZhou",
-                "https://explorer.ont.io",
-                "zhouqiang@ont.io");
+                "user00000001",
+                "https://www.tesra.me",
+                "956809670@qq.com");
         //api基本信息，展示在页面
         return new ApiInfoBuilder()
                 .title("Tesra Explorer APIs")
