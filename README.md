@@ -101,7 +101,7 @@ spring.jpa.database = MYSQL
 //the driver for database
 spring.datasource.driverClassName = com.mysql.jdbc.Driver
 //the url for database
-spring.datasource.url = jdbc:mysql://localhost:3306/explorer_v2?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+spring.datasource.url = jdbc:mysql://localhost:3306/explorer?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
 //the username for database
 spring.datasource.username = root
 //the password for databse
@@ -171,7 +171,7 @@ spring.jpa.database = MYSQL
 //the driver for database
 spring.datasource.driverClassName = com.mysql.jdbc.Driver
 //the url for database
-spring.datasource.url = jdbc:mysql://localhost:3306/explorer_v2?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+spring.datasource.url = jdbc:mysql://localhost:3306/explorer?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
 //the username for database
 spring.datasource.username = root
 //the password for databse

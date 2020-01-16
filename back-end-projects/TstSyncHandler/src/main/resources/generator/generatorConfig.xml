@@ -16,7 +16,7 @@
         </plugin>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/explorer_v2?characterEncoding=UTF-8"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/explorer?characterEncoding=UTF-8"
                         userId="root"
                         password="zaq12wsx">
         </jdbcConnection>
