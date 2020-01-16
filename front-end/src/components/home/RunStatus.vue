@@ -213,7 +213,7 @@
       },
       toOnlineNodes() {
         /* this.$router.push({ name: 'NodeStakeList'}) */
-        //  window.open('http://node.tesra.me/')
+        //  window.open('https://node.tesra.me/')
         this.$router.push({ name: 'Home' })
       },
       getNodeCountStatus() {
