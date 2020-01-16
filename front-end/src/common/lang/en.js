@@ -33,7 +33,7 @@ module.exports = {
       submit: 'Submit',
       statistics: 'Statistic',
       tool: 'Tool',
-      apiDocUrl:"https://dev-docs.ont.io/#/docs-en/explorer/overview"
+      apiDocUrl:"http://docs.tesra.me"
     }
   },
   all: {
@@ -207,7 +207,7 @@ module.exports = {
     rewardRate: 'Reward Rate:',
     rank2: 'Rank:',
     stake2: 'Stake:',
-    stakeOWallet: 'Stake with Owallet →',
+    stakeTWallet: 'Stake with TWallet →',
     process2: 'Process:',
     ip: 'IP:',
     email: 'Email:',

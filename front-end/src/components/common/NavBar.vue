@@ -125,9 +125,9 @@
     data() {
       return {
         isHome: true,
-        monitor: 'https://monitor.ont.io/',
-        apiDocUrl: 'https://dev-docs.ont.io/#/docs-en/explorer/overview',
-        nodelist: 'https://node.ont.io',
+        monitor: 'http://monitor.tesra.me/',
+        apiDocUrl: 'http://dev-docs.tesra.me/#/docs-en/explorer/overview',
+        nodelist: 'http://node.tesra.me',
         language: 'en'
       }
     },

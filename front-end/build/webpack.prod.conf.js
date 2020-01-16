@@ -117,14 +117,13 @@ const webpackConfig = merge(baseWebpackConfig, {
       children: true,
       minChunks: 3
     }),
-
     // copy custom static assets
-    // copy custom static assets
-    // new CopyWebpackPlugin([{
-    //   from: path.resolve(__dirname, '../stati'),
-    //   to: config.build.assetsSubDirectory,
-    //   ignore: ['.*']
-    // }]),
+    new CopyWebpackPlugin([{
+      from: path.resolve(__dirname, '../static/lib/browser.js'),
+      to: path.resolve(config.build.assetsRoot, 'static/lib/browser.js'),
+      force: true,
+      // ignore: ['.*']
+    }]),
     new PrerenderSPAPlugin({
       // Required - The path to the webpack-outputted app to prerender.
       staticDir: path.join(__dirname, '../dist'),

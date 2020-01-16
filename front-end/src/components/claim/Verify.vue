@@ -1,6 +1,6 @@
 <template>
   <div class="e-container container-margin-top">
-    <div class="div-ont-id-detail-page form-group">
+    <div class="div-tst-id-detail-page form-group">
       <div class="row">
         <div class="col">
           <p class="font-Regular normal_color font-size18 title-more float-left pointer" @click="toReturn"><< {{

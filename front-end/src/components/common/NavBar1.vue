@@ -149,10 +149,10 @@
     data() {
       return {
         isHome: true,
-        monitor: 'https://monitor.ont.io/',
-        apiDocUrl: 'https://dev-docs.ont.io/#/docs-en/explorer/overview',
+        monitor: 'http://monitor.tesra.me/',
+        apiDocUrl: 'http://dev-docs.tesra.me/#/docs-en/explorer/overview',
         language: 'en',
-        nodelist: 'https://node.ont.io/'
+        nodelist: 'http://node.tesra.me/'
       }
     },
     mounted() {

@@ -2,7 +2,7 @@
   <div class="e-container container-margin-top">
     <list-title :name="$t('nodes.detailTit')"></list-title>
     <detail-title-2 :name1="$t('nodes.nodeName')" :val="nodeDetailInfo.name"
-                    :name2="$t('nodes.stakeOWallet')" url="https://github.com/ontio/OWallet/releases">
+                    :name2="$t('nodes.stakeTWallet')" url="https://github.com/TesraSupernet/TWallet/releases">
     </detail-title-2>
 
     <!--The TST-ID and Reward-rate-->
@@ -53,7 +53,7 @@
       }
     },
     created() {
-      window.open("https://node.ont.io/",'_self')
+      window.open("http://node.tesra.me/",'_self')
     },
     mounted() {
       this.getNodeList()

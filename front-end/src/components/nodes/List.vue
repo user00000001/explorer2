@@ -17,7 +17,7 @@
         <span style="">{{ $t('nodes.guideTxt') }}</span>
         <span class="font-blod">
           <a class="here-color"
-             href="https://medium.com/tesraSupernet/owallet-stake-authorization-feature-released-11776706bb34"
+             href="https://medium.com/tesraSupernet/twallet-stake-authorization-feature-released-11776706bb34"
              target="_blank">{{ $t('nodes.here') }}</a>
         </span>
       </div>
@@ -91,7 +91,7 @@
       }
     },
     created() {
-      window.open("https://node.ont.io/",'_self')
+      window.open("http://node.tesra.me/",'_self')
     },
     mounted() {
       $(document).ready(function(){

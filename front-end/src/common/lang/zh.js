@@ -33,7 +33,7 @@ module.exports = {
       submit: '提交',
       statistics: '统计',
       tool: '工具',
-      apiDocUrl:"https://dev-docs.ont.io/#/docs-cn/explorer/overview"
+      apiDocUrl:"http://docs.tesra.me"
     }
   },
   all: {
@@ -59,7 +59,7 @@ module.exports = {
     txns: '交易',
     pk:"公钥"
   },
-  ontPagination: {
+  tstPagination: {
     total: '共有 ',
     data: ' 条数据'
   },
@@ -207,7 +207,7 @@ module.exports = {
     rewardRate: '奖励比例：',
     rank2: '排名：',
     stake2: '质押：',
-    stakeOWallet: '在 Owallet 上质押 →',
+    stakeTWallet: '在 TWallet 上质押 →',
     process2: '进度：',
     ip: 'IP地址：',
     email: '邮箱：',

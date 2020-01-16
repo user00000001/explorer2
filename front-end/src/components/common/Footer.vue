@@ -12,30 +12,30 @@
         <div class="footer-content">
           <div class="mobile-foot-line-developer"></div>
           <div class="footer-content-title">{{ $t('footer.Development') }}</div>
-<!--           <div class="footer-content-div"><a class="footer-content-text" href="https://ontio.github.io/documentation/tutorial_for_developer_en.html">{{ $t('footer.Tutorials') }}</a></div> -->
-          <div class="footer-content-div"><a class="footer-content-text" href="https://developer.ont.io/">{{ $t('footer.DeveloperCenter') }}</a></div>
-          <div class="footer-content-div"><a class="footer-content-text" href="https://dev-docs.ont.io/#/">{{ $t('footer.Documentation') }}</a></div>
-          <div class="footer-content-div"><a class="footer-content-text" href="https://bounty.ont.io">{{ $t('footer.Bounty') }}</a></div>
-          <div class="footer-content-div"><a class="footer-content-text" href="https://smartx.ont.io">{{ $t('footer.SmartX') }}</a></div>
-          <div class="footer-content-div"><a class="footer-content-text" href="https://github.com/ontio">{{ $t('footer.Github') }}</a></div>
+<!--           <div class="footer-content-div"><a class="footer-content-text" href="https://TesraSupernet.github.io/documentation/tutorial_for_developer_en.html">{{ $t('footer.Tutorials') }}</a></div> -->
+          <div class="footer-content-div"><a class="footer-content-text" href="https://developer.tesra.me/">{{ $t('footer.DeveloperCenter') }}</a></div>
+          <div class="footer-content-div"><a class="footer-content-text" href="https://dev-docs.tesra.me/#/">{{ $t('footer.Documentation') }}</a></div>
+          <div class="footer-content-div"><a class="footer-content-text" href="https://bounty.tesra.me">{{ $t('footer.Bounty') }}</a></div>
+          <div class="footer-content-div"><a class="footer-content-text" href="https://smartx.tesra.me">{{ $t('footer.SmartX') }}</a></div>
+          <div class="footer-content-div"><a class="footer-content-text" href="https://github.com/TesraSupernet">{{ $t('footer.Github') }}</a></div>
         </div>
 
 <!--         <div class="footer-content">
           <div class="mobile-foot-line"></div>
           <div class="footer-content-title">{{ $t('footer.Cooperation') }}</div>
-          <div class="footer-content-div"><a class="footer-content-text" href="https://info.ont.io/cooperation/en">{{ $t('footer.CooperateWithTesraSupernet') }}</a></div>
-          <div class="footer-content-div"><a class="footer-content-text" href="https://info.ont.io/listtriones/en">{{ $t('footer.Nodes') }}</a></div>
+          <div class="footer-content-div"><a class="footer-content-text" href="https://info.tesra.me/cooperation/en">{{ $t('footer.CooperateWithTesraSupernet') }}</a></div>
+          <div class="footer-content-div"><a class="footer-content-text" href="https://info.tesra.me/listtriones/en">{{ $t('footer.Nodes') }}</a></div>
         </div> -->
 
         <div class="footer-content">
           <div class="mobile-foot-line"></div>
           <div class="footer-content-title">{{ $t('footer.About') }}</div>
-<!--           <div class="footer-content-div"><a class="footer-content-text" href="https://info.ont.io/news/en">{{ $t('footer.Press') }}</a></div>
+<!--           <div class="footer-content-div"><a class="footer-content-text" href="https://info.tesra.me/news/en">{{ $t('footer.Press') }}</a></div>
           <div class="footer-content-div" @click="toTechNews()" ><a class="footer-content-text" >{{ $t('footer.TechNews') }}</a></div>
-          <div class="footer-content-div"><a class="footer-content-text" href="https://info.ont.io/team/en">{{ $t('footer.Team') }}</a></div> -->
-          <div class="footer-content-div"><a class="footer-content-text" href="https://ont.io/#/aboutus">{{ $t('footer.AboutTesraSupernet') }}</a></div>
-          <div class="footer-content-div"><a class="footer-content-text" href="https://ontio.github.io/documentation/wp_download_en.html">{{ $t('footer.WhitePaper') }}</a></div>
-<!--           <div class="footer-content-div"><a class="footer-content-text" href="https://explorer.ont.io">{{ $t('footer.Explorer') }}</a></div> -->
+          <div class="footer-content-div"><a class="footer-content-text" href="https://info.tesra.me/team/en">{{ $t('footer.Team') }}</a></div> -->
+          <div class="footer-content-div"><a class="footer-content-text" href="https://tesra.me/#/aboutus">{{ $t('footer.AboutTesraSupernet') }}</a></div>
+          <div class="footer-content-div"><a class="footer-content-text" href="https://TesraSupernet.github.io/documentation/wp_download_en.html">{{ $t('footer.WhitePaper') }}</a></div>
+<!--           <div class="footer-content-div"><a class="footer-content-text" href="https://explorer.tesra.me">{{ $t('footer.Explorer') }}</a></div> -->
         </div>
 
         <div class="footer-content">
@@ -66,8 +66,8 @@
           <a href="https://medium.com/tesrasupernet"><img class="footer-link-medium footer-link-img" src="../../assets/footer/medium@2x.png"></a>
         </div>
         <div style="display: inline-block">
-          <a href="mailto:contact@ont.io"><img class="footer-link-email footer-link-img" src="../../assets/footer/email@2x.png"></a>
-          <a href="https://github.com/ontio"><img class="footer-link-github footer-link-img" src="../../assets/footer/github@2x.png"></a>
+          <a href="mailto:contact@tesra.me"><img class="footer-link-email footer-link-img" src="../../assets/footer/email@2x.png"></a>
+          <a href="https://github.com/TesraSupernet"><img class="footer-link-github footer-link-img" src="../../assets/footer/github@2x.png"></a>
           <a href="https://www.linkedin.com/company/tesrasupernet-official/"><img class="footer-link-linkedin footer-link-img" src="../../assets/footer/linkedin@2x.png"></a>
         </div>
       </div>

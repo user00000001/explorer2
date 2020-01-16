@@ -63,6 +63,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         from: path.resolve(__dirname, '../static'),
         to: config.dev.assetsSubDirectory,
         ignore: ['.*']
+      },
+      {
+        from: path.resolve(__dirname, '../static/lib/browser.js'),
+        to: path.resolve(config.dev.assetsSubDirectory, 'lib/browser.js'),
+        force: true,
+        // ignore: ['.*']
       }
     ])
   ]
