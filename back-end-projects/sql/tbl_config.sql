@@ -11,4 +11,5 @@ CREATE TABLE `tbl_config`
     `value` varchar(256) NOT NULL,
     PRIMARY KEY (`field`)
 ) ENGINE = InnoDB
+  ROW_FORMAT=DYNAMIC
   DEFAULT CHARSET = utf8;
