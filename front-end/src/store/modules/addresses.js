@@ -51,7 +51,7 @@ export default {
           type: types.SET_ADDRESS_LIST_PAGE,
           info: {
             list: response.data.result,
-            total: 1000,
+            total: response.data.result.length,
             basicRank: (Number($param.pageNumber) - 1) * $param.pageSize + 1
           }
         })
