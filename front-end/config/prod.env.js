@@ -6,8 +6,7 @@ module.exports = {
   // 单独提供给addresses页面的接口，golang实现的
   // EXPLORE_URL: '"http://localhost:8585/v2/"',
   // TEST_EXPLORE_URL: '"http://localhost:8585/v2/"',
-  // EXPLORE_URL: '"http://explorer.tesra.me:19998/"',
-  EXPLORE_URL: '"http://121.41.30.85:19998/"',
+  EXPLORE_URL: '"http://explorer.tesra.me:19998/"',
   TEST_EXPLORE_URL: '"http://explorer.tesra.me:3000/v2/"',
 
   // 基础API接口
