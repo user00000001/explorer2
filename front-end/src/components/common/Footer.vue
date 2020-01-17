@@ -35,7 +35,7 @@
           <div class="footer-content-div"><a class="footer-content-text" href="https://info.tesra.me/team/en">{{ $t('footer.Team') }}</a></div> -->
           <div class="footer-content-div"><a class="footer-content-text" href="https://tesra.me/#/aboutus">{{ $t('footer.AboutTesraSupernet') }}</a></div>
           <div class="footer-content-div"><a class="footer-content-text" href="https://TesraSupernet.github.io/documentation/wp_download_en.html">{{ $t('footer.WhitePaper') }}</a></div>
-<!--           <div class="footer-content-div"><a class="footer-content-text" href="https://explorer.tesra.me">{{ $t('footer.Explorer') }}</a></div> -->
+<!--           <div class="footer-content-div"><a class="footer-content-text" href="https://explorer2.tesra.me">{{ $t('footer.Explorer') }}</a></div> -->
         </div>
 
         <div class="footer-content">

@@ -153,7 +153,7 @@ export default {
     },
     getAddressDetailAllData({dispatch}, $param) {
       let apiUrl = ($param.net === "testnet") ? process.env.TEST_API_URL : process.env.API_URL;
-      let url = 'http://explorer.tesra.me/api/v1/explorer/address/queryaddressinfo/' + $param.address;
+      let url = 'http://explorer2.tesra.me/api/v1/explorer/address/queryaddressinfo/' + $param.address;
 
       return axios.get(url).then(response => {
         return response.data.Result.TxnList
